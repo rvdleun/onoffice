@@ -10,7 +10,7 @@
     "build-electron": "ng build --base-href . && cp src/electron/* dist",
     "start": "npm run build-electron && electron dist/main.js",
     "package-mac": "npm run build-electron && electron-packager . --overwrite --asar=true --platform=darwin --arch=x64 --prune=true --out=release-builds",
-    "package-windows": "npm run build-electron && electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Angular Boilerplate\"",
+    "package-windows": "npm run build-electron && electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds",
     "package-linux": "npm run build-electron && electron-packager . --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds",
     "create-installer-mac": "electron-installer-dmg ./release-builds/Electron\\ Angular\\ Boilerplate-darwin-x64/Electron\\ Angular\\ Boilerplate.app electron-boilerplate-app --out=release-builds --overwrite",
     "create-installer-windows": "node installers/windows/createinstaller.js",
