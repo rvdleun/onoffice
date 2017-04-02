@@ -46,7 +46,7 @@ To be able to use Developer tools, go to `View > Toggle Developer Tools`. You sh
 ## Included Commands
 
 - `npm run build-electron` - builds your Angular2 app and throws the result as well as your electron main.js file into the dist folder
-- `npm start` - runs `npm run build electron` and starts your app in electron by running `main.js`
+- `npm start` - runs `npm run build-electron` and starts your app in electron by running `main.js`
 - `npm run package-mac` - builds your application and generates a `.app` file of your application that can be run on mac. NOTE: I am like 99% sure you need to be on a MAC OS machine to be able to run this.
 - `npm run package-windows` - builds your application and creates an app consumable in windows 32 bit systems. NOTE: If you build this on MAC OS or linux you need wine installed, which can be installed with `brew install wine`
 - `npm run package-linux` - builds your application and creates an app consumable on linux systems.
