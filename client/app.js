@@ -3,7 +3,6 @@ const socket = io();
 const pc = new RTCPeerConnection({  iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }] });
 
 pc.onaddstream = (event) => {
-    alert('Got a stream!');
     const video = document.createElement('video');
     video.src = window.URL.createObjectURL(event.stream)
     video.onloadedmetadata = () => {

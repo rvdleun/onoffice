@@ -80,6 +80,10 @@ export class StreamToggleComponent {
                 console.log('Settign er to active');
                 this.status.current = 'active';
             }
+
+            if (event.currentTarget['iceConnectionState'] === 'disconnected') {
+                this.status.current = 'waiting-for-client';
+            }
         });
 
         pc.onicecandidate = (event) => {
