@@ -1,0 +1,18 @@
+<html>
+<body>
+<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+<script src="./socket.io/socket.io.js"></script>
+<script src="./simplepeer.min.js"></script>
+<script src="./app.js"></script>
+<a-scene>
+    <a-assets>
+        <video id="remote" muted autoplay></video>
+    </a-assets>
+    <a-entity position="0 1.6 0" camera look-controls></a-entity>
+    <a-plane id="screen" position="0 1.6 -1" scale="1 1 1" material="shader: flat" src="#remote">
+        <a-plane id="cursor" color="red" position="-.5 0 .001" materia="shader: flat; opacity: .5; transparent: true" scale=".01 .016 .01"></a-plane>
+    </a-plane>
+    <a-sky src="./office.jpg" rotation="0 270 0"></a-sky>
+</a-scene>
+</body>
+</html>
