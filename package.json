@@ -7,7 +7,7 @@
   "author": "Liam Stokinger",
   "main": "dist/main.js",
   "scripts": {
-    "build-electron": "ng build --base-href . && cp -R src/electron/* dist && cp -R client dist",
+    "build-electron": "ng build --base-href . && cp -R src/electron/* dist && ln -s ../client dist/client",
     "start": "npm run build-electron && electron dist/main.js",
     "package-mac": "npm run build-electron && electron-packager . --overwrite --asar=true --platform=darwin --arch=x64 --prune=true --out=release-builds",
     "package-windows": "npm run build-electron && electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds",
@@ -32,6 +32,7 @@
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
     "express": "^4.16.3",
+    "ip": "^1.1.5",
     "ngx-electron": "^1.0.3",
     "robotjs": "^0.5.1",
     "rxjs": "^5.1.0",

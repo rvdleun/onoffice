@@ -44,8 +44,8 @@ io.on('connect', (socket) => {
         socket.broadcast.emit('cursor-position', message);
     });
 
-    socket.on('message', (message) => {
-        socket.broadcast.emit('message', message);
+    socket.on('webrtc-message', (message) => {
+        socket.broadcast.emit('webrtc-message', message);
     });
 
     const Robot = require('robotjs');

@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {SourceSelection} from '../source-toggle/source-toggle.component';
-import {AppStatus} from '../main.page';
 import {SocketService} from '../../../shared/socket.service';
+import {AppStatus} from '../main.page';
 
 @Component({
     selector: 'app-stream-toggle',
@@ -63,7 +63,7 @@ export class StreamToggleComponent {
                 if (pc.getLocalStreams().length === selectedSources.length) {
                     pc.createOffer((description) => {
                         pc.setLocalDescription(description, () => {
-                            this.socketService.emit('message', {'sdp': description});
+                            this.socketService.emit('webrtc-message', {'sdp': description});
                         }, () => {
                             console.log('set description error');
                         });
@@ -88,17 +88,17 @@ export class StreamToggleComponent {
 
         pc.onicecandidate = (event) => {
             if (event.candidate != null) {
-                this.socketService.emit('message', {'ice': event.candidate});
+                this.socketService.emit('webrtc-message', {'ice': event.candidate});
             }
         };
 
-        this.socketService.on('message', (message) => {
+        this.socketService.on('webrtc-message', (message) => {
             if (message.sdp) {
                 pc.setRemoteDescription(new RTCSessionDescription(message.sdp), () => {
-                    if(message.sdp.type === 'offer') {
+                    if (message.sdp.type === 'offer') {
                         pc.createAnswer((description) => {
                             pc.setLocalDescription(description, () => {
-                                this.socketService.emit('message', {'sdp': description});
+                                this.socketService.emit('webrtc-message', {'sdp': description});
                             }, () => {
                                 console.log('set description error');
                             });
@@ -107,7 +107,7 @@ export class StreamToggleComponent {
                         });
                     }
                 });
-            } else if(message.ice) {
+            } else if (message.ice) {
                 pc.addIceCandidate(new RTCIceCandidate(message.ice));
             }
         });

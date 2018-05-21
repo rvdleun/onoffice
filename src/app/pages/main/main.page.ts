@@ -13,6 +13,7 @@ export interface AppStatus {
 export class MainPageComponent implements OnInit {
     public sources: SourceSelection[];
     public status: AppStatus;
+    public ip = 'Unknown';
 
     constructor(private electronService: ElectronService) {
         this.status = {
@@ -29,5 +30,6 @@ export class MainPageComponent implements OnInit {
                 };
             });
         });
+        this.ip = this.electronService.remote.getGlobal('IP');
     }
 }
