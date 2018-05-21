@@ -47,10 +47,9 @@ AFRAME.registerSystem('manipulate-source', {
             const startAxisZ = this.touchStartData.startAxis[1];
             const axisZ = axis[1];
             const changeZ = startAxisZ - axisZ;
-            const newZ = Math.min(-1, this.touchStartData.startZ - changeZ);
+            const newZ = Math.min(-.5, this.touchStartData.startZ - changeZ);
 
             this.target.querySelector('a-plane').setAttribute('position', `0 1.6 ${newZ}`);
-            console.log(startAxisZ, axisZ, changeZ);
         } else {
             this.touchStartData = {
                 startAxis: [axis[0], axis[1]],

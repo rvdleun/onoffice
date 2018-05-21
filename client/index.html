@@ -4,6 +4,7 @@
 <script src="./socket.io/socket.io.js"></script>
 <script src="./components/cursor-position.component.js"></script>
 <script src="./components/manipulate-source.component.js"></script>
+<script src="./components/source.component.js"></script>
 <script src="./systems/socket.system.js"></script>
 <script src="./systems/webrtc.system.js"></script>
 <script src="./app.js"></script>
@@ -15,12 +16,13 @@
     <a-entity id="controls" position="0 1.6 0" laser-controls="hand: right"></a-entity>
 
     <a-entity id="sources">
-        <a-entity>
-            <a-plane manipulate-source id="screen" position="0 1.6 -1" scale="1 1 1" material="shader: flat" src="#remote">
-                <a-plane id="cursor" cursor-position color="red" position="-.5 0 .001" materia="shader: flat; opacity: .5; transparent: true" scale=".01 .016 .01"></a-plane>
+        <!--a-entity>
+            <!--a-plane manipulate-source id="screen" position="0 1.6 -1" scale="1 1 1" material="shader: flat" src="#remote">
             </a-plane>
-        </a-entity>
+        </a-entity-->
     </a-entity>
+    <!-- a-plane id="cursor" cursor-position color="red" position="-.5 0 .001" materia="shader: flat; opacity: .5; transparent: true" scale=".01 .016 .01"></a-plane -->
+
     <a-sky src="./office.jpg" rotation="0 270 0"></a-sky>
 </a-scene>
 </body>
