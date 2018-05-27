@@ -11,13 +11,11 @@ let host = null;
 let client = null;
 
 function checkHostClient() {
-    console.log('Host', !!host);
-    console.log('Client', !!client);
-    console.log('---');
-
     if (!host || !client) {
         return;
     }
+
+    console.log('Host and client are available. Initiate connection.');
 
     host.socket.emit('start');
 }
@@ -26,18 +24,15 @@ io.on('connect', (socket) => {
     console.log('User connected');
 
     socket.on('host', (signal) => {
-        console.log('Host found!');
+        console.log('Client signed in!');
         host = {signal, socket};
         checkHostClient();
     });
 
-    socket.on('client', (data) => {
-        if (data) {
-            host.socket.emit('clientSignal', data);
-        } else {
-            client = {socket};
-            checkHostClient();
-        }
+    socket.on('client', () => {
+        client = {socket};
+        checkHostClient();
+        console.log('Client signed in!');
     });
 
     socket.on('cursor-position', (message) => {
