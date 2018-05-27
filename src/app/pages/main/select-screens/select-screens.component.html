@@ -1,3 +1,5 @@
-<div *ngFor="let source of sources">
-    <app-source-toggle [source]="source"></app-source-toggle>
+<div class="row">
+    <div *ngFor="let source of sources" class="col">
+        <app-source-toggle [source]="source"></app-source-toggle>
+    </div>
 </div>

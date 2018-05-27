@@ -1,1 +1,3 @@
-<input type="button" (click)="onClick()" [value]="status.current === 'inactive' ? 'Start streaming, yo' : 'Stop that streaming!'" />
+<div>
+    <button type="button" class="btn btn-light"  (click)="onClick()">{{ status.current === 'inactive' ? 'Start streaming, yo' : 'Stop that streaming!' }}</button>
+</div>
