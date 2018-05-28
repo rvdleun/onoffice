@@ -38,22 +38,12 @@ AFRAME.registerSystem('source', {
             const sizeY = 1;
 
             const screen = document.createElement('a-plane');
+            screen.setAttribute('id', `screen-${event.stream.id}`);
             screen.setAttribute('manipulate-source', '');
             screen.setAttribute('position', '0 1.6 -1');
             screen.setAttribute('material', 'shader: flat');
             screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
             screen.setAttribute('src', `#${videoId}`);
-
-            if(this.id === 1) {
-                const mouseCursor = document.createElement('a-plane');
-                mouseCursor.setAttribute('cursor-position', '');
-                mouseCursor.setAttribute('color', 'red');
-                mouseCursor.setAttribute('position', '-.5 0 0.001');
-                mouseCursor.setAttribute('material', 'shader: flat');
-                mouseCursor.setAttribute('scale', '.01 .016 .01');
-
-                screen.appendChild(mouseCursor);
-            }
 
             const entity = document.createElement('a-entity');
             entity.appendChild(screen);
