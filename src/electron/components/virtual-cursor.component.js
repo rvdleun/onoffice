@@ -36,7 +36,10 @@ module.exports.watch = function(socket) {
                 y <= display.display.bounds.y + display.display.bounds.height);
 
             if (display && display.streamId !== '') {
-                socket.emit('cursor-position', {streamId: display.streamId, x: mouse.x / display.display.bounds.width, y: mouse.y / display.display.bounds.height});
+                const posX = (x - display.display.bounds.x) / display.display.bounds.width;
+                const posY = (y - display.display.bounds.y) / display.display.bounds.height;
+
+                socket.emit('cursor-position', {streamId: display.streamId, x: posX, y: posY});
             }
         }
     }, 50);
