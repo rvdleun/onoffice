@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {SourceSelection} from '../source-toggle/source-toggle.component';
 import {SocketService} from '../../../shared/socket.service';
 import {AppStatus} from '../main.page';
+import {ElectronService} from 'ngx-electron';
 
 @Component({
     selector: 'app-stream-toggle',
@@ -13,7 +14,7 @@ export class StreamToggleComponent {
 
     private pc: RTCPeerConnection;
 
-    constructor(private socketService: SocketService) { }
+    constructor(private electronService: ElectronService, private socketService: SocketService) { }
 
     public onClick() {
         if (this.status.current === 'inactive') {
@@ -59,6 +60,8 @@ export class StreamToggleComponent {
                 }
             }).then((stream) => {
                 pc.addStream(stream);
+
+                this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(source.source.id, stream.id);
 
                 if (pc.getLocalStreams().length === selectedSources.length) {
                     pc.createOffer((description) => {

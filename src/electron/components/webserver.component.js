@@ -33,6 +33,8 @@ io.on('connect', (socket) => {
         client = {socket};
         checkHostClient();
         console.log('Client signed in!');
+
+        require('./virtual-cursor.component').watch(socket);
     });
 
     socket.on('cursor-position', (message) => {
@@ -42,18 +44,4 @@ io.on('connect', (socket) => {
     socket.on('webrtc-message', (message) => {
         socket.broadcast.emit('webrtc-message', message);
     });
-
-    const Robot = require('robotjs');
-    let prevX = -1;
-    let prevY = -1;
-
-    setInterval(() => {
-        const mouse = Robot.getMousePos();
-        if (prevX !== mouse.x || prevY !== mouse.y) {
-            prevX = mouse.x;
-            prevY = mouse.y;
-
-            socket.emit('cursor-position', {x: mouse.x / 1440, y: mouse.y / 900});
-        }
-    }, 50);
 });
