@@ -5,9 +5,10 @@ import {SourceToggleComponent} from './source-toggle/source-toggle.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {StreamToggleComponent} from './stream-toggle/stream-toggle.component';
+import {PinFormComponent} from './pin-form/pin-form.component';
 
 @NgModule({
-    declarations: [MainPageComponent, SelectScreensComponent, StreamToggleComponent, SourceToggleComponent],
+    declarations: [MainPageComponent, PinFormComponent, SelectScreensComponent, StreamToggleComponent, SourceToggleComponent],
     exports: [MainPageComponent],
     imports: [BrowserModule, FormsModule],
 })

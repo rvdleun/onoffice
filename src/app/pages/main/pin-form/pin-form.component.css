@@ -1,0 +1,28 @@
+.digits {
+    cursor: pointer;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.digit {
+    float: left;
+    height: 40px;
+    width: 40px;
+    border-bottom: solid 1px #71dd8a;
+
+    margin-right: 10px;
+
+    color: lightgreen;
+    font-size: 40px;
+}
+
+.digit:last-child {
+    margin-right: 0;
+}
+
+input {
+    position: fixed;
+    top: -5000px;
+    left: -5000px;
+}

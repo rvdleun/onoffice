@@ -1,0 +1,7 @@
+<div class="digits" (click)="onClick()">
+    <div class="digit"><span *ngIf="pin[0]">*</span></div>
+    <div class="digit"><span *ngIf="pin[1]">*</span></div>
+    <div class="digit"><span *ngIf="pin[2]">*</span></div>
+    <div class="digit"><span *ngIf="pin[3]">*</span></div>
+</div>
+<input #input type="number" (keyup)="onKeyUp($event)" />

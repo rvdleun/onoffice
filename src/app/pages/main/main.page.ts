@@ -8,6 +8,7 @@ export interface AppStatus {
 
 @Component({
     selector: 'app-page-main',
+    styleUrls: ['./main.page.css'],
     templateUrl: './main.page.html'
 })
 export class MainPageComponent implements OnInit {
