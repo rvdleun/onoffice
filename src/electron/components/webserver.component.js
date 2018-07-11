@@ -33,9 +33,7 @@ io.on('connect', (socket) => {
     });
 
     socket.on('client', () => {
-        console.log('======> ', pin, !connections[socket.id].properties, ' <======');
         if(pin && !connections[socket.id].properties.approved) {
-            console.log('I need a pin');
             socket.emit('pin_required');
             return;
         }

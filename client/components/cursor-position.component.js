@@ -11,13 +11,10 @@ AFRAME.registerSystem('cursor-position', {
                 }
 
                 if (this.streamId !== data.streamId) {
-                    console.log('--->', this.streamId, data.streamId, ' <---');
                     const screen = document.querySelector('#screen-' + data.streamId);
                     if (!screen) {
                         return;
                     }
-
-                    console.log('Appending cursor to display');
 
                     screen.appendChild(cursor);
                     this.streamId = data.streamId;

@@ -43,7 +43,12 @@ AFRAME.registerSystem('source', {
             screen.setAttribute('position', '0 1.6 -1');
             screen.setAttribute('material', 'shader: flat');
             screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
-            screen.setAttribute('src', `#${videoId}`);
+
+            if (location.search && location.search.indexOf('no-source') >= 0) {
+                screen.setAttribute('color', 'lightgreen');
+            } else {
+                screen.setAttribute('src', `#${videoId}`);
+            }
 
             const entity = document.createElement('a-entity');
             entity.appendChild(screen);
