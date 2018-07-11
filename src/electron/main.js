@@ -1,4 +1,4 @@
-require('./components/webserver.component.js');
+require('./components/webserver.component.js')(global);
 
 const electron = require('electron')
 // Module to control application life.

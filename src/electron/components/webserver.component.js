@@ -3,12 +3,15 @@ const webApp = express();
 const webServer = require('http').Server(webApp);
 const io = require('socket.io')(webServer);
 
-webServer.listen(24242);
-
 webApp.use(express.static(__dirname + '/../client'));
+
+let connections = {};
 
 let host = null;
 let client = null;
+
+let webServerHandler;
+let pin = '';
 
 function checkHostClient() {
     if (!host || !client) {
@@ -21,15 +24,22 @@ function checkHostClient() {
 }
 
 io.on('connect', (socket) => {
-    console.log('User connected');
+    connections[socket.id] = { properties: { approved: false }, socket };
 
     socket.on('host', (signal) => {
-        console.log('Client signed in!');
+        console.log('Host signed in!');
         host = {signal, socket};
         checkHostClient();
     });
 
     socket.on('client', () => {
+        console.log('======> ', pin, !connections[socket.id].properties, ' <======');
+        if(pin && !connections[socket.id].properties.approved) {
+            console.log('I need a pin');
+            socket.emit('pin_required');
+            return;
+        }
+
         client = {socket};
         checkHostClient();
         console.log('Client signed in!');
@@ -45,3 +55,19 @@ io.on('connect', (socket) => {
         socket.broadcast.emit('webrtc-message', message);
     });
 });
+
+
+module.exports = function(global) {
+    global.setPin = function(newPin) {
+        console.log('Setting pin to', newPin);
+        pin = newPin;
+    };
+
+    global.setWebServerActive = function(active) {
+        if (active) {
+            webServerHandler = webServer.listen(24242);
+        } else {
+            webServerHandler.close();
+        }
+    }
+};

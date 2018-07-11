@@ -4,4 +4,4 @@
     <div class="digit"><span *ngIf="pin[2]">*</span></div>
     <div class="digit"><span *ngIf="pin[3]">*</span></div>
 </div>
-<input #input type="number" (keyup)="onKeyUp($event)" />
+<input #input type="number" (blur)="onBlur()" (keyup)="onKeyUp($event)" />

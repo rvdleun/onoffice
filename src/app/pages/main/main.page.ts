@@ -30,7 +30,6 @@ export class MainPageComponent implements OnInit {
                     selected: true,
                 };
             });
-            console.log(this.sources);
         });
         this.ip = this.electronService.remote.getGlobal('IP');
     }

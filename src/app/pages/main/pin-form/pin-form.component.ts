@@ -1,4 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
+import {ElectronService} from 'ngx-electron';
 
 @Component({
     selector: 'app-pin-form',
@@ -8,6 +9,17 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 export class PinFormComponent {
     public pin: string[] = [];
     @ViewChild('input') input: ElementRef;
+
+    constructor(private electronService: ElectronService) { }
+
+    public onBlur() {
+        if(this.pin.length < 4) {
+            this.pin = [];
+        }
+
+        console.log(this.electronService, this.electronService.remote, this.electronService.remote.getGlobal);
+        this.electronService.remote.getGlobal('setPin')(this.pin.join(''));
+    }
 
     public onClick() {
         this.input.nativeElement.focus();
@@ -21,8 +33,6 @@ export class PinFormComponent {
         if (event.code === 'Backspace') {
             this.removeDigit();
         }
-
-        console.log(this.pin);
     }
 
     public addDigit(digit: string) {

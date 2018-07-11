@@ -25,6 +25,7 @@ export class StreamToggleComponent {
     }
 
     private startStreaming() {
+        this.electronService.remote.getGlobal('setWebServerActive')(true);
         this.status.current = 'waiting-for-client';
 
         this.socketService.emit('host');
@@ -32,6 +33,7 @@ export class StreamToggleComponent {
     }
 
     private stopStreaming() {
+        this.electronService.remote.getGlobal('setWebServerActive')(false);
         this.status.current = 'inactive';
 
         this.socketService.removeAllListeners('start');
@@ -39,7 +41,7 @@ export class StreamToggleComponent {
     }
 
     private setupConnection() {
-        this.status.current = 'setting-up';
+        this.status.current = 'waiting-for-client';
 
         const pc = new RTCPeerConnection(
             {
@@ -80,7 +82,7 @@ export class StreamToggleComponent {
         pc.addEventListener('iceconnectionstatechange', (event) => {
             console.log(event.currentTarget['iceConnectionState'], event.currentTarget['iceConnectionState'] === 'completed');
             if (event.currentTarget['iceConnectionState'] === 'completed') {
-                console.log('Settign er to active');
+                console.log('Setting er to active');
                 this.status.current = 'active';
             }
 
