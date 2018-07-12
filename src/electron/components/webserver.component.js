@@ -6,6 +6,7 @@ const storage = require('electron-json-storage');
 
 webApp.use(express.static(__dirname + '/../client'));
 
+let global = null;
 let connections = {};
 
 let host = null;
@@ -25,6 +26,8 @@ function checkHostClient() {
 }
 
 io.on('connect', (socket) => {
+    require('./environment.component')(socket);
+
     connections[socket.id] = { properties: { approved: false }, socket };
 
     socket.on('host', (signal) => {
@@ -68,7 +71,9 @@ io.on('connect', (socket) => {
 });
 
 
-module.exports = function(global) {
+module.exports = function(currentGlobal) {
+    global = currentGlobal;
+
     global.getPinFromStorage = function(cb) {
         storage.get('pin', (error, data) => {
             if (error) {

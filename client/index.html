@@ -6,6 +6,7 @@
 <script src="./socket.io/socket.io.js"></script>
 <script src="./components/cursor-position.component.js"></script>
 <script src="./components/manipulate-source.component.js"></script>
+<script src="./components/sky.component.js"></script>
 <script src="./components/source.component.js"></script>
 <script src="./systems/socket.system.js"></script>
 <script src="./systems/webrtc.system.js"></script>
@@ -19,7 +20,7 @@
 
     <button v-if="readyToEnterVR" v-on:click="startVirtualReality()">Enter<br />Virtual Reality</button>
 </div>
-<a-scene vr-mode-ui="enabled: false">
+<a-scene antialias="true" vr-mode-ui="enabled: false">
     <a-assets>
         <video id="remote" muted autoplay></video>
     </a-assets>
@@ -35,7 +36,7 @@
     </a-entity>
     <a-plane id="cursor" cursor-position color="red" position="-.5 0 .001" material="shader: flat; opacity: .5; transparent: true" scale=".01 .016 .01"></a-plane>
 
-    <a-sky src="./office.jpg" rotation="0 270 0"></a-sky>
+    <a-sky sky rotation="0 270 0"></a-sky>
 </a-scene>
 
 <script src="./splash-screen/splash-screen.js"></script>
