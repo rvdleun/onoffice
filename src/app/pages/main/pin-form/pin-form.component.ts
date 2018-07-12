@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 
 @Component({
@@ -6,7 +6,7 @@ import {ElectronService} from 'ngx-electron';
     styleUrls: ['./pin-form.component.css'],
     templateUrl: './pin-form.component.html'
 })
-export class PinFormComponent {
+export class PinFormComponent implements OnInit {
     @Input() disabled: boolean;
 
     public pin: string[] = [];
@@ -14,12 +14,17 @@ export class PinFormComponent {
 
     constructor(private electronService: ElectronService) { }
 
+    public ngOnInit() {
+        this.electronService.remote.getGlobal('getPinFromStorage')((pin) => {
+            this.pin = pin.split('');
+        });
+    }
+
     public onBlur() {
         if(this.pin.length < 4) {
             this.pin = [];
         }
 
-        console.log(this.electronService, this.electronService.remote, this.electronService.remote.getGlobal);
         this.electronService.remote.getGlobal('setPin')(this.pin.join(''));
     }
 

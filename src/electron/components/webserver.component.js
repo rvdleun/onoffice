@@ -2,6 +2,7 @@ const express = require('express');
 const webApp = express();
 const webServer = require('http').Server(webApp);
 const io = require('socket.io')(webServer);
+const storage = require('electron-json-storage');
 
 webApp.use(express.static(__dirname + '/../client'));
 
@@ -50,12 +51,9 @@ io.on('connect', (socket) => {
     socket.on('pin', (receivedPin) => {
         console.log('Gonna check pin', pin, receivedPin);
         if (pin === receivedPin) {
-            console.log('Pin correct');
-
             connections[socket.id].properties.approved = true;
             socket.emit('pin_correct');
         } else {
-            console.log('Pin incorrect');
             socket.emit('pin_incorrect');
         }
     });
@@ -71,9 +69,24 @@ io.on('connect', (socket) => {
 
 
 module.exports = function(global) {
+    global.getPinFromStorage = function(cb) {
+        storage.get('pin', (error, data) => {
+            if (error) {
+                return;
+            }
+
+            pin = data.pin;
+            cb(data.pin);
+        });
+    };
+
     global.setPin = function(newPin) {
         console.log('Setting pin to', newPin);
         pin = newPin;
+
+        storage.set('pin', { pin }, (error) => {
+            console.log(error);
+        });
     };
 
     global.setWebServerActive = function(active) {
@@ -82,5 +95,5 @@ module.exports = function(global) {
         } else {
             webServerHandler.close();
         }
-    }
+    };
 };
