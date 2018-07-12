@@ -1,15 +1,25 @@
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <body>
-<script src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.js"></script>
+<script src="./vendor/aframe-master.min.js"></script>
+<script src="./vendor/vue.js"></script>
+
 <script src="./socket.io/socket.io.js"></script>
 <script src="./components/cursor-position.component.js"></script>
 <script src="./components/manipulate-source.component.js"></script>
 <script src="./components/source.component.js"></script>
 <script src="./systems/socket.system.js"></script>
 <script src="./systems/webrtc.system.js"></script>
-<script src="./app.js"></script>
 
-<a-scene>
+<link rel="stylesheet" type="text/css" href="./splash-screen/splash-screen.css">
+
+<div id="splash-screen">
+    <h1>Virtual Office</h1>
+    <p>{{ message }}</p>
+    <pincode-input v-if="pincodeRequired" v-on:send="onSendPin($event)"></pincode-input>
+
+    <button v-if="readyToEnterVR" v-on:click="startVirtualReality()">Enter<br />Virtual Reality</button>
+</div>
+<a-scene vr-mode-ui="enabled: false">
     <a-assets>
         <video id="remote" muted autoplay></video>
     </a-assets>
@@ -27,5 +37,8 @@
 
     <a-sky src="./office.jpg" rotation="0 270 0"></a-sky>
 </a-scene>
+
+<script src="./splash-screen/splash-screen.js"></script>
+
 </body>
 </html>

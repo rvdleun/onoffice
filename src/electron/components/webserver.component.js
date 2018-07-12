@@ -38,11 +38,26 @@ io.on('connect', (socket) => {
             return;
         }
 
+        socket.emit('client_accepted');
+
         client = {socket};
         checkHostClient();
         console.log('Client signed in!');
 
         require('./virtual-cursor.component').watch(socket);
+    });
+
+    socket.on('pin', (receivedPin) => {
+        console.log('Gonna check pin', pin, receivedPin);
+        if (pin === receivedPin) {
+            console.log('Pin correct');
+
+            connections[socket.id].properties.approved = true;
+            socket.emit('pin_correct');
+        } else {
+            console.log('Pin incorrect');
+            socket.emit('pin_incorrect');
+        }
     });
 
     socket.on('cursor-position', (message) => {

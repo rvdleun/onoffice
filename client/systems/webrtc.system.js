@@ -37,6 +37,6 @@ AFRAME.registerSystem('webrtc', {
             }
         };
 
-        socket.emit('client');
+        // socket.emit('client');
     }
 });
