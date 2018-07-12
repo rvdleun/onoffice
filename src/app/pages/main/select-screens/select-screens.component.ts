@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ElectronService} from 'ngx-electron';
 import {SourceSelection} from '../source-toggle/source-toggle.component';
 
 @Component({
@@ -8,5 +7,5 @@ import {SourceSelection} from '../source-toggle/source-toggle.component';
 })
 export class SelectScreensComponent {
     @Input() sources: SourceSelection[] = [];
-
+    @Input() disabled: boolean;
 }

@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" [ngStyle]="{'pointer-events': disabled ? 'none' : 'all'}">
     <div *ngFor="let source of sources" class="col">
         <app-source-toggle [source]="source"></app-source-toggle>
     </div>

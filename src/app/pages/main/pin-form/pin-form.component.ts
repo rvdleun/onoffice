@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 
 @Component({
@@ -7,6 +7,8 @@ import {ElectronService} from 'ngx-electron';
     templateUrl: './pin-form.component.html'
 })
 export class PinFormComponent {
+    @Input() disabled: boolean;
+
     public pin: string[] = [];
     @ViewChild('input') input: ElementRef;
 

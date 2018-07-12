@@ -9,12 +9,12 @@
 <div class="row">
     <div class="col">
         <h2>Select active screen</h2>
-        <app-select-screens [sources]="sources"></app-select-screens>
+        <app-select-screens [disabled]="streaming" [sources]="sources"></app-select-screens>
     </div>
     <div class="col">
         <h2 style="margin-bottom: 50px">Pincode</h2>
-        <app-pin-form></app-pin-form>
+        <app-pin-form [disabled]="streaming"></app-pin-form>
     </div>
 </div>
 <hr style="margin-top: 10px;" />
-<app-stream-toggle [status]="status" [sources]="sources"></app-stream-toggle>
+<app-stream-toggle [status]="status" [sources]="sources" (streaming)="setStreaming($event)"></app-stream-toggle>

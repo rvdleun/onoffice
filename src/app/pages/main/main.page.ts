@@ -15,6 +15,7 @@ export class MainPageComponent implements OnInit {
     public sources: SourceSelection[];
     public status: AppStatus;
     public ip = 'Unknown';
+    public streaming: boolean = false;
 
     constructor(private electronService: ElectronService) {
         this.status = {
@@ -32,5 +33,10 @@ export class MainPageComponent implements OnInit {
             });
         });
         this.ip = this.electronService.remote.getGlobal('IP');
+    }
+
+    public setStreaming(streaming: boolean) {
+        console.log('Setting streaming to ', streaming);
+        this.streaming = streaming;
     }
 }

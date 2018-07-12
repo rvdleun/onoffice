@@ -1,4 +1,4 @@
-<div class="digits" (click)="onClick()">
+<div class="digits" (click)="onClick()" [ngStyle]="{'pointer-events': disabled ? 'none' : 'all'}">
     <div class="digit"><span *ngIf="pin[0]">*</span></div>
     <div class="digit"><span *ngIf="pin[1]">*</span></div>
     <div class="digit"><span *ngIf="pin[2]">*</span></div>

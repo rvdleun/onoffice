@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SourceSelection} from '../source-toggle/source-toggle.component';
 import {SocketService} from '../../../shared/socket.service';
 import {AppStatus} from '../main.page';
@@ -11,6 +11,7 @@ import {ElectronService} from 'ngx-electron';
 export class StreamToggleComponent {
     @Input() sources: SourceSelection[];
     @Input() status: AppStatus;
+    @Output() streaming: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private pc: RTCPeerConnection;
 
@@ -25,6 +26,8 @@ export class StreamToggleComponent {
     }
 
     private startStreaming() {
+        this.streaming.next(true);
+
         this.electronService.remote.getGlobal('setWebServerActive')(true);
         this.status.current = 'waiting-for-client';
 
@@ -33,6 +36,8 @@ export class StreamToggleComponent {
     }
 
     private stopStreaming() {
+        this.streaming.next(false);
+
         this.electronService.remote.getGlobal('setWebServerActive')(false);
         this.status.current = 'inactive';
 
