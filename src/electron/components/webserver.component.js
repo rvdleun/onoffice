@@ -20,8 +20,6 @@ function checkHostClient() {
         return;
     }
 
-    console.log('Host and client are available. Initiate connection.');
-
     host.socket.emit('start');
 }
 
@@ -46,13 +44,11 @@ io.on('connect', (socket) => {
 
         client = {socket};
         checkHostClient();
-        console.log('Client signed in!');
 
         require('./virtual-cursor.component').watch(socket);
     });
 
     socket.on('pin', (receivedPin) => {
-        console.log('Gonna check pin', pin, receivedPin);
         if (pin === receivedPin) {
             connections[socket.id].properties.approved = true;
             socket.emit('pin_correct');

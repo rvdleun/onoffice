@@ -5,3 +5,7 @@
     margin: 0;
     height: 180px;
 }
+
+input {
+    visibility: hidden;
+}
