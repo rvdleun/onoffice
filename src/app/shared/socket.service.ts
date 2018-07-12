@@ -10,6 +10,7 @@ export class SocketService {
     }
 
     emit(event: string, data: any = null) {
+        console.log('Gonna emit a thing', event, data);
         this.socket.emit(event, data);
     }
 

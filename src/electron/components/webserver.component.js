@@ -26,7 +26,7 @@ function checkHostClient() {
 }
 
 io.on('connect', (socket) => {
-    require('./environment.component')(socket);
+    require('./environment.component').setupSocket(socket);
 
     connections[socket.id] = { properties: { approved: false }, socket };
 

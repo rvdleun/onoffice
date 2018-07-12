@@ -1,3 +1,4 @@
+require('./components/environment.component').init(global);
 require('./components/webserver.component.js')(global);
 
 const electron = require('electron')
