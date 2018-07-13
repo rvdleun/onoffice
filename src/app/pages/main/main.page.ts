@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {SourceSelection} from './source-toggle/source-toggle.component';
+import {SocketService} from '../../shared/socket.service';
 
 export interface AppStatus {
     current: 'inactive' | 'setting-up' | 'waiting-for-client' | 'active';
@@ -16,8 +17,9 @@ export class MainPageComponent implements OnInit {
     public status: AppStatus;
     public ip = 'Unknown';
     public streaming: boolean = false;
+    public sourceScale: number = 1;
 
-    constructor(private electronService: ElectronService) {
+    constructor(private electronService: ElectronService, private socketService: SocketService) {
         this.status = {
             current: 'inactive',
         };
@@ -36,7 +38,10 @@ export class MainPageComponent implements OnInit {
     }
 
     public setStreaming(streaming: boolean) {
-        console.log('Setting streaming to ', streaming);
         this.streaming = streaming;
+    }
+
+    public onSourceScaleChange() {
+        this.socketService.emit('source-scale', this.sourceScale);
     }
 }

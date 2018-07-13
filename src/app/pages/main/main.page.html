@@ -1,20 +1,25 @@
-<p>IP: {{ ip }}</p>
-<p>Status:
-    <span *ngIf="status.current === 'active'">Active</span>
-    <span *ngIf="status.current === 'inactive'">Inactive</span>
-    <span *ngIf="status.current === 'setting-up'">Setting up...</span>
-    <span *ngIf="status.current === 'waiting-for-client'">Waiting for client</span>
-</p>
-<app-sky></app-sky>
-<div class="row">
-    <div class="col">
-        <h2>Select active screen</h2>
-        <app-select-screens [disabled]="streaming" [sources]="sources"></app-select-screens>
+<div *ngIf="!streaming">
+    <app-sky></app-sky>
+    <div class="row">
+        <div class="col">
+            <h2>Select active screen</h2>
+            <app-select-screens [disabled]="streaming" [sources]="sources"></app-select-screens>
+        </div>
+        <div class="col">
+            <h2 style="margin-bottom: 50px">Pincode</h2>
+            <app-pin-form [disabled]="streaming"></app-pin-form>
+        </div>
     </div>
-    <div class="col">
-        <h2 style="margin-bottom: 50px">Pincode</h2>
-        <app-pin-form [disabled]="streaming"></app-pin-form>
-    </div>
+    <hr style="margin-top: 10px;" />
 </div>
-<hr style="margin-top: 10px;" />
+<div *ngIf="streaming">
+    <p>IP: {{ ip }}</p>
+    <p>Status:
+        <span *ngIf="status.current === 'active'">Active</span>
+        <span *ngIf="status.current === 'inactive'">Inactive</span>
+        <span *ngIf="status.current === 'setting-up'">Setting up...</span>
+        <span *ngIf="status.current === 'waiting-for-client'">Waiting for client</span>
+    </p>
+    <input type="range" min=".5" max="2" step=".1" (input)="onSourceScaleChange()" [(ngModel)]="sourceScale" />
+</div>
 <app-stream-toggle [status]="status" [sources]="sources" (streaming)="setStreaming($event)"></app-stream-toggle>

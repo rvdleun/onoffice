@@ -43,6 +43,7 @@ AFRAME.registerSystem('source', {
             screen.setAttribute('position', '0 1.6 -1');
             screen.setAttribute('material', 'shader: flat');
             screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
+            screen.setAttribute('source', '');
 
             if (location.search && location.search.indexOf('no-source') >= 0) {
                 screen.setAttribute('color', 'lightgreen');
@@ -60,11 +61,15 @@ AFRAME.registerSystem('source', {
 });
 
 AFRAME.registerComponent('source', {
-    schema: {
-        videoSrc: { type: 'string' }
-    },
-
     init: function() {
+        const initialScale = this.el.getAttribute('scale');
+        const x = initialScale.x;
+        const y = initialScale.y;
+        const z = initialScale.z;
 
+        this.el.sceneEl.systems['socket'].on('source-scale', (scale) => {
+            this.el.setAttribute('scale', `${x * scale} ${y * scale} ${z * scale}`);
+            console.log(this.el.getAttribute('scale'));
+        });
     }
 });

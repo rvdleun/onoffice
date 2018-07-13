@@ -27,10 +27,15 @@ module.exports.init = function(global) {
             console.log(error);
         });
     }
-}
+};
 
 module.exports.setupSocket = function(socket) {
     socket.on('get-sky', () => {
         socket.emit('sky', sky);
+    });
+
+    socket.on('source-scale', (scale) => {
+        console.log('Gonna broadcast source-scale', scale);
+        socket.broadcast.emit('source-scale', scale);
     });
 };
