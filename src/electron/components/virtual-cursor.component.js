@@ -1,5 +1,5 @@
 const Electron = require('electron');
-const Robot = require('robotjs');
+const Robot = require('robot-js');
 let prevX = -1;
 let prevY = -1;
 
@@ -21,7 +21,8 @@ module.exports.registerDisplay = function(displayId, streamId) {
 
 module.exports.watch = function(socket) {
     setInterval(() => {
-        const mouse = Robot.getMousePos();
+        const mouse = Robot.Mouse.getPos();
+        console.log(mouse);
         if (prevX !== mouse.x || prevY !== mouse.y) {
             const x = mouse.x;
             const y = mouse.y;
