@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
 import {SourceSelection} from '../source-toggle/source-toggle.component';
 import {SocketService} from '../../../shared/socket.service';
 import {AppStatus} from '../main.page';
@@ -15,7 +15,7 @@ export class StreamToggleComponent {
 
     private pc: RTCPeerConnection;
 
-    constructor(private electronService: ElectronService, private socketService: SocketService) { }
+    constructor(private changeDetectorRef: ChangeDetectorRef, private electronService: ElectronService, private socketService: SocketService) { }
 
     public onClick() {
         if (this.status.current === 'inactive') {
@@ -33,6 +33,8 @@ export class StreamToggleComponent {
 
         this.socketService.emit('host');
         this.socketService.on('start', () => this.setupConnection());
+
+        this.changeDetectorRef.detectChanges();
     }
 
     private stopStreaming() {
@@ -43,10 +45,13 @@ export class StreamToggleComponent {
 
         this.socketService.removeAllListeners('start');
         this.pc.close();
+
+        this.changeDetectorRef.detectChanges();
     }
 
     private setupConnection() {
         this.status.current = 'waiting-for-client';
+        this.changeDetectorRef.detectChanges();
 
         const pc = new RTCPeerConnection(
             {
@@ -94,6 +99,8 @@ export class StreamToggleComponent {
             if (event.currentTarget['iceConnectionState'] === 'disconnected') {
                 this.status.current = 'waiting-for-client';
             }
+
+            this.changeDetectorRef.detectChanges();
         });
 
         pc.onicecandidate = (event) => {
