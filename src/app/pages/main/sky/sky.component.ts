@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 
 @Component({
@@ -11,7 +11,7 @@ export class SkyComponent implements OnInit {
 
     backgroundImage: string;
 
-    constructor(public electronService: ElectronService) { }
+    constructor(public changeDetectorRef: ChangeDetectorRef, public electronService: ElectronService) { }
 
     public ngOnInit() {
         this.electronService.remote.getGlobal('getSky')((sky) => {
@@ -44,14 +44,13 @@ export class SkyComponent implements OnInit {
             const result = canvas.toDataURL('jpg');
             this.electronService.remote.getGlobal('setSky')(result);
             this.setImage(result);
-
-
-
         };
         image.src = URL.createObjectURL(file);
     }
 
     private setImage(image: string) {
         this.backgroundImage = `url(${image})`;
+
+        this.changeDetectorRef.detectChanges();
     }
 }

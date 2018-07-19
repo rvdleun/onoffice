@@ -22,7 +22,6 @@ module.exports.registerDisplay = function(displayId, streamId) {
 module.exports.watch = function(socket) {
     setInterval(() => {
         const mouse = Electron.screen.getCursorScreenPoint();
-        console.log(mouse);
         if (prevX !== mouse.x || prevY !== mouse.y) {
             const x = mouse.x;
             const y = mouse.y;

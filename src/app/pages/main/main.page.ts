@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {SourceSelection} from './source-toggle/source-toggle.component';
 import {SocketService} from '../../shared/socket.service';
@@ -19,7 +19,7 @@ export class MainPageComponent implements OnInit {
     public streaming: boolean = false;
     public sourceScale: number = 1;
 
-    constructor(private electronService: ElectronService, private socketService: SocketService) {
+    constructor(private changeDetectorRef: ChangeDetectorRef, private electronService: ElectronService, private socketService: SocketService) {
         this.status = {
             current: 'inactive',
         };
@@ -33,6 +33,8 @@ export class MainPageComponent implements OnInit {
                     selected: true,
                 };
             });
+
+            this.changeDetectorRef.detectChanges();
         });
         this.ip = this.electronService.remote.getGlobal('IP');
     }
