@@ -55,6 +55,8 @@ AFRAME.registerSystem('source', {
             entity.appendChild(screen);
             this.sources.appendChild(entity);
 
+            this.el.sceneEl.dispatchEvent(new Event('source-added'));
+
             // <!--a-plane manipulate-source id="screen" position="0 1.6 -1" scale="1 1 1" material="shader: flat" src="#remote">
         };
     }

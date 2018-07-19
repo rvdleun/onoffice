@@ -1,6 +1,6 @@
 <html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <body>
-<script src="./vendor/aframe-master.min.js"></script>
+<script src="./vendor/aframe.min.js"></script>
 <script src="./vendor/vue.js"></script>
 
 <script src="./socket.io/socket.io.js"></script>
@@ -13,19 +13,19 @@
 
 <link rel="stylesheet" type="text/css" href="./splash-screen/splash-screen.css">
 
-<div id="splash-screen">
+<div id="splash-screen" v-if="!vrActive">
     <h1>Virtual Office</h1>
     <p>{{ message }}</p>
     <pincode-input v-if="pincodeRequired" v-on:send="onSendPin($event)"></pincode-input>
 
     <button v-if="readyToEnterVR" v-on:click="startVirtualReality()">Enter<br />Virtual Reality</button>
 </div>
-<a-scene antialias="true" vr-mode-ui="enabled: false">
+<a-scene vr-mode-ui="enabled: true">
     <a-assets>
         <video id="remote" muted autoplay></video>
     </a-assets>
     <a-entity position="0 1.6 0" camera look-controls></a-entity>
-    <!--a-entity id="controls" position="0 1.6 0" laser-controls="hand: right"></a-entity -->
+    <!-- a-entity id="controls" position="0 1.6 0" laser-controls="hand: right"></a-entity -->
 
     <a-entity id="sources">
         <!--a-entity>

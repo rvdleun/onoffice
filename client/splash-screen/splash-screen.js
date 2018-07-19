@@ -68,6 +68,7 @@ new Vue({
         scene: null,
         readyToEnterVR: false,
         socket: null,
+        vrActive: false,
     },
     created: function() {
         this.message = 'Initializing scene';
@@ -88,8 +89,18 @@ new Vue({
     },
     methods: {
         onClientAccepted: function() {
-            this.message = '';
-            this.readyToEnterVR = true;
+            this.message = 'Waiting for source';
+
+            const scene = document.querySelector('a-scene');
+
+            const onSourceFunc = () => {
+                this.message = '';
+                this.readyToEnterVR = true;
+
+                scene.removeEventListener('source-added');
+            };
+
+            scene.addEventListener('source-added', onSourceFunc);
         },
 
         onPinRequired: function() {

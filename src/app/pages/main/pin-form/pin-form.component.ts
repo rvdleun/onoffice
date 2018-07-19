@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 
 @Component({
@@ -12,11 +12,12 @@ export class PinFormComponent implements OnInit {
     public pin: string[] = [];
     @ViewChild('input') input: ElementRef;
 
-    constructor(private electronService: ElectronService) { }
+    constructor(private changeDetectorRef: ChangeDetectorRef, private electronService: ElectronService) { }
 
     public ngOnInit() {
         this.electronService.remote.getGlobal('getPinFromStorage')((pin) => {
             this.pin = pin.split('');
+            this.changeDetectorRef.detectChanges();
         });
     }
 
