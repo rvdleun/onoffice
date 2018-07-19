@@ -21,5 +21,7 @@
         <span *ngIf="status.current === 'waiting-for-client'">Waiting for client</span>
     </p>
     <input type="range" min=".5" max="2" step=".1" (input)="onSourceScaleChange()" [(ngModel)]="sourceScale" />
+    <button type="button" class="btn btn-light"  (click)="centerScreen()">Center Screen</button>
+    <hr style="margin-top: 10px;" />
 </div>
 <app-stream-toggle [status]="status" [sources]="sources" (streaming)="setStreaming($event)"></app-stream-toggle>

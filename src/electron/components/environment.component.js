@@ -30,12 +30,15 @@ module.exports.init = function(global) {
 };
 
 module.exports.setupSocket = function(socket) {
+    socket.on('center-screen', () => {
+        socket.broadcast.emit('center-screen');
+    });
+
     socket.on('get-sky', () => {
         socket.emit('sky', sky);
     });
 
     socket.on('source-scale', (scale) => {
-        console.log('Gonna broadcast source-scale', scale);
         socket.broadcast.emit('source-scale', scale);
     });
 };

@@ -55,12 +55,10 @@ AFRAME.registerSystem('manipulate-source', {
                 startAxis: [axis[0], axis[1]],
                 startZ: this.target.querySelector('a-plane').getAttribute('position').z
             };
-            console.log(event, event.detail.axis);
         }
     },
 
     onTouchEnd: function() {
-        console.log('Cleaning up');
         this.touchStartData = null;
     }
 });
@@ -81,6 +79,14 @@ AFRAME.registerComponent('manipulate-source', {
 
         this.el.addEventListener('mouseup', () => {
             this.system.setDragging(false);
+        });
+
+        this.el.sceneEl.systems['socket'].on('center-screen', () => {
+            const activeCamera = this.el.sceneEl.camera.el;
+            const rotation = activeCamera.getAttribute('rotation');
+            const y = rotation.y;
+
+            this.el.parentElement.setAttribute('rotation', `0 ${y} 0`);
         });
     }
 });

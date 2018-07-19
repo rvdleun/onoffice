@@ -46,4 +46,8 @@ export class MainPageComponent implements OnInit {
     public onSourceScaleChange() {
         this.socketService.emit('source-scale', this.sourceScale);
     }
+
+    public centerScreen() {
+        this.socketService.emit('center-screen');
+    }
 }
