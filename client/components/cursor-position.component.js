@@ -22,8 +22,8 @@ AFRAME.registerSystem('cursor-position', {
 
                 const x = data.x;
                 const y = data.y;
-                const posX = -.5 + (1 * x);
-                const posY = .5 - (1 * y);
+                const posX = -.5 + (1 * x) + .01;
+                const posY = .5 - (1 * y) - .015;
                 cursor.setAttribute('position', `${posX} ${posY} .001`);
             });
         }, 50);

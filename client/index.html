@@ -22,6 +22,7 @@
 </div>
 <a-scene vr-mode-ui="enabled: false">
     <a-assets>
+        <img id="cursorImg" src="./assets/cursor.svg" />
         <video id="remote" muted autoplay></video>
     </a-assets>
     <a-entity position="0 1.6 0" camera look-controls></a-entity>
@@ -34,7 +35,7 @@
         </a-entity-->
         <!--a-curvedimage id="screen" position="0 1.6 -1" rotation="0 135 0" scale="1 1.6 1" material="shader: flat" color="red" theta-length="90"></a-curvedimage -->
     </a-entity>
-    <a-plane id="cursor" cursor-position color="red" position="-.5 0 .001" material="shader: flat; opacity: .5; transparent: true" scale=".01 .016 .01"></a-plane>
+    <a-plane id="cursor" src="#cursorImg" cursor-position color="red" position="-.5 0 .001" material="shader: flat; opacity: .5; transparent: true" scale=".02 .03 .01"></a-plane>
 
     <a-sky sky rotation="0 270 0"></a-sky>
 </a-scene>

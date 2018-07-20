@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:docname="Mouse Cursor Arow (Fixed).svg"
+   viewBox="0 0 720.71089 1079.4492"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="720.71088"
+   height="1079.4492">
+  <defs
+     id="defs133" />
+  <sodipodi:namedview
+     id="base"
+     fit-margin-left="0"
+     inkscape:showpageshadow="false"
+     inkscape:zoom="0.5"
+     height="0px"
+     borderopacity="1.0"
+     inkscape:current-layer="layer2"
+     inkscape:cx="-552.07217"
+     inkscape:cy="679.69231"
+     inkscape:object-paths="true"
+     fit-margin-right="0"
+     inkscape:window-maximized="1"
+     inkscape:snap-bbox="false"
+     showgrid="false"
+     width="0px"
+     inkscape:document-units="px"
+     bordercolor="#666666"
+     inkscape:window-x="0"
+     inkscape:window-y="19"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     pagecolor="#ffffff"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:window-height="1061"
+     showborder="false"
+     fit-margin-top="0"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4359"
+       empspacing="50"
+       originx="0"
+       originy="58.73832" />
+  </sodipodi:namedview>
+  <g
+     id="layer2"
+     inkscape:label="Layer"
+     inkscape:groupmode="layer"
+     transform="translate(-555.1899,-112.08836)">
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:100;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 555.1899,112.08836 0,120.71094 0,920.7109 232.42188,-232.42184 111.90429,270.44924 169.76363,-84.8828 -114.09371,-273.8555 320.71481,0 z"
+       id="path4392"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1"
+       d="M 50,50 50,850 250,650 369.99609,940.00195 449.98828,900.00586 325,600 l 275,0 z"
+       id="rect56"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccc"
+       transform="translate(555.1899,182.7993)" />
+  </g>
+  <metadata
+     id="metadata131">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title></dc:title>
+        <dc:date>2011-12-20T04:30:04</dc:date>
+        <dc:description>A pixel-art style arrow mouse cursor. Made up of individual squares, for easy manipulation</dc:description>
+        <dc:source>https://openclipart.org/detail/166356/mouse-cursor---arrow-by-hellocatfood</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>hellocatfood</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>arrow</rdf:li>
+            <rdf:li>cursor</rdf:li>
+            <rdf:li>mouse</rdf:li>
+            <rdf:li>pixel</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
