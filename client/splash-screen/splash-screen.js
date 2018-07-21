@@ -67,6 +67,7 @@ new Vue({
         pincodeRequired: false,
         scene: null,
         readyToEnterVR: false,
+        sessionId: '',
         socket: null,
         vrActive: false,
     },
@@ -83,13 +84,15 @@ new Vue({
             this.socket.on('pin_required', this.onPinRequired.bind(this));
             this.socket.on('pin_correct', this.onPinCorrect.bind(this));
             this.socket.on('pin_incorrect', this.onPinIncorrect.bind(this));
+            this.socket.on('session_expired', this.onSessionExpired.bind(this));
 
             this.socket.emit('client');
         });
     },
     methods: {
-        onClientAccepted: function() {
+        onClientAccepted: function(sessionId) {
             this.message = 'Waiting for source';
+            this.sessionId = sessionId;
 
             const scene = document.querySelector('a-scene');
 
@@ -126,6 +129,10 @@ new Vue({
             console.log(pin);
             this.message = 'Sending pin';
             this.socket.emit('pin', pin);
+        },
+
+        onSessionExpired: function() {
+            alert('Your session has expired. Please refresh to try again.');
         }
     },
 });
