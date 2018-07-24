@@ -5,10 +5,12 @@ const displays = Electron.screen.getAllDisplays().map((display) => {
     return { streamId: '', display };
 });
 
+console.log('TEST');
+
 module.exports.registerDisplay = function(displayId, streamId) {
     console.log('Gonna map', streamId, ' to ', displayId, displays);
 
-    const display = displays.find((display) => { return 'screen:' + display.display.id === displayId });
+    const display = displays.find((display) => { return displayId == 'screen:0:0' ||  'screen:' + display.display.id === displayId });
     if (display) {
         display.streamId = streamId;
     } else {
@@ -19,7 +21,7 @@ module.exports.registerDisplay = function(displayId, streamId) {
 module.exports.watch = function(socket) {
     let prevX = -1;
     let prevY = -1;
-    
+
     socket.on('watch-cursor-position', () => {
         setInterval(() => {
             const mouse = Electron.screen.getCursorScreenPoint();
@@ -41,6 +43,8 @@ module.exports.watch = function(socket) {
                     const posY = (y - display.display.bounds.y) / display.display.bounds.height;
 
                     socket.emit('cursor-position', {streamId: display.streamId, x: posX, y: posY});
+                } else {
+                    // console.log('Display not found', display);
                 }
             }
         }, 50);

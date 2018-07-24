@@ -8,7 +8,9 @@
   "main": "dist/main.js",
   "scripts": {
     "build-electron": "ng build --base-href . && cp -R src/electron/* dist && ln -s ../client dist/client",
+    "build-electron-windows": "ng build --base-href . && xcopy .\\src\\electron\\* dist /s && xcopy .\\client .\\dist\\client /I /S",
     "start": "npm run build-electron && electron dist/main.js",
+    "start-windows": "npm run build-electron-windows && electron dist/main.js",
     "package-mac": "npm run build-electron && electron-packager . --overwrite --asar=true --platform=darwin --arch=x64 --prune=true --out=release-builds",
     "package-windows": "npm run build-electron && electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds",
     "package-linux": "npm run build-electron && electron-packager . --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds",
