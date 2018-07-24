@@ -95,15 +95,23 @@ new Vue({
             this.sessionId = sessionId;
 
             const scene = document.querySelector('a-scene');
+            scene.addEventListener('source-added', this.onSourceAdded);
+        },
 
-            const onSourceFunc = () => {
+        onSourceAdded: function() {
+            this.message = 'Requesting virtual cursor';
+
+            const scene = document.querySelector('a-scene');
+            scene.removeEventListener('source-added', this.onSourceAdded);
+
+            const onCursorPosition = () => {
+                this.socket.removeListener('cursor-position', onCursorPosition);
+
                 this.message = '';
                 this.readyToEnterVR = true;
-
-                scene.removeEventListener('source-added');
             };
-
-            scene.addEventListener('source-added', onSourceFunc);
+            this.socket.on('cursor-position', onCursorPosition);
+            this.socket.emit('watch-cursor-position');
         },
 
         onPinRequired: function() {

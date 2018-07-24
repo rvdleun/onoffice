@@ -8,10 +8,9 @@ import {SocketService} from './shared/socket.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(public socketService: SocketService) {
+  constructor() {
   }
 
   public ngOnInit() {
-    this.socketService.initialize();
   }
 }

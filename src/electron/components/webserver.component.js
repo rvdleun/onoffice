@@ -1,14 +1,14 @@
 const express = require('express');
 const webApp = express();
 const webServer = require('http').Server(webApp);
-const io = require('socket.io')(webServer);
 const storage = require('electron-json-storage');
-const uniqid = require('uniqid');
+// const uniqid = require('uniqid');
 
 webApp.use(express.static(__dirname + '/../client'));
 
 let global = null;
 let connections = {};
+let sockets = [];
 
 let host = null;
 let client = null;
@@ -26,59 +26,63 @@ function checkHostClient() {
     host.socket.emit('start');
 }
 
-io.on('connect', (socket) => {
-    require('./environment.component').setupSocket(socket);
+function initializeSocket() {
+    const io = require('socket.io')(webServer);
 
-    connections[socket.id] = { properties: { approved: false }, socket };
+    io.on('connect', (socket) => {
+        require('./environment.component').setupSocket(socket);
 
-    socket.on('host', (id) => {
-        console.log('Host trying to connect with ', id);
-        if (sessionId === id) {
-            console.log('Host signed in!');
-            host = {socket};
+        connections[socket.id] = { properties: { approved: false }, socket };
+        sockets.push(socket);
+
+        socket.on('host', (id) => {
+            console.log('Host trying to connect with ', id);
+            if (sessionId === id) {
+                console.log('Host signed in!');
+                host = {socket};
+                checkHostClient();
+
+                socket.emit('host_accepted');
+            }
+        });
+
+        socket.on('client', (id) => {
+            if (id && id !== sessionId) {
+                socket.emit('session_expired', sessionId);
+                return;
+            }
+
+            if(pin && !connections[socket.id].properties.approved) {
+                socket.emit('pin_required');
+                return;
+            }
+
+            socket.emit('client_accepted', sessionId);
+
+            client = {socket};
             checkHostClient();
 
-            socket.emit('host_accepted');
-        }
+            require('./virtual-cursor.component').watch(socket);
+        });
+
+        socket.on('pin', (receivedPin) => {
+            if (pin === receivedPin) {
+                connections[socket.id].properties.approved = true;
+                socket.emit('pin_correct');
+            } else {
+                socket.emit('pin_incorrect');
+            }
+        });
+
+        socket.on('cursor-position', (message) => {
+            socket.broadcast.emit('cursor-position', message);
+        });
+
+        socket.on('webrtc-message', (message) => {
+            socket.broadcast.emit('webrtc-message', message);
+        });
     });
-
-    socket.on('client', (id) => {
-        if (id && id !== sessionId) {
-            socket.emit('session_expired', sessionId);
-            return;
-        }
-
-        if(pin && !connections[socket.id].properties.approved) {
-            socket.emit('pin_required');
-            return;
-        }
-
-        socket.emit('client_accepted', sessionId);
-
-        client = {socket};
-        checkHostClient();
-
-        require('./virtual-cursor.component').watch(socket);
-    });
-
-    socket.on('pin', (receivedPin) => {
-        if (pin === receivedPin) {
-            connections[socket.id].properties.approved = true;
-            socket.emit('pin_correct');
-        } else {
-            socket.emit('pin_incorrect');
-        }
-    });
-
-    socket.on('cursor-position', (message) => {
-        socket.broadcast.emit('cursor-position', message);
-    });
-
-    socket.on('webrtc-message', (message) => {
-        socket.broadcast.emit('webrtc-message', message);
-    });
-});
-
+}
 
 module.exports = function(currentGlobal) {
     global = currentGlobal;
@@ -105,10 +109,18 @@ module.exports = function(currentGlobal) {
 
     global.setWebServerActive = function(active) {
         if (active) {
-            sessionId = uniqid();
+            sessionId = '12345';
             global.sessionId = sessionId;
+            initializeSocket();
             webServerHandler = webServer.listen(24242);
         } else {
+            for(let id in connections) {
+                const connection = connections[id];
+                connection.socket.disconnect();
+            }
+
+            client = null;
+            host = null;
             sessionId = null;
             global.sessionId = null;
             webServerHandler.close();

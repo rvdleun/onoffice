@@ -26,6 +26,8 @@ export class StreamToggleComponent {
     }
 
     private startStreaming() {
+        this.socketService.initialize();
+
         this.streaming.next(true);
 
         this.electronService.remote.getGlobal('setWebServerActive')(true);
@@ -44,12 +46,14 @@ export class StreamToggleComponent {
         this.status.current = 'inactive';
 
         this.socketService.removeAllListeners('start');
-        this.pc.close();
+        // this.pc.close();
 
         this.changeDetectorRef.detectChanges();
     }
 
     private setupConnection() {
+        // alert('SETTING HER UP');
+
         this.status.current = 'waiting-for-client';
         this.changeDetectorRef.detectChanges();
 

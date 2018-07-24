@@ -3,6 +3,7 @@ AFRAME.registerSystem('socket', {
 
     init: function() {
         this.socket = io();
+        this.on('disconnect', this.onDisconnect.bind(this));
     },
 
     emit: function(event, data) {
@@ -11,5 +12,9 @@ AFRAME.registerSystem('socket', {
 
     on: function(event, func) {
         this.socket.on(event, func);
-    }
+    },
+
+    onDisconnect: function() {
+        console.log('Disconnected!!!');
+    },
 });
