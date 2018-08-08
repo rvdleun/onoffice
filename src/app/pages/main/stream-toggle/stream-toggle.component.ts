@@ -31,7 +31,6 @@ export class StreamToggleComponent {
         this.streaming.next(true);
 
         this.electronService.remote.getGlobal('setWebServerActive')(true);
-        this.status.current = 'waiting-for-client';
 
         this.socketService.emit('host', this.electronService.remote.getGlobal('sessionId'));
         this.socketService.on('start', () => this.setupConnection());
@@ -43,7 +42,6 @@ export class StreamToggleComponent {
         this.streaming.next(false);
 
         this.electronService.remote.getGlobal('setWebServerActive')(false);
-        this.status.current = 'inactive';
 
         this.socketService.removeAllListeners('start');
 

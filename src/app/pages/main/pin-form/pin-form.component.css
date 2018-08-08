@@ -7,14 +7,36 @@
 
 .digit {
     float: left;
-    height: 40px;
+    height: 60px;
     width: 40px;
     border-bottom: solid 1px #71dd8a;
 
+    padding-top: 20px;
     margin-right: 10px;
 
     color: lightgreen;
     font-size: 40px;
+}
+
+.active {
+    animation: active-animation 1.5s infinite linear;
+    transform: translate(0, -15px);
+}
+
+.lastSelected {
+    transform: translate(0, -75px);
+}
+
+@keyframes active-animation {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .digit:last-child {

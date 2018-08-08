@@ -1,7 +1,19 @@
 <div class="digits" (click)="onClick()" [ngStyle]="{'pointer-events': disabled ? 'none' : 'all'}">
-    <div class="digit"><span *ngIf="pin[0]">*</span></div>
-    <div class="digit"><span *ngIf="pin[1]">*</span></div>
-    <div class="digit"><span *ngIf="pin[2]">*</span></div>
-    <div class="digit"><span *ngIf="pin[3]">*</span></div>
+    <div class="digit">
+        <span *ngIf="pin[0]">*</span>
+        <div *ngIf="active && pin.length === 0" class="active">|</div>
+    </div>
+    <div class="digit">
+        <span *ngIf="pin[1]">*</span>
+        <div *ngIf="active && pin.length === 1" class="active">|</div>
+    </div>
+    <div class="digit">
+        <span *ngIf="pin[2]">*</span>
+        <div *ngIf="active && pin.length === 2" class="active">|</div>
+    </div>
+    <div class="digit">
+        <span *ngIf="pin[3]">*</span>
+        <div *ngIf="active && pin.length >= 3" [ngClass]="{ lastSelected: active && pin.length === 4}" class="active">|</div>
+    </div>
 </div>
 <input #input type="number" (blur)="onBlur()" (keyup)="onKeyUp($event)" />

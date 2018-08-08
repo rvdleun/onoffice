@@ -1,9 +1,28 @@
-#image {
+#image, #hover {
     background: black no-repeat center center;
     background-size: 100% auto;
     width: 100%;
     margin: 0;
     height: 180px;
+}
+
+#hover {
+    position: absolute;
+    background-color: rgba(0, 0, 0, .65);
+    transform: translate(0, -180px);
+
+    opacity: 0;
+    transition: all .5s;
+
+    cursor: pointer;
+}
+
+#hover:hover {
+    opacity: 1;
+}
+
+#hover p {
+    transform: translate(0, 85px);
 }
 
 input {

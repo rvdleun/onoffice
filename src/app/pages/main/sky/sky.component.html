@@ -1,2 +1,6 @@
-<div id="image" (click)="onClick()" [ngStyle]="{'background-image': backgroundImage }"></div>
+<div id="image" [ngStyle]="{'background-image': backgroundImage }">
+</div>
+<div id="hover" (click)="onClick()">
+    <p>Change background image</p>
+</div>
 <input #upload class="form-control" type="file" (change)="onFileChange()" id="file" />

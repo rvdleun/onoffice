@@ -9,6 +9,7 @@ import {ElectronService} from 'ngx-electron';
 export class PinFormComponent implements OnInit {
     @Input() disabled: boolean;
 
+    public active: boolean = false;
     public pin: string[] = [];
     @ViewChild('input') input: ElementRef;
 
@@ -26,10 +27,12 @@ export class PinFormComponent implements OnInit {
             this.pin = [];
         }
 
+        this.active = false;
         this.electronService.remote.getGlobal('setPin')(this.pin.join(''));
     }
 
     public onClick() {
+        this.active = true;
         this.input.nativeElement.focus();
     }
 
@@ -39,13 +42,21 @@ export class PinFormComponent implements OnInit {
         }
 
         if (event.code === 'Backspace') {
-            this.removeDigit();
+            if (this.pin.length < 4) {
+                this.removeDigit();
+            } else {
+                this.pin = [];
+            }
         }
     }
 
     public addDigit(digit: string) {
         if (this.pin.length < 4) {
             this.pin.push(digit);
+        }
+
+        if (this.pin.length === 4) {
+            this.input.nativeElement.blur();
         }
     }
 

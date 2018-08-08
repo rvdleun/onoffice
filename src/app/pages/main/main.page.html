@@ -1,8 +1,8 @@
 <div class="page" [ngClass]="{fading: fadeOut}">
     <div *ngIf="!streaming">
         <app-sky></app-sky>
-        <div class="row">
-            <div class="col">
+        <div class="row" style="position: relative; top: -15px">
+            <div class="col" style="border-right: solid 1px white">
                 <h2>Select active screen</h2>
                 <app-select-screens [disabled]="streaming" [sources]="sources"></app-select-screens>
             </div>

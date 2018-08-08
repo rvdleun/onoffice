@@ -44,6 +44,7 @@ export class MainPageComponent implements OnInit {
     public setStreaming(streaming: boolean) {
         this.fadeOut = true;
         setTimeout(() => {
+            this.status.current = streaming ? 'waiting-for-client' : 'inactive';
             this.streaming = streaming;
             setTimeout(() => {
                 this.fadeOut = false;
