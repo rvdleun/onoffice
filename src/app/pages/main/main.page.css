@@ -1,3 +1,14 @@
 hr {
     border-top: solid 1px white;
 }
+
+.page {
+    opacity: 1;
+    transition: all .75s;
+    transform: translate(0, 0);
+}
+
+.fading {
+    transform: translate(-250px, 0);
+    opacity: 0;
+}

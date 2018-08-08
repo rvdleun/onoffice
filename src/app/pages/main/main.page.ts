@@ -19,6 +19,8 @@ export class MainPageComponent implements OnInit {
     public streaming: boolean = false;
     public sourceScale: number = 1;
 
+    public fadeOut: boolean = false;
+
     constructor(private changeDetectorRef: ChangeDetectorRef, private electronService: ElectronService, private socketService: SocketService) {
         this.status = {
             current: 'inactive',
@@ -40,7 +42,13 @@ export class MainPageComponent implements OnInit {
     }
 
     public setStreaming(streaming: boolean) {
-        this.streaming = streaming;
+        this.fadeOut = true;
+        setTimeout(() => {
+            this.streaming = streaming;
+            setTimeout(() => {
+                this.fadeOut = false;
+            }, 250);
+        }, 1000);
     }
 
     public onSourceScaleChange() {

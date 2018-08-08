@@ -46,7 +46,10 @@ export class StreamToggleComponent {
         this.status.current = 'inactive';
 
         this.socketService.removeAllListeners('start');
-        // this.pc.close();
+
+        if (this.pc) {
+            this.pc.close();
+        }
 
         this.changeDetectorRef.detectChanges();
     }
