@@ -5,6 +5,11 @@ const storage = require('electron-json-storage');
 // const uniqid = require('uniqid');
 
 webApp.use(express.static(__dirname + '/../client'));
+webApp.get('/check-virtual-office-availability', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.send('Available')
+});
 
 let global = null;
 let connections = {};

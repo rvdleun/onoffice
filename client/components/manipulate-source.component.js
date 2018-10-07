@@ -86,7 +86,7 @@ AFRAME.registerComponent('manipulate-source', {
             const rotation = activeCamera.getAttribute('rotation');
             const y = rotation.y;
 
-            this.el.parentElement.setAttribute('rotation', `0 ${y} 0`);
+            this.el.parentElement.setAttribute('animation', `property: rotation; to: 0 ${y} 0; dur: 500; easing: linear`);
         });
     }
 });

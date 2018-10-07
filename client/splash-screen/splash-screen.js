@@ -89,6 +89,7 @@ new Vue({
             this.socket.emit('client');
         });
     },
+
     methods: {
         onClientAccepted: function(sessionId) {
             this.message = 'Waiting for source';

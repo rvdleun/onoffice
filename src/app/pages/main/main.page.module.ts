@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {StreamToggleComponent} from './stream-toggle/stream-toggle.component';
 import {PinFormComponent} from './pin-form/pin-form.component';
 import {SkyComponent} from './sky/sky.component';
+import {UrlShortenerComponent} from './url-shortener/url-shortener.component';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import {SkyComponent} from './sky/sky.component';
         SelectScreensComponent,
         SkyComponent,
         StreamToggleComponent,
-        SourceToggleComponent
+        SourceToggleComponent,
+        UrlShortenerComponent,
     ],
     exports: [MainPageComponent],
     imports: [BrowserModule, FormsModule],

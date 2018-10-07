@@ -15,6 +15,7 @@
     </div>
     <div *ngIf="streaming">
         <p>IP: {{ ip }}</p>
+        <app-url-shortener></app-url-shortener>
         <p>Status:
             <span *ngIf="status.current === 'active'">Active</span>
             <span *ngIf="status.current === 'inactive'">Inactive</span>

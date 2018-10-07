@@ -1,6 +1,7 @@
 <html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <body>
 <script src="./vendor/aframe.min.js"></script>
+<script src="./vendor/aframe-animation.min.js"></script>
 <script src="./vendor/vue.js"></script>
 
 <script src="./socket.io/socket.io.js"></script>
@@ -20,12 +21,15 @@
 
     <button v-if="readyToEnterVR" v-on:click="startVirtualReality()">Enter<br />Virtual Reality</button>
 </div>
-<a-scene vr-mode-ui="enabled: false">
+<a-scene embedded vr-mode-ui="enabled: false">
     <a-assets>
         <img id="cursorImg" src="./assets/cursor.svg" />
         <video id="remote" muted autoplay></video>
     </a-assets>
-    <a-entity position="0 1.6 0" camera look-controls></a-entity>
+
+    <a-entity position="0 1.6 0" camera look-controls>
+        <a-text id="connection-lost" align="center" value="Connection lost\nPlease refresh your browser" position="0 0 -.5" scale=".2 .2 .2" visible="false"></a-text>
+    </a-entity>
     <!-- a-entity id="controls" position="0 1.6 0" laser-controls="hand: right"></a-entity -->
 
     <a-entity id="sources">

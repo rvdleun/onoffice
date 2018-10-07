@@ -7,6 +7,9 @@ AFRAME.registerSystem('source', {
     init: function() {
         window.setTimeout(() => {
             this.el.systems['webrtc'].onAddStreamFunc = this.onAddStream.bind(this);
+
+            this.el.addEventListener('enter-vr', () => this.showAll());
+            this.el.addEventListener('exit-vr', () => this.hideAll());
         });
     },
 
@@ -52,13 +55,24 @@ AFRAME.registerSystem('source', {
             }
 
             const entity = document.createElement('a-entity');
+            entity.setAttribute('scale', '0 0 1');
             entity.appendChild(screen);
             this.sources.appendChild(entity);
 
             this.el.sceneEl.dispatchEvent(new Event('source-added'));
-
-            // <!--a-plane manipulate-source id="screen" position="0 1.6 -1" scale="1 1 1" material="shader: flat" src="#remote">
         };
+    },
+
+    showAll: function() {
+        for (let i = 0; i < this.sources.children.length; i++) {
+            this.sources.children[i].setAttribute('animation', 'property: scale; to: 1 1 1');
+        }
+    },
+
+    hideAll: function() {
+        for (let i = 0; i < this.sources.children.length; i++) {
+            this.sources.children[i].setAttribute('animation', 'property: scale; to: 0 1 1');
+        }
     }
 });
 

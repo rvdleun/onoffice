@@ -1,4 +1,8 @@
 AFRAME.registerSystem('socket', {
+    schema: {
+        connectionLostText: {type: 'selector', default: '#connection-lost'}
+    },
+
     socket: null,
 
     init: function() {
@@ -15,6 +19,7 @@ AFRAME.registerSystem('socket', {
     },
 
     onDisconnect: function() {
-        console.log('Disconnected!!!');
+        this.el.systems['source'].hideAll();
+        this.data.connectionLostText.setAttribute('visible', 'true');
     },
 });
