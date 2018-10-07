@@ -2,9 +2,20 @@ const express = require('express');
 const webApp = express();
 const webServer = require('http').Server(webApp);
 const storage = require('electron-json-storage');
-// const uniqid = require('uniqid');
 
 webApp.use(express.static(__dirname + '/../client'));
+
+webApp.get('/manifest.json', (req, res) => {
+    const manifest = {
+        "short_name": "On/Office",
+        "name": "On/Office",
+        "icon": "icon.png",
+        "start_url": "http://" + global.IP + ':24242'
+    };
+
+    res.send(JSON.stringify(manifest));
+});
+
 webApp.get('/check-virtual-office-availability', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
