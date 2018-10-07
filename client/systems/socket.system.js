@@ -20,6 +20,6 @@ AFRAME.registerSystem('socket', {
 
     onDisconnect: function() {
         this.el.systems['source'].hideAll();
-        this.data.connectionLostText.setAttribute('visible', 'true');
+        this.el.dispatchEvent(new Event('socket-disconnected'));
     },
 });

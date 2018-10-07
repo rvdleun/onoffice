@@ -62,13 +62,14 @@ Vue.component('pincode-input', {
 new Vue({
     el: '#splash-screen',
     data: {
+        connectionLost: false,
         message: '',
         insertPin: false,
         pincodeRequired: false,
         scene: null,
-        readyToEnterVR: false,
         sessionId: '',
         socket: null,
+        readyToEnterVR: false,
         vrActive: false,
     },
     created: function() {
@@ -87,6 +88,11 @@ new Vue({
             this.socket.on('session_expired', this.onSessionExpired.bind(this));
 
             this.socket.emit('client');
+        });
+
+        this.scene.addEventListener('socket-disconnected', () => {
+            this.connectionLost = true;
+            this.readyToEnterVR = false;
         });
     },
 

@@ -20,6 +20,7 @@
     <pincode-input v-if="pincodeRequired" v-on:send="onSendPin($event)"></pincode-input>
 
     <button v-if="readyToEnterVR" v-on:click="startVirtualReality()">Enter<br />Virtual Reality</button>
+    <p v-if="connectionLost">Connection lost.<br/>Please refresh your browser to reconnect</p>
 </div>
 <a-scene embedded vr-mode-ui="enabled: false">
     <a-assets>
@@ -30,14 +31,8 @@
     <a-entity position="0 1.6 0" camera look-controls>
         <a-text id="connection-lost" align="center" value="Connection lost\nPlease refresh your browser" position="0 0 -.5" scale=".2 .2 .2" visible="false"></a-text>
     </a-entity>
-    <!-- a-entity id="controls" position="0 1.6 0" laser-controls="hand: right"></a-entity -->
 
     <a-entity id="sources">
-        <!--a-entity>
-            <!--a-plane manipulate-source id="screen" position="0 1.6 -1" scale="1 1 1" material="shader: flat" src="#remote">
-            </a-plane>
-        </a-entity-->
-        <!--a-curvedimage id="screen" position="0 1.6 -1" rotation="0 135 0" scale="1 1.6 1" material="shader: flat" color="red" theta-length="90"></a-curvedimage -->
     </a-entity>
     <a-plane id="cursor" src="#cursorImg" cursor-position color="red" position="-.5 0 .001" material="shader: flat; opacity: .5; transparent: true" scale=".02 .03 .01"></a-plane>
 
