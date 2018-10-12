@@ -18,11 +18,11 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
       fullscreenable: false,
-      height: 550,
+      height: 530,
       icon: path.join(__dirname, 'assets/icons/64x64.png'),
       maximizable: false,
       resizable: false,
-      title: 'OnOffice',
+      title: 'On / Office',
       width: 800,
   });
 

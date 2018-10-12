@@ -6,6 +6,7 @@ import {ElectronService} from 'ngx-electron';
 
 @Component({
     selector: 'app-stream-toggle',
+    styleUrls: ['./stream-toggle.component.scss'],
     templateUrl: 'stream-toggle.component.html'
 })
 export class StreamToggleComponent {

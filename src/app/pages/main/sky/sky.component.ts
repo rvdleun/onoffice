@@ -3,7 +3,7 @@ import {ElectronService} from 'ngx-electron';
 
 @Component({
     selector: 'app-sky',
-    styleUrls: ['./sky.component.css'],
+    styleUrls: ['./sky.component.scss'],
     templateUrl: './sky.component.html',
 })
 export class SkyComponent implements OnInit {

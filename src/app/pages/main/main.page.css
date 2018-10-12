@@ -1,3 +1,17 @@
+/* work-sans-200 - latin */
+@font-face {
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 200;
+    src: url('../../../assets/fonts/work-sans-v3-latin-100.eot'); /* IE9 Compat Modes */
+    src: local('Work Sans ExtraLight'), local('WorkSans-ExtraLight'),
+    url('../../../assets/fonts/work-sans-v3-latin-100.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../../assets/fonts/work-sans-v3-latin-100.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../../../assets/fonts/work-sans-v3-latin-100.woff') format('woff'), /* Modern Browsers */
+    url('../../../assets/fonts/work-sans-v3-latin-100.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../../../assets/fonts/work-sans-v3-latin-100.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
 hr {
     border-top: solid 1px white;
 }
@@ -6,9 +20,47 @@ hr {
     opacity: 1;
     transition: all .75s;
     transform: translate(0, 0);
+
+    font-family: 'Work Sans', sans-serif;
+    color: #262261;
+}
+
+.page h2 {
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.options {
+    background-image: url('../../../assets/img/background.png');
+    background-position: center;
+    background-size: cover;
+
+    height: calc(50vh);
+    margin: 0;
+    padding: 0;
+}
+
+.options .form {
+    position: relative;
+    top: calc(10vh);
+}
+
+.options .row.title {
+    margin-top: 15px;
 }
 
 .fading {
     opacity: 0;
     pointer-events: none;
+}
+
+app-stream-toggle {
+    position: fixed;
+    top: calc(50vh);
+    left: calc(50vw);
+
+    width: 180px;
+    height: 60px;
+    transform: translate(-90px, -25px) !important;
 }

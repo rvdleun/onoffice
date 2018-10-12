@@ -1,17 +1,26 @@
 <div class="page" [ngClass]="{fading: fadeOut}">
     <div *ngIf="!streaming">
-        <app-sky></app-sky>
-        <div class="row" style="position: relative; top: -15px">
-            <div class="col" style="border-right: solid 1px white">
-                <h2>Select active screen</h2>
-                <app-select-screens [disabled]="streaming" [sources]="sources"></app-select-screens>
-            </div>
-            <div class="col">
-                <h2 style="margin-bottom: 50px">Pincode</h2>
-                <app-pin-form [disabled]="streaming"></app-pin-form>
+        <app-sky style="height: 50%"></app-sky>
+        <div class="options">
+            <div class="form">
+                <div class="row components">
+                    <div class="col">
+                        <app-select-screens [disabled]="streaming" [sources]="sources"></app-select-screens>
+                    </div>
+                    <div class="col">
+                        <app-pin-form [disabled]="streaming"></app-pin-form>
+                    </div>
+                </div>
+                <div class="row titles">
+                    <div class="col">
+                        <h2>Select screen</h2>
+                    </div>
+                    <div class="col">
+                        <h2>Pincode</h2>
+                    </div>
+                </div>
             </div>
         </div>
-        <hr style="margin-top: 10px;" />
     </div>
     <div *ngIf="streaming">
         <p>IP: {{ ip }}</p>

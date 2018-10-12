@@ -3,13 +3,18 @@
     background-size: 100% auto;
     width: 100%;
     margin: 0;
-    height: 180px;
+    height: calc(50vh);
+}
+
+#image img {
+    width: calc(33vw);
+    transform: translateY(15px);
 }
 
 #hover {
     position: absolute;
     background-color: rgba(0, 0, 0, .65);
-    transform: translate(0, -180px);
+    transform: translate(0, calc(-50vh));
 
     opacity: 0;
     transition: all .5s;
@@ -26,5 +31,6 @@
 }
 
 input {
+    display: none;
     visibility: hidden;
 }
