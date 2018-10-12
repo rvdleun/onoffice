@@ -35,5 +35,5 @@
         <button type="button" class="btn btn-light"  (click)="centerScreen()">Center Screen</button>
         <hr style="margin-top: 10px;" />
     </div>
-    <app-stream-toggle class="page" [ngClass]="{fading: fadeOut}" [status]="status" [sources]="sources" (streaming)="setStreaming($event)"></app-stream-toggle>
+    <app-stream-toggle class="page" (startStreaming)="startStreaming()"></app-stream-toggle>
 </div>

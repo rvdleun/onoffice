@@ -2,10 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {SourceSelection} from './source-toggle/source-toggle.component';
 import {SocketService} from '../../../shared/socket.service';
-
-export interface AppStatus {
-    current: 'inactive' | 'setting-up' | 'waiting-for-client' | 'active';
-}
+import {AppStatus, StreamService} from '../../../shared/stream.service';
 
 @Component({
     selector: 'app-screen-settings',
@@ -21,7 +18,7 @@ export class SettingsScreen implements OnInit {
 
     public fadeOut: boolean = false;
 
-    constructor(private changeDetectorRef: ChangeDetectorRef, private electronService: ElectronService, private socketService: SocketService) {
+    constructor(private changeDetectorRef: ChangeDetectorRef, private electronService: ElectronService, public streamService: StreamService, private socketService: SocketService) {
         this.status = {
             current: 'inactive',
         };
@@ -39,6 +36,11 @@ export class SettingsScreen implements OnInit {
             this.changeDetectorRef.detectChanges();
         });
         this.ip = this.electronService.remote.getGlobal('IP');
+    }
+
+    public startStreaming() {
+        this.streamService.startStreaming(this.sources.filter((source) => source.selected));
+        this.setStreaming(true);
     }
 
     public setStreaming(streaming: boolean) {
