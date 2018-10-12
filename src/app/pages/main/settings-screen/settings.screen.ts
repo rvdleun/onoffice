@@ -1,18 +1,18 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
-import {SourceSelection} from './settings-screen/source-toggle/source-toggle.component';
-import {SocketService} from '../../shared/socket.service';
+import {SourceSelection} from './source-toggle/source-toggle.component';
+import {SocketService} from '../../../shared/socket.service';
 
 export interface AppStatus {
     current: 'inactive' | 'setting-up' | 'waiting-for-client' | 'active';
 }
 
 @Component({
-    selector: 'app-page-main',
-    styleUrls: ['./main.page.css'],
-    templateUrl: './main.page.html'
+    selector: 'app-screen-settings',
+    styleUrls: ['./settings.screen.css'],
+    templateUrl: './settings.screen.html'
 })
-export class MainPageComponent implements OnInit {
+export class SettingsScreen implements OnInit {
     public sources: SourceSelection[];
     public status: AppStatus;
     public ip = 'Unknown';

@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
 import {SourceSelection} from '../source-toggle/source-toggle.component';
-import {SocketService} from '../../../shared/socket.service';
-import {AppStatus} from '../main.page';
+import {SocketService} from '../../../../shared/socket.service';
+import {AppStatus} from '../../main.page';
 import {ElectronService} from 'ngx-electron';
 
 @Component({

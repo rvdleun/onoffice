@@ -1,0 +1,39 @@
+<div class="page" [ngClass]="{fading: fadeOut}">
+    <div *ngIf="!streaming">
+        <app-sky style="height: 50%"></app-sky>
+        <div class="options">
+            <div class="form">
+                <div class="row components">
+                    <div class="col">
+                        <app-select-screens [disabled]="streaming" [sources]="sources"></app-select-screens>
+                    </div>
+                    <div class="col">
+                        <app-pin-form [disabled]="streaming"></app-pin-form>
+                    </div>
+                </div>
+                <div class="row titles">
+                    <div class="col">
+                        <h2>Select screen</h2>
+                    </div>
+                    <div class="col">
+                        <h2>Pincode</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="streaming">
+        <p>IP: {{ ip }}</p>
+        <app-url-shortener></app-url-shortener>
+        <p>Status:
+            <span *ngIf="status.current === 'active'">Active</span>
+            <span *ngIf="status.current === 'inactive'">Inactive</span>
+            <span *ngIf="status.current === 'setting-up'">Setting up...</span>
+            <span *ngIf="status.current === 'waiting-for-client'">Waiting for client</span>
+        </p>
+        <input type="range" min=".5" max="2" step=".1" (input)="onSourceScaleChange()" [(ngModel)]="sourceScale" />
+        <button type="button" class="btn btn-light"  (click)="centerScreen()">Center Screen</button>
+        <hr style="margin-top: 10px;" />
+    </div>
+    <app-stream-toggle class="page" [ngClass]="{fading: fadeOut}" [status]="status" [sources]="sources" (streaming)="setStreaming($event)"></app-stream-toggle>
+</div>
