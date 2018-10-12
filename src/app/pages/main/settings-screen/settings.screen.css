@@ -50,12 +50,7 @@ hr {
     margin-top: 15px;
 }
 
-.fading {
-    opacity: 0;
-    pointer-events: none;
-}
-
-app-stream-toggle {
+app-start-streaming {
     position: fixed;
     top: calc(50vh);
     left: calc(50vw);

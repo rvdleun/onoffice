@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
-    selector: 'app-stream-toggle',
-    styleUrls: ['./stream-toggle.component.scss'],
-    templateUrl: 'stream-toggle.component.html'
+    selector: 'app-start-streaming',
+    styleUrls: ['./start-streaming.component.scss'],
+    templateUrl: 'start-streaming.component.html'
 })
-export class StreamToggleComponent {
+export class StartStreamingComponent {
     @Output() startStreaming: EventEmitter<null> = new EventEmitter<null>();
 
     public onClick() {

@@ -16,6 +16,7 @@ export class StreamService {
     constructor(private electronService: ElectronService, private socketService: SocketService) { }
 
     public startStreaming(sources: SourceSelection[]) {
+        this.statusSubject.next({current: 'waiting-for-client'});
         this.socketService.initialize();
 
         this.electronService.remote.getGlobal('setWebServerActive')(true);
@@ -25,6 +26,7 @@ export class StreamService {
     }
 
     public stopStreaming() {
+        this.statusSubject.next({current: 'inactive'});
         this.electronService.remote.getGlobal('setWebServerActive')(false);
 
         this.socketService.removeAllListeners('start');
@@ -35,8 +37,6 @@ export class StreamService {
     }
 
     private setupConnection(sources: SourceSelection[]) {
-        // alert('SETTING HER UP');
-
         const pc = new RTCPeerConnection(
             {
                 iceServers:

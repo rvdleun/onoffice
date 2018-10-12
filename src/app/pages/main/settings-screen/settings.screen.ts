@@ -40,18 +40,6 @@ export class SettingsScreen implements OnInit {
 
     public startStreaming() {
         this.streamService.startStreaming(this.sources.filter((source) => source.selected));
-        this.setStreaming(true);
-    }
-
-    public setStreaming(streaming: boolean) {
-        this.fadeOut = true;
-        setTimeout(() => {
-            this.status.current = streaming ? 'waiting-for-client' : 'inactive';
-            this.streaming = streaming;
-            setTimeout(() => {
-                this.fadeOut = false;
-            }, 250);
-        }, 1000);
     }
 
     public onSourceScaleChange() {
