@@ -1,4 +1,4 @@
-#image, #hover {
+#image, #hover #overlay {
     background: black no-repeat center center;
     background-size: 100% auto;
     width: 100%;
@@ -7,17 +7,19 @@
 }
 
 #image img {
-    width: calc(33vw);
+    width: calc(25vw);
     transform: translateY(15px);
 }
 
 #hover {
-    position: absolute;
-    background-color: rgba(0, 0, 0, .65);
-    transform: translate(0, calc(-50vh));
-
     opacity: 0;
     transition: all .5s;
+}
+
+#hover #overlay {
+    position: fixed;
+    background-color: rgba(38, 34, 97, .85);
+    transform: translate(0, calc(-50vh));
 
     cursor: pointer;
 }
@@ -27,7 +29,17 @@
 }
 
 #hover p {
-    transform: translate(0, 85px);
+    position: fixed;
+    top: 115px;
+    width: 200px;
+    left: calc(50vw);
+    margin-left: -100px;
+
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 16px;
+    letter-spacing: 4px;
+    padding-bottom: 5px;
 }
 
 input {

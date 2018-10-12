@@ -22,7 +22,7 @@ function createWindow () {
       icon: path.join(__dirname, 'assets/icons/64x64.png'),
       maximizable: false,
       resizable: false,
-      title: 'On / Office',
+      title: '',
       width: 800,
   });
 
