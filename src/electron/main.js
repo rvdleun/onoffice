@@ -16,13 +16,21 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 550})
+  mainWindow = new BrowserWindow({
+      fullscreenable: false,
+      height: 550,
+      icon: path.join(__dirname, 'assets/icons/64x64.png'),
+      maximizable: false,
+      resizable: false,
+      title: 'OnOffice',
+      width: 800,
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
-    slashes: true
+    slashes: true,
   }));
 
   // Open the DevTools.

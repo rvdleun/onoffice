@@ -1,3 +1,17 @@
+/* work-sans-200 - latin */
+@font-face {
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 200;
+    src: url('../assets/fonts/work-sans-v3-latin-100.eot'); /* IE9 Compat Modes */
+    src: local('Work Sans ExtraLight'), local('WorkSans-ExtraLight'),
+    url('../assets/fonts/work-sans-v3-latin-100.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../assets/fonts/work-sans-v3-latin-100.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../assets/fonts/work-sans-v3-latin-100.woff') format('woff'), /* Modern Browsers */
+    url('../assets/fonts/work-sans-v3-latin-100.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../assets/fonts/work-sans-v3-latin-100.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
 #splash-screen {
     position: fixed;
     top: 0;
@@ -5,10 +19,47 @@
     width: 100%;
     height: 100%;
     z-index: 25;
-    background-color: green;
+    background-color: #262261;
+
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 100;
     color: white;
 
     text-align: center;
+    text-transform: uppercase;
+}
+
+#splash-screen #body {
+    width: calc(100vw);
+    margin: auto;
+}
+
+@media only screen and (orientation: landscape) {
+    #splash-screen #body {
+        width: calc(100vh);
+    }
+}
+
+#splash-screen img {
+    width: 80%;
+    margin-bottom: 40px;
+}
+
+#splash-screen p {
+    font-size: 16px;
+    letter-spacing: 4px;
+}
+
+#splash-screen button {
+    background-color: white;
+    border: solid 1px black;
+    color: #262261;
+    font-size: 16px;
+    margin-top: 20px;
+    padding: 20px;
+    width: 80%;
+    letter-spacing: 6px;
+    text-transform: uppercase;
 }
 
 #pincode {

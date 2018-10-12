@@ -114,7 +114,7 @@ new Vue({
             const onCursorPosition = () => {
                 this.socket.removeListener('cursor-position', onCursorPosition);
 
-                this.message = '';
+                this.message = 'Status: Active';
                 this.readyToEnterVR = true;
             };
             this.socket.on('cursor-position', onCursorPosition);

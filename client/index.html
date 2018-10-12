@@ -15,12 +15,14 @@
 <link rel="stylesheet" type="text/css" href="./splash-screen/splash-screen.css">
 
 <div id="splash-screen" v-if="!vrActive">
-    <h1>Virtual Office</h1>
-    <p>{{ message }}</p>
-    <pincode-input v-if="pincodeRequired" v-on:send="onSendPin($event)"></pincode-input>
+    <div id="body">
+        <img src="./assets/logo.png" />
+        <p>{{ message }}</p>
+        <pincode-input v-if="pincodeRequired" v-on:send="onSendPin($event)"></pincode-input>
 
-    <button v-if="readyToEnterVR" v-on:click="startVirtualReality()">Enter<br />Virtual Reality</button>
-    <p v-if="connectionLost">Connection lost.<br/>Please refresh your browser to reconnect</p>
+        <button v-if="readyToEnterVR" v-on:click="startVirtualReality()">Enter Office</button>
+        <p v-if="connectionLost">Connection lost.<br/><br/>Please refresh your browser to reconnect</p>
+    </div>
 </div>
 <a-scene embedded vr-mode-ui="enabled: false">
     <a-assets>
@@ -34,7 +36,7 @@
 
     <a-entity id="sources">
     </a-entity>
-    <a-plane id="cursor" src="#cursorImg" cursor-position color="red" position="-.5 0 .001" material="shader: flat; opacity: .5; transparent: true" scale=".02 .03 .01"></a-plane>
+    <a-plane id="cursor" src="#cursorImg" cursor-position color="#ff3c4b" position="-.5 0 .001" material="shader: flat; opacity: .5; transparent: true" scale=".02 .03 .01"></a-plane>
 
     <a-sky sky rotation="0 270 0"></a-sky>
 </a-scene>
