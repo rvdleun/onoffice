@@ -1,0 +1,29 @@
+{
+  "name": "on-office",
+  "productName": "OnOffice",
+  "description": "Instant Office, just add browser.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Reality Lab",
+  "main": "dist/main.js",
+  "scripts": {
+    "build-mac": "npm run dist && npm run package-mac",
+    "dist": "sh build.sh",
+    "package-mac": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=darwin --arch=x64 --prune=true --out=release-builds --icon=assets/mac.icns && cd release-builds/OnOffice-darwin-x64 && zip OnOffice-mac.zip OnOffice.app -r",
+    "package-windows": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds",
+    "package-linux": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds",
+    "start": "npm run build-mac && node server/index.js"
+  },
+  "dependencies": {
+    "archiver": "^3.0.0",
+    "electron-json-storage": "^4.1.1",
+    "express": "^4.16.4",
+    "ip": "^1.1.5",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1"
+  },
+  "devDependencies": {
+    "electron": "^2.0.9",
+    "electron-packager": "^12.1.2"
+  }
+}
