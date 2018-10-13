@@ -1,6 +1,7 @@
 # If virtual-office doesn't exist yet
 cd ..
 npm install
+npm rebuild node-sass --force
 npm run build-electron
 
 cd build
