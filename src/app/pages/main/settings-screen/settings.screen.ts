@@ -12,7 +12,6 @@ import {AppStatus, StreamService} from '../../../shared/stream.service';
 export class SettingsScreen implements OnInit {
     public sources: SourceSelection[];
     public status: AppStatus;
-    public ip = 'Unknown';
     public streaming: boolean = false;
     public sourceScale: number = 1;
 
@@ -35,11 +34,6 @@ export class SettingsScreen implements OnInit {
 
             this.changeDetectorRef.detectChanges();
         });
-        this.ip = this.electronService.remote.getGlobal('IP');
-    }
-
-    public startStreaming() {
-        this.streamService.startStreaming(this.sources.filter((source) => source.selected));
     }
 
     public onSourceScaleChange() {

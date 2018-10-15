@@ -1,0 +1,28 @@
+.page {
+    width: calc(100vw);
+    height: calc(100vh);
+
+    font-family: 'Work Sans 100', sans-serif;
+    font-size: 14px;
+    background-color: #262261;
+    color: white;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+
+    overflow: hidden;
+}
+
+img {
+    width: calc(25vw);
+    margin-top: 15px;
+}
+
+#data {
+    margin-top: 20px;
+}
+
+#controls {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+}

@@ -1,28 +1,8 @@
-/* work-sans-200 - latin */
-@font-face {
-    font-family: 'Work Sans';
-    font-style: normal;
-    font-weight: 200;
-    src: url('../../../../assets/fonts/work-sans-v3-latin-200.eot'); /* IE9 Compat Modes */
-    src: local('Work Sans ExtraLight'), local('WorkSans-ExtraLight'),
-    url('../../../../assets/fonts/work-sans-v3-latin-200.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../../../../assets/fonts/work-sans-v3-latin-200.woff2') format('woff2'), /* Super Modern Browsers */
-    url('../../../../assets/fonts/work-sans-v3-latin-200.woff') format('woff'), /* Modern Browsers */
-    url('../../../../assets/fonts/work-sans-v3-latin-200.ttf') format('truetype'), /* Safari, Android, iOS */
-    url('../../../../assets/fonts/work-sans-v3-latin-200.svg#WorkSans') format('svg'); /* Legacy iOS */
-}
-
-hr {
-    border-top: solid 1px white;
-}
-
 .page {
-    opacity: 1;
-    transition: all .75s;
-    transform: translate(0, 0);
-
-    font-family: 'Work Sans', sans-serif;
+    font-family: 'Work Sans 200', sans-serif;
     color: #262261;
+
+    overflow: hidden;
 }
 
 .page h2 {

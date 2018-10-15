@@ -1,13 +1,13 @@
 <div class="page">
-    <p>IP: {{ ip }}</p>
-    <app-url-shortener></app-url-shortener>
-    <p>Status:
-        <span *ngIf="status.current === 'active'">Active</span>
-        <span *ngIf="status.current === 'inactive'">Inactive</span>
-        <span *ngIf="status.current === 'setting-up'">Setting up...</span>
-        <span *ngIf="status.current === 'waiting-for-client'">Waiting for client</span>
-    </p>
-    <input type="range" min=".5" max="2" step=".1" (input)="onSourceScaleChange()" [(ngModel)]="sourceScale" />
-    <button type="button" class="btn btn-light"  (click)="centerScreen()">Center Screen</button>
-    <hr style="margin-top: 10px;" />
+    <img src="./assets/img/logo-red.png" />
+    <div id="data">
+        <p><app-status></app-status></p>
+        <p><app-ip-address></app-ip-address></p>
+        <p><app-url-shortener></app-url-shortener></p>
+    </div>
+    <div id="controls">
+        <input type="range" min=".5" max="2" step=".1" (input)="onSourceScaleChange()" [(ngModel)]="sourceScale" />
+        <button type="button" class="btn btn-light"  (click)="centerScreen()">Center Screen</button>
+        <app-stop-streaming></app-stop-streaming>
+    </div>
 </div>

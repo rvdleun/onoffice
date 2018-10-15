@@ -1,4 +1,6 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {StreamService} from '../../../../shared/stream.service';
+import {SourceSelection} from '../source-toggle/source-toggle.component';
 
 @Component({
     selector: 'app-start-streaming',
@@ -6,9 +8,11 @@ import {Component, EventEmitter, Output} from '@angular/core';
     templateUrl: 'start-streaming.component.html'
 })
 export class StartStreamingComponent {
-    @Output() startStreaming: EventEmitter<null> = new EventEmitter<null>();
+    @Input() sources: SourceSelection[];
+
+    constructor(public streamService: StreamService) { }
 
     public onClick() {
-        this.startStreaming.next();
+        this.streamService.startStreaming(this.sources.filter((source) => source.selected));
     }
 }
