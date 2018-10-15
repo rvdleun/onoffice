@@ -3,11 +3,16 @@
     <div id="data">
         <p><app-status></app-status></p>
         <p><app-ip-address></app-ip-address></p>
-        <p><app-url-shortener></app-url-shortener></p>
     </div>
     <div id="controls">
-        <input type="range" min=".5" max="2" step=".1" (input)="onSourceScaleChange()" [(ngModel)]="sourceScale" />
-        <button type="button" class="btn btn-light"  (click)="centerScreen()">Center Screen</button>
+        <div id="in-scene">
+            <div class="input">
+                <input type="range" min=".5" max="2" step=".1" (input)="onSourceScaleChange()" [(ngModel)]="sourceScale" style="width: 235px" />
+            </div>
+            <div class="input">
+                <app-center-screen></app-center-screen>
+            </div>
+        </div>
         <app-stop-streaming></app-stop-streaming>
     </div>
 </div>

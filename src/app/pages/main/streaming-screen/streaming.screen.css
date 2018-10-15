@@ -23,6 +23,17 @@ img {
 
 #controls {
     position: absolute;
-    bottom: 15px;
+    bottom: 50px;
     width: 100%;
+}
+
+#in-scene {
+    margin-left: auto;
+    margin-bottom: 35px;
+    padding-bottom: 35px;
+}
+
+#in-scene .input {
+    width: 50%;
+    float: left;
 }

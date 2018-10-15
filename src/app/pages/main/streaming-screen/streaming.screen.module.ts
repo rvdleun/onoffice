@@ -6,9 +6,10 @@ import {UrlShortenerComponent} from './url-shortener/url-shortener.component';
 import {StatusComponent} from './status/status.component';
 import {IpAddressComponent} from './ip-address/ip-address.component';
 import {StopStreamingComponent} from './stop-streaming/stop-streaming.component';
+import {CenterScreenComponent} from './center-screen/center-screen.component';
 
 @NgModule({
-    declarations: [StreamingScreen, IpAddressComponent, StatusComponent, StopStreamingComponent, UrlShortenerComponent],
+    declarations: [StreamingScreen, CenterScreenComponent, IpAddressComponent, StatusComponent, StopStreamingComponent, UrlShortenerComponent],
     exports: [StreamingScreen],
     imports: [BrowserModule, FormsModule],
 })
