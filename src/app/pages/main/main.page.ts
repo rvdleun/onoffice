@@ -16,7 +16,7 @@ export class MainPageComponent {
     public active: boolean = true;
     public backgroundClass: 'blue' | 'no-transition' = 'no-transition';
 
-    constructor(streamService: StreamService) {
+    constructor(public electronService: ElectronService, public streamService: StreamService) {
         streamService.statusSubject.subscribe((status) => {
             if (status.current === 'inactive') {
                 this.transitionTo('settings');
@@ -30,7 +30,10 @@ export class MainPageComponent {
         if (this.backgroundClass === 'no-transition') {
             this.activeScreen = screen;
             this.active = true;
-            window.setTimeout(() => this.backgroundClass = null);
+            window.setTimeout(() => {
+                this.backgroundClass = null
+                this.electronService.remote.getGlobal('showWindow')();
+            }, 250);
             return;
         }
         this.active = false;

@@ -22,9 +22,14 @@ function createWindow () {
       icon: path.join(__dirname, 'assets/icons/64x64.png'),
       maximizable: false,
       resizable: false,
+      show: false,
       title: '',
       width: 800,
   });
+
+  global.showWindow = () => {
+      mainWindow.show();
+  };
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -42,7 +47,9 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null
-  })
+  });
+
+
 }
 
 // This method will be called when Electron has finished
