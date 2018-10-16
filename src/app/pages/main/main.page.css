@@ -77,3 +77,8 @@ app-stream-toggle {
     height: 60px;
     transform: translate(-130px, -30px) !important;
 }
+
+app-screen-settings,
+app-screen-streaming {
+    transition: all 2s;
+}

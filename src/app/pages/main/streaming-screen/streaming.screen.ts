@@ -9,19 +9,4 @@ import {AppStatus, StreamService} from '../../../shared/stream.service';
     templateUrl: './streaming.screen.html'
 })
 export class StreamingScreen {
-    public ip = 'Unknown';
-    public status: AppStatus;
-    public sourceScale: number = 1;
-
-    constructor(private electronService: ElectronService, private socketService: SocketService, private streamService: StreamService) {
-        this.streamService.statusSubject.subscribe((status) => {
-            this.status = status;
-        });
-        this.ip = this.electronService.remote.getGlobal('IP');
-    }
-
-    public onSourceScaleChange() {
-        this.socketService.emit('source-scale', this.sourceScale);
-    }
-
 }

@@ -10,7 +10,7 @@ import {StreamService} from '../../shared/stream.service';
     templateUrl: './main.page.html'
 })
 export class MainPageComponent {
-    public activeScreen: 'settings' | 'streaming' = 'streaming';
+    public activeScreen: 'settings' | 'streaming' = 'settings';
 
     constructor(streamService: StreamService) {
         streamService.statusSubject.subscribe((status) => {
