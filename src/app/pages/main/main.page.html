@@ -1,2 +1,5 @@
-<app-screen-settings *ngIf="activeScreen === 'settings'"></app-screen-settings>
-<app-screen-streaming *ngIf="activeScreen === 'streaming'"></app-screen-streaming>
+<div id="background" [ngClass]="backgroundClass"></div>
+<div id="activeScreen" [ngClass]="{'active': active, 'no-transition': backgroundClass === 'no-transition'}">
+    <app-screen-settings *ngIf="activeScreen === 'settings'"></app-screen-settings>
+    <app-screen-streaming *ngIf="activeScreen === 'streaming'"></app-screen-streaming>
+</div>

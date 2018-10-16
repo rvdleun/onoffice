@@ -78,7 +78,30 @@ app-stream-toggle {
     transform: translate(-130px, -30px) !important;
 }
 
-app-screen-settings,
-app-screen-streaming {
-    transition: all 2s;
+#activeScreen {
+    transition: all 1s;
+    opacity: 0;
+}
+
+#activeScreen.no-transition {
+    transition: all 0s;
+}
+
+#activeScreen.active {
+    opacity: 1;
+}
+
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100vw);
+    height: calc(100vh);
+
+    transition: all .5s;
+    z-index: -1;
+}
+
+#background.blue {
+    background-color: #262261;
 }
