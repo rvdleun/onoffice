@@ -25,6 +25,8 @@ AFRAME.registerSystem('webrtc', {
                             console.log(error);
                         });
                     }
+                }, (error) => {
+                    console.error('Error while settings remote description', error);
                 });
             } else if(message.ice) {
                 this.pc.addIceCandidate(new RTCIceCandidate(message.ice));

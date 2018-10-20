@@ -32,7 +32,7 @@ AFRAME.registerSystem('source', {
         videoEl.setAttribute('id', videoId);
         videoEl.setAttribute('muted', '');
 
-        videoEl.src = window.URL.createObjectURL(event.stream)
+        videoEl.srcObject = event.stream;
         videoEl.onloadedmetadata = () => {
             this.assets.appendChild(videoEl);
 
