@@ -8,4 +8,16 @@
     text-transform: uppercase;
     width: calc(27vw);
     height: calc(10.6vh);
+
+    transition: background-color 1s;
+}
+
+.btn:hover {
+    background-color: #E5E5E5;
+}
+
+.btn:focus,
+.btn:active {
+    outline: none !important;
+    box-shadow: none;
 }

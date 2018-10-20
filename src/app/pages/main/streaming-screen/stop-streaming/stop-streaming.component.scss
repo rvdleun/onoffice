@@ -12,6 +12,8 @@ button {
   outline:none;
 }
 
-button:focus {
-  outline: none;
+button:focus,
+button:active {
+  outline: none !important;
+  box-shadow: none;
 }
