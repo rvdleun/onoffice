@@ -18,13 +18,13 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
       fullscreenable: false,
-      height: 530,
+      height: 675,
       icon: path.join(__dirname, 'assets/icons/64x64.png'),
       maximizable: false,
       resizable: false,
       show: false,
       title: '',
-      width: 800,
+      width: 1024,
   });
 
   global.showWindow = () => {

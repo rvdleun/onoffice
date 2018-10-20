@@ -6,9 +6,10 @@
 }
 
 .page h2 {
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 900;
     letter-spacing: 5px;
+    text-transform: uppercase;
 }
 
 .options {
@@ -30,11 +31,16 @@
     margin-top: 15px;
 }
 
+app-pin-form {
+    position: relative;
+    top: calc(5vh);
+}
+
 app-start-streaming {
     position: fixed;
     top: calc(50vh);
     left: calc(50vw);
-    width: 260px;
-    height: 60px;
-    transform: translate(-130px, -30px) !important;
+    width: calc(27vw);
+    height: calc(10.6vh);
+    transform: translate(calc(-13.5vw), calc(-5.3vh)) !important;
 }

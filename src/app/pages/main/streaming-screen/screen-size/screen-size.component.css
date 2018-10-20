@@ -23,7 +23,7 @@ input[type=range]::-ms-track {
 
 input {
     margin-top: 3px;
-    width: 235px;
+    width: calc(27vw);
 }
 
 input[type=range]::-webkit-slider-runnable-track {

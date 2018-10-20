@@ -3,9 +3,9 @@
     border-radius: 0;
     color: #262261;
 
-    font-size: .8rem;
+    font-size: 16px;
     letter-spacing: 5px;
     text-transform: uppercase;
-    width: 235px;
-    height: 60px;
+    width: calc(27vw);
+    height: calc(10.6vh);
 }
