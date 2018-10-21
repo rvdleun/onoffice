@@ -68,12 +68,14 @@ AFRAME.registerSystem('source', {
     showAll: function() {
         for (let i = 0; i < this.sources.children.length; i++) {
             this.sources.children[i].setAttribute('animation', 'property: scale; to: 1 1 1');
+            setTimeout(() => this.sources.children[i].setAttribute('visible', 'true'), 5000);
         }
     },
 
     hideAll: function() {
         for (let i = 0; i < this.sources.children.length; i++) {
             this.sources.children[i].setAttribute('animation', 'property: scale; to: 0 1 1');
+            setTimeout(() => this.sources.children[i].setAttribute('visible', 'false'), 5000);
         }
     }
 });

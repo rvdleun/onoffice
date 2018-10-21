@@ -8,6 +8,7 @@ AFRAME.registerSystem('socket', {
     init: function() {
         this.socket = io();
         this.on('disconnect', this.onDisconnect.bind(this));
+        this.data.connectionLostText.setAttribute('visible', 'false');
     },
 
     emit: function(event, data) {
@@ -20,6 +21,7 @@ AFRAME.registerSystem('socket', {
 
     onDisconnect: function() {
         this.el.systems['source'].hideAll();
+        this.data.connectionLostText.setAttribute('visible', 'true');
         this.el.dispatchEvent(new Event('socket-disconnected'));
     },
 });
