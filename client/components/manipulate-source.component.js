@@ -1,8 +1,8 @@
 AFRAME.registerSystem('manipulate-source', {
-    touchStartData: null,
     controls: null,
     dragging: false,
     target: null,
+    touchStartData: null,
 
     tick: function() {
         if(!this.controls) {
@@ -18,18 +18,6 @@ AFRAME.registerSystem('manipulate-source', {
             const rot = this.controls.getAttribute('rotation');
             this.target.setAttribute('rotation', `0 ${rot.y} 0`);
         }
-    },
-
-    setTarget: function(target) {
-        this.target = target;
-
-        if(!target) {
-            this.touchStartData = null;
-        }
-    },
-
-    setDragging: function(dragging) {
-        this.dragging = dragging;
     },
 
     onAxisMove: function(event) {
@@ -60,7 +48,27 @@ AFRAME.registerSystem('manipulate-source', {
 
     onTouchEnd: function() {
         this.touchStartData = null;
-    }
+    },
+
+    setTarget: function(target) {
+        this.target = target;
+
+        if(!target) {
+            this.touchStartData = null;
+        }
+    },
+
+    setDragging: function(dragging) {
+        this.dragging = dragging;
+    },
+
+    centerAllScreens: function() {
+        const sources = document.querySelectorAll('[manipulate-source]');
+        for(let i = 0; i <sources.length; i++) {
+            const source = sources[i];
+            source.components['manipulate-source'].center();
+        }
+    },
 });
 
 AFRAME.registerComponent('manipulate-source', {
@@ -81,12 +89,17 @@ AFRAME.registerComponent('manipulate-source', {
             this.system.setDragging(false);
         });
 
-        this.el.sceneEl.systems['socket'].on('center-screen', () => {
-            const activeCamera = this.el.sceneEl.camera.el;
-            const rotation = activeCamera.getAttribute('rotation');
-            const y = rotation.y;
+        this.el.sceneEl.systems['socket'].on('center-screen', () => this.center() );
+    },
 
-            this.el.parentElement.setAttribute('animation', `property: rotation; to: 0 ${y} 0; dur: 500; easing: linear`);
-        });
+    center: function() {
+        console.log('Center!');
+
+        const activeCamera = this.el.sceneEl.camera.el;
+        const position = activeCamera.getAttribute('position');
+        const rotation = activeCamera.getAttribute('rotation');
+
+        this.el.parentElement.setAttribute('animation__position', `property: position; to: ${position.x} 0 ${position.z}; dur: 500; easing: linear`);
+        this.el.parentElement.setAttribute('animation__rotation', `property: rotation; to: 0 ${rotation.y} 0; dur: 500; easing: linear`);
     }
 });

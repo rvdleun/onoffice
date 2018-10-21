@@ -90,7 +90,17 @@ new Vue({
             this.socket.emit('client');
         });
 
+        this.scene.addEventListener('enter-vr', () => {
+            this.scene.systems['manipulate-source'].centerAllScreens();
+            this.vrActive = true;
+        });
+
+        this.scene.addEventListener('exit-vr', () => {
+            this.vrActive = false;
+        });
+
         this.scene.addEventListener('socket-disconnected', () => {
+            this.message = 'Status: Disconnected';
             this.connectionLost = true;
             this.readyToEnterVR = false;
         });
@@ -138,6 +148,10 @@ new Vue({
 
         startVirtualReality: function() {
             this.scene.enterVR();
+        },
+
+        exitVirtualReality: function() {
+            this.scene.exitVR();
         },
 
         onSendPin: function(pin) {

@@ -20,8 +20,9 @@
         <p>{{ message }}</p>
         <pincode-input v-if="pincodeRequired" v-on:send="onSendPin($event)"></pincode-input>
 
-        <button v-if="readyToEnterVR" v-on:click="startVirtualReality()">Enter Office</button>
-        <p v-if="connectionLost">Connection lost.<br/><br/>Please refresh your browser to reconnect</p>
+        <button v-if="readyToEnterVR && !vrActive" v-on:click="startVirtualReality()">Enter Office</button>
+        <button v-if="readyToEnterVR && vrActive" v-on:click="exitVirtualReality()">Leave Office</button>
+        <p v-if="connectionLost">Please refresh your browser to reconnect</p>
     </div>
 </div>
 <a-scene embedded vr-mode-ui="enabled: false">
