@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {SourceSelection} from '../source-toggle/source-toggle.component';
 
 @Component({
@@ -9,6 +9,8 @@ import {SourceSelection} from '../source-toggle/source-toggle.component';
 export class SelectScreensComponent {
     @Input() sources: SourceSelection[] = [];
     @Input() disabled: boolean;
+
+    constructor(public changeDetectorRef: ChangeDetectorRef) { }
 
     public changeSelected(change: number) {
         let index = -1;
@@ -22,6 +24,9 @@ export class SelectScreensComponent {
             index = 0;
         }
 
+        console.log(index);
+
         this.sources[index].selected = true;
+        this.changeDetectorRef.detectChanges();
     }
 }

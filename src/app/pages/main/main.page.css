@@ -81,6 +81,8 @@ app-stream-toggle {
 #activeScreen {
     transition: all 1s;
     opacity: 0;
+    cursor: default;
+    user-select: none;
 }
 
 #activeScreen.no-transition {

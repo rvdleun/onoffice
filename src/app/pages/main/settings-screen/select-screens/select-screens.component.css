@@ -1,15 +1,21 @@
+.button {
+    margin-top: 45px;
+}
+
 .prev-button,
 .next-button {
-    height: 100px;
-    margin-top: 25px;
     cursor: pointer;
+    font-size: 24px;
 }
 
 .prev-button {
-    margin-left: 60px;
+    margin-left: 90px;
 }
 
 .next-button {
-    transform: scaleX(-1);
-    margin-right: 60px;
+    margin-left: -160px;
+}
+
+.source {
+    pointer-events: none;
 }

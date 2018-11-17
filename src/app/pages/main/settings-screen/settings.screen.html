@@ -4,7 +4,7 @@
         <div class="form">
             <div class="row components">
                 <div class="col">
-                    <app-select-screens [disabled]="streaming" [sources]="sources"></app-select-screens>
+                    <app-select-screens *ngIf="sources" [disabled]="streaming" [sources]="sources"></app-select-screens>
                 </div>
                 <div class="col">
                     <app-pin-form [disabled]="streaming"></app-pin-form>
