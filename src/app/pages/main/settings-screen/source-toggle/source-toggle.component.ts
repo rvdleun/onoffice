@@ -20,6 +20,6 @@ export class SourceToggleComponent implements OnInit {
     }
 
     public onToggle() {
-        this.source.selected = !this.source.selected;
+        // this.source.selected = !this.source.selected;
     }
 }

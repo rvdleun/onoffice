@@ -1,7 +1,5 @@
 button {
-  background-color: #ff3c4b;
-  background-size: auto 100%;
-  background-position: center;
+  position: relative;
   border-radius: 0;
   color: white;
 
@@ -10,12 +8,38 @@ button {
   text-transform: uppercase;
   width: 100%;
   height: 100%;
+  background: none;
+  overflow: hidden;
 
-  transition: background-color 1s;
-}
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ff3c4b;
+    z-index: -2;
+  }
 
-button:hover {
-  background-color: #E53543;
+  .background-hover {
+    position: absolute;
+    top: 0;
+    left: calc(-100% - 30px);
+    background-color: #ff3c4b;
+    z-index: -2;
+
+    width: calc(100% + 30px);
+    height: 0;
+    border-top: 70px solid #E53543;
+    border-right: 30px solid transparent;
+    transition: all 1s;
+  }
+
+  &:hover {
+    .background-hover {
+      left: 0;
+    }
+  }
 }
 
 button:focus,

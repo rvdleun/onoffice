@@ -1,0 +1,15 @@
+.prev-button,
+.next-button {
+    height: 100px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.prev-button {
+    margin-left: 60px;
+}
+
+.next-button {
+    transform: scaleX(-1);
+    margin-right: 60px;
+}
