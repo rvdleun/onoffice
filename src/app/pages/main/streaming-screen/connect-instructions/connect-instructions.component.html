@@ -1,0 +1,19 @@
+<p>Please select your headset</p>
+<select [(ngModel)]="selectedHeadset">
+    <option *ngFor="let headset of instructions" [value]="headset.id">{{ headset.title }}</option>
+</select>
+
+<hr *ngIf="selectedHeadset" />
+
+<ng-container *ngFor="let headset of instructions">
+    <div class="row" [hidden]="headset.id !== selectedHeadset">
+        <div [ngClass]="{'col': headset.hasImages, 'col-12': !headset.hasImages}" *ngFor="let step of headset.steps; let i = index">
+            <img *ngIf="headset.hasImages" [src]="'./assets/connect-instructions/' + headset.id + '-' + i + '.png'" />
+            <p *ngIf="step.code">
+                <span *ngIf="mode === 'code'" [innerHTML]="'#' + (i+1) + '. ' + step.code"></span>
+                <span *ngIf="mode === 'ip'" [innerHTML]="'#' + (i+1) + '. ' + step.ip"></span>
+            </p>
+            <p *ngIf="!step.code">#{{ i+1 }}. {{ step }}</p>
+        </div>
+    </div>
+</ng-container>

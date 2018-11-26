@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {ElectronService} from 'ngx-electron';
-import {SocketService} from '../../../shared/socket.service';
 import {AppStatus, StreamService} from '../../../shared/stream.service';
 
 @Component({
@@ -9,4 +7,10 @@ import {AppStatus, StreamService} from '../../../shared/stream.service';
     templateUrl: './streaming.screen.html'
 })
 export class StreamingScreen {
+    status: AppStatus;
+    constructor(private streamService: StreamService) {
+        this.streamService.statusSubject.subscribe((status) => {
+            this.status = status;
+        });
+    }
 }

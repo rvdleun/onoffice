@@ -1,5 +1,7 @@
 require('./components/environment.component').init(global);
+require('./components/url-redirect.component').init(global);
 require('./components/webserver.component.js')(global);
+
 
 const electron = require('electron')
 // Module to control application life.
@@ -12,7 +14,7 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
 
 function createWindow () {
   // Create the browser window.
@@ -27,6 +29,7 @@ function createWindow () {
       width: 1024,
   });
 
+  mainWindow.show();
   global.showWindow = () => {
       mainWindow.show();
   };

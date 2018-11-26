@@ -2,10 +2,13 @@
     <img src="./assets/img/logo-red.png" />
     <div id="data">
         <p><app-status></app-status></p>
-        <p><app-ip-address></app-ip-address></p>
+        <!--p><app-ip-address></app-ip-address></p-->
+    </div>
+    <div id="instructions" *ngIf="status.current !== 'active'">
+        <app-connect-instructions></app-connect-instructions>
     </div>
     <div id="controls">
-        <div id="in-scene">
+        <div id="in-scene" *ngIf="status.current === 'active'">
             <div class="input">
                 <app-screen-size></app-screen-size>
             </div>

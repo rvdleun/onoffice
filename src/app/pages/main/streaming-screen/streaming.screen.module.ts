@@ -8,12 +8,15 @@ import {IpAddressComponent} from './ip-address/ip-address.component';
 import {StopStreamingComponent} from './stop-streaming/stop-streaming.component';
 import {CenterScreenComponent} from './center-screen/center-screen.component';
 import {ScreenSizeComponent} from './screen-size/screen-size.component';
+import {ConnectInstructionsComponent} from './connect-instructions/connect-instructions.component';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
     declarations: [
         StreamingScreen,
 
         CenterScreenComponent,
+        ConnectInstructionsComponent,
         IpAddressComponent,
         ScreenSizeComponent,
         StatusComponent,
@@ -21,6 +24,6 @@ import {ScreenSizeComponent} from './screen-size/screen-size.component';
         UrlShortenerComponent
     ],
     exports: [StreamingScreen],
-    imports: [BrowserModule, FormsModule],
+    imports: [BrowserModule, CommonModule, FormsModule],
 })
 export class StreamingScreenModule { }

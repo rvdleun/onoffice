@@ -3,6 +3,7 @@ import {ElectronService} from 'ngx-electron';
 import {SourceSelection} from './settings-screen/source-toggle/source-toggle.component';
 import {SocketService} from '../../shared/socket.service';
 import {StreamService} from '../../shared/stream.service';
+import {UrlShortenerService} from '../../shared/url-shortener.service';
 
 type ScreenId = 'settings' | 'streaming';
 
@@ -16,7 +17,7 @@ export class MainPageComponent {
     public active: boolean = true;
     public backgroundClass: 'blue' | 'no-transition' = 'no-transition';
 
-    constructor(public electronService: ElectronService, public streamService: StreamService) {
+    constructor(public electronService: ElectronService, public streamService: StreamService, public urlShortenerService: UrlShortenerService) {
         streamService.statusSubject.subscribe((status) => {
             if (status.current === 'inactive') {
                 this.transitionTo('settings');
@@ -31,7 +32,7 @@ export class MainPageComponent {
             this.activeScreen = screen;
             this.active = true;
             window.setTimeout(() => {
-                this.backgroundClass = null
+                this.backgroundClass = null;
                 this.electronService.remote.getGlobal('showWindow')();
             }, 250);
             return;
@@ -39,11 +40,18 @@ export class MainPageComponent {
         this.active = false;
 
         window.setTimeout(() => {
-            this.backgroundClass = screen === 'streaming' ? 'blue' : null;
             this.activeScreen = screen;
-            window.setTimeout(() => {
-                this.active = true;
-            }, 750);
+            if (screen === 'streaming') {
+                this.backgroundClass = 'blue';
+                this.urlShortenerService.getCode().then(() => {
+                    this.active = true;
+                });
+            } else {
+                this.backgroundClass = null;
+                window.setTimeout(() => {
+                    this.active = true;
+                }, 750);
+            }
         }, 1250);
     }
 }

@@ -8,6 +8,7 @@ import {MainPageModule} from './pages/main/main.page.module';
 import {NgxElectronModule} from 'ngx-electron';
 import {HttpClientModule} from '@angular/common/http';
 import {StreamService} from './shared/stream.service';
+import {UrlShortenerService} from './shared/url-shortener.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import {StreamService} from './shared/stream.service';
 
     MainPageModule,
   ],
-  providers: [SocketService, StreamService],
+  providers: [SocketService, StreamService, UrlShortenerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

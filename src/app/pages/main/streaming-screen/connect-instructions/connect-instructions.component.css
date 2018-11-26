@@ -1,0 +1,18 @@
+.row {
+    font-size: 12px;
+    padding: 0 15px;
+}
+
+.row .col {
+    text-align: center;
+}
+
+img {
+    height: 150px;
+    margin-bottom: 10px;
+    border: solid 1px white;
+}
+
+.row strong {
+    text-decoration: underline;
+}
