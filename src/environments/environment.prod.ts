@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  urlShortenerUrl: 'http://localhost:3000/update',
+  production: false,
 };

@@ -1,18 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {UrlShortenerService} from '../../../../shared/url-shortener.service';
-
-type Step = {
-    code: string;
-    ip: string;
-};
-
-type Instructions = {
-    hasImages: boolean;
-    id: string,
-    title: string,
-    steps: (Step | string)[],
-};
+import {HeadsetInstructions, Instructions, Step} from './instructions';
 
 @Component({
     selector: 'app-connect-instructions',
@@ -23,50 +12,7 @@ export class ConnectInstructionsComponent implements OnInit {
     @Input() public mode: 'code' | 'ip' = null;
 
     public selectedHeadset: string;
-    public readonly instructions: Instructions[] = [
-        {
-            hasImages: true,
-            id: 'cardboard-android',
-            title: 'Cardboard (Android)',
-            steps: [
-                'Join the same network as this computer.',
-                'Open the chrome browser',
-                {
-                    code: 'Browse to http://openoffice.org/code and enter code *CODE*.',
-                    ip: 'Browse to http://*IP*.',
-                },
-                'Press the \'Enter Office\' button.'
-            ],
-        },
-        {
-            hasImages: false,
-            id: 'oculus-go',
-            title: 'Oculus Go',
-            steps: [
-                'Join the same network as this computer.',
-                'Open the Oculus browser',
-                {
-                    code: 'Browse to http://openoffice.org/code and enter code *CODE*.',
-                    ip: 'Browse to http://*IP*. Note that http:// is required!',
-                },
-                'Press the \'Enter Office\' button.'
-            ],
-        },
-        {
-            hasImages: true,
-            id: 'htc-vive',
-            title: 'HTC Vive',
-            steps: [
-                'Open an Internet browser(Edge, Chrome or Firefox)',
-                'If the Vive is connected to this computer, browse to http://localhost:24242.',
-                {
-                    code: 'If not, browse to http://openoffice.org/code and enter code *CODE*.',
-                    ip: 'If not, browse to http://*IP*.',
-                },
-                'Press the \'Enter Office\' button.'
-            ],
-        },
-    ];
+    public readonly instructions: Instructions[] = HeadsetInstructions;
     private code: string;
 
     constructor(public electronService: ElectronService, public urlShortenerService: UrlShortenerService) { }

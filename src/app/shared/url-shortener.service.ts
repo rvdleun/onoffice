@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {environment} from '../../environments/environment';
 
 type RedirectData = {
     ip: string;
@@ -24,7 +25,7 @@ export class UrlShortenerService {
             let done = false;
 
             this.getData().then((data) => {
-                let url = `http://localhost:3000/update?ip=${data.ip}`;
+                let url = `${environment.urlShortenerUrl}?ip=${data.ip}`;
                 if (data.token) {
                     url += `&token=${data.token}`;
                 }
