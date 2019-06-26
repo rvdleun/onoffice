@@ -12,6 +12,17 @@ export type Instructions = {
 
 export const HeadsetInstructions = [
     {
+        hasImages: false,
+        id: 'basic',
+        title: 'How to connect',
+        steps: [
+            'Join the same network as this computer.',
+            'Open the chrome browser',
+            'Browse to http://*IP*.',
+            'Press the \'Enter Office\' button.'
+        ]
+    },
+    {
         hasImages: true,
         id: 'cardboard-android',
         title: 'Android',

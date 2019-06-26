@@ -1,9 +1,6 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
-import {SourceSelection} from './settings-screen/source-toggle/source-toggle.component';
-import {SocketService} from '../../shared/socket.service';
 import {StreamService} from '../../shared/stream.service';
-import {UrlShortenerService} from '../../shared/url-shortener.service';
 
 type ScreenId = 'settings' | 'streaming';
 
@@ -17,7 +14,7 @@ export class MainPageComponent {
     public active: boolean = true;
     public backgroundClass: 'blue' | 'no-transition' = 'no-transition';
 
-    constructor(public electronService: ElectronService, public streamService: StreamService, public urlShortenerService: UrlShortenerService) {
+    constructor(public electronService: ElectronService, public streamService: StreamService) {
         streamService.statusSubject.subscribe((status) => {
             if (status.current === 'inactive') {
                 this.transitionTo('settings');
@@ -41,17 +38,10 @@ export class MainPageComponent {
 
         window.setTimeout(() => {
             this.activeScreen = screen;
-            if (screen === 'streaming') {
-                this.backgroundClass = 'blue';
-                this.urlShortenerService.getCode().then(() => {
-                    this.active = true;
-                });
-            } else {
-                this.backgroundClass = null;
-                window.setTimeout(() => {
-                    this.active = true;
-                }, 750);
-            }
+            this.backgroundClass = screen === 'streaming' ? 'blue' : null;
+            window.setTimeout(() => {
+                this.active = true;
+            }, 750);
         }, 1250);
     }
 }

@@ -1,19 +1,11 @@
-<p>Please select your headset</p>
+<p>Instructions</p>
+<hr />
 <div class="row">
-    <div class="col-3 headset" *ngFor="let headset of instructions" (click)="selectedHeadset = headset.id" [ngClass]="{'selected': selectedHeadset === headset.id}">{{ headset.title }}</div>
-</div>
-
-<hr *ngIf="selectedHeadset" />
-
-<ng-container *ngFor="let headset of instructions">
-    <div class="row" [hidden]="headset.id !== selectedHeadset">
-        <div [ngClass]="{'col': headset.hasImages, 'col-12': !headset.hasImages}" *ngFor="let step of headset.steps; let i = index">
-            <img *ngIf="headset.hasImages" [src]="'./assets/connect-instructions/' + headset.id + '-' + i + '.png'" />
-            <p *ngIf="step.code">
-                <span *ngIf="mode === 'code'" [innerHTML]="'#' + (i+1) + '. ' + step.code"></span>
-                <span *ngIf="mode === 'ip'" [innerHTML]="'#' + (i+1) + '. ' + step.ip"></span>
-            </p>
-            <p *ngIf="!step.code">#{{ i+1 }}. {{ step }}</p>
-        </div>
+    <div class="col-12">
+        <p>#1. Join the same network as this computer</p>
+        <p>#2. Open a browser on your headset</p>
+        <p>#3. Browse to <span class="ip">http://{{ ip }}</span></p>
+        <p>(Note that 'http://' is required for the Oculus Go and Quest)</p>
+        <p>#4. Press the 'Enter Office' button.</p>
     </div>
-</ng-container>
+</div>

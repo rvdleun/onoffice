@@ -17,19 +17,8 @@ img {
     text-decoration: underline;
 }
 
-select {
-    background: none;
-    border: solid 1px white;
-    border-radius: 0;
-    color: white;
-    padding: 10px;
-}
-
-.headset {
-    cursor: pointer;
-    text-align: center;
-}
-
-.headset.selected {
+.ip {
     text-decoration: underline;
+    border-bottom-width: 1px;
+    padding-bottom: 3px;
 }
