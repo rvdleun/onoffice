@@ -16,3 +16,20 @@ img {
 .row strong {
     text-decoration: underline;
 }
+
+select {
+    background: none;
+    border: solid 1px white;
+    border-radius: 0;
+    color: white;
+    padding: 10px;
+}
+
+.headset {
+    cursor: pointer;
+    text-align: center;
+}
+
+.headset.selected {
+    text-decoration: underline;
+}

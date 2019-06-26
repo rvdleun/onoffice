@@ -51,7 +51,11 @@ export class StreamService {
                     mandatory: {
                         chromeMediaSource: 'desktop',
                         chromeMediaSourceId: source.source.id,
-                    }
+                        minWidth: 2880,
+                        maxWidth: 2880,
+                        minHeight: 1800,
+                        maxHeight: 1800,
+                    },
                 }
             }).then((stream) => {
                 pc.addStream(stream);

@@ -19,7 +19,6 @@ export class ConnectInstructionsComponent implements OnInit {
 
     public ngOnInit() {
         this.urlShortenerService.codeSubject.subscribe((code) => {
-            console.log(code);
             this.code = code;
             this.mode = code ? 'code' : 'ip';
 

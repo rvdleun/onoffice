@@ -1,7 +1,7 @@
 <p>Please select your headset</p>
-<select [(ngModel)]="selectedHeadset">
-    <option *ngFor="let headset of instructions" [value]="headset.id">{{ headset.title }}</option>
-</select>
+<div class="row">
+    <div class="col-3 headset" *ngFor="let headset of instructions" (click)="selectedHeadset = headset.id" [ngClass]="{'selected': selectedHeadset === headset.id}">{{ headset.title }}</div>
+</div>
 
 <hr *ngIf="selectedHeadset" />
 
