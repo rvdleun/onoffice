@@ -45,7 +45,7 @@ AFRAME.registerSystem('source', {
             const screen = document.createElement('a-plane');
             screen.setAttribute('id', `screen-${event.stream.id}`);
             screen.setAttribute('manipulate-source', '');
-            screen.setAttribute('position', '0 1.6 -1');
+            screen.setAttribute('position', '0 0 -1');
             screen.setAttribute('material', 'shader: flat');
             screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
             screen.setAttribute('source', '');

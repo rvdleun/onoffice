@@ -93,13 +93,11 @@ AFRAME.registerComponent('manipulate-source', {
     },
 
     center: function() {
-        console.log('Center!');
-
         const activeCamera = this.el.sceneEl.camera.el;
         const position = activeCamera.getAttribute('position');
         const rotation = activeCamera.getAttribute('rotation');
 
-        this.el.parentElement.setAttribute('animation__position', `property: position; to: ${position.x} 0 ${position.z}; dur: 500; easing: linear`);
+        this.el.parentElement.setAttribute('animation__position', `property: position; to: ${position.x} ${position.y} ${position.z}; dur: 500; easing: linear`);
         this.el.parentElement.setAttribute('animation__rotation', `property: rotation; to: 0 ${rotation.y} 0; dur: 500; easing: linear`);
     }
 });

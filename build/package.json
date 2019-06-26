@@ -4,7 +4,7 @@
   "description": "Instant Office, just add browser.",
   "version": "0.1.0",
   "license": "MIT",
-  "author": "Reality Lab",
+  "author": "Ruben van der Leun",
   "main": "dist/main.js",
   "scripts": {
     "build-mac": "npm run dist && npm run package-mac",
