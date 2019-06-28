@@ -3,10 +3,11 @@ import {ElectronService} from 'ngx-electron';
 import {SourceSelection} from './source-toggle/source-toggle.component';
 import {SocketService} from '../../../shared/socket.service';
 import {AppStatus, StreamService} from '../../../shared/stream.service';
+import * as introJs from 'intro.js/intro.js';
 
 @Component({
     selector: 'app-screen-settings',
-    styleUrls: ['./settings.screen.css'],
+    styleUrls: ['./settings.screen.css', '../../../../../node_modules/intro.js/minified/introjs.min.css'],
     templateUrl: './settings.screen.html'
 })
 export class SettingsScreen implements OnInit {
@@ -42,5 +43,9 @@ export class SettingsScreen implements OnInit {
 
     public centerScreen() {
         this.socketService.emit('center-screen');
+    }
+
+    public startTutorial() {
+        introJs().start();
     }
 }

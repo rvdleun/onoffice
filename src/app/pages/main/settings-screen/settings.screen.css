@@ -44,3 +44,10 @@ app-start-streaming {
     height: calc(10.6vh);
     transform: translate(calc(-13.5vw), calc(-5.3vh)) !important;
 }
+
+.tutorial-button {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    font-size: 24px;
+}
