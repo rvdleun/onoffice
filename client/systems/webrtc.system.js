@@ -1,3 +1,6 @@
+/*
+    This system takes care of all the communication required to get WebRTC setup
+ */
 AFRAME.registerSystem('webrtc', {
     pc: null,
     onAddStreamFunc: null,
@@ -6,7 +9,7 @@ AFRAME.registerSystem('webrtc', {
         this.pc = new RTCPeerConnection({  iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }] });
         window.setTimeout(() => {
             this.connect();
-        }, 50);
+        });
     },
 
     connect: function() {
@@ -34,6 +37,7 @@ AFRAME.registerSystem('webrtc', {
         });
 
         this.pc.onaddstream = (event) => {
+            console.log('Got a stream');
             if(this.onAddStreamFunc) {
                 this.onAddStreamFunc(event);
             }

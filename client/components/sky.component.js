@@ -1,3 +1,6 @@
+/*
+    This component retrieves and displays the panoramic image
+ */
 AFRAME.registerComponent('sky', {
     socket: null,
 

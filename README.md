@@ -11,7 +11,7 @@ On/Office was created to give you a private setting. Making use of powerful Virt
 🔗 Powered by web technology. Runs on any headset supporting WebVR.
 🖱️ A handy virtual cursor to keep your mouse position on the screen updated at all times
 💻 Available for Windows, Mac and Linux.
-😎 Fully open-source. Read the DEVELOPMENT.md file for more background on how the code works and how you can get involved.
+😎 Fully open-source. Read the DEVELOPMENT.md file for more background on how the code is structured and how you can get involved.
 
 ## Roadmap
 
@@ -23,5 +23,5 @@ On/Office was created to give you a private setting. Making use of powerful Virt
 
 ## Special thanks
 
-- [Nick van Manen](https://www.linkedin.com/in/nvanmanen/) for his valuable contributions in getting this project up and running.
+- [Nick van Manen](https://www.linkedin.com/in/nvanmanen/) for his invaluable contributions in getting this project up and running.
 - [Janine Terlouw](http://janineterlouw.nl) for the UI designs

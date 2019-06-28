@@ -35,6 +35,7 @@ let pin = '';
 let sessionId = null;
 
 function checkHostClient() {
+    console.log(!!host, !!client);
     if (!host || !client) {
         return;
     }
@@ -73,6 +74,7 @@ function initializeSocket() {
                 return;
             }
 
+            console.log('Client signed in!');
             socket.emit('client_accepted', sessionId);
 
             client = {socket};

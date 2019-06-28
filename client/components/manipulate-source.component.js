@@ -1,3 +1,6 @@
+/*
+    This component will allow the user to move the screen
+ */
 AFRAME.registerSystem('manipulate-source', {
     controls: null,
     dragging: false,

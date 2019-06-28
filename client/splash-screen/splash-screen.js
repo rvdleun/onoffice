@@ -1,4 +1,6 @@
-
+/*
+    Handles the pincode input, if the user has one setup
+ */
 Vue.component('pincode-input', {
     template: `
         <div id="pincode">
@@ -59,6 +61,9 @@ Vue.component('pincode-input', {
     }
 });
 
+/*
+    Handles the splash screen element, updating the user on what is going on.
+ */
 new Vue({
     el: '#splash-screen',
     data: {

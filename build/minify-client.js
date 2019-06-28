@@ -1,3 +1,7 @@
+/*
+    This script minifies all the code to reduce the filesize
+ */
+
 const compressor = require('node-minify');
 const fs = require('fs');
 const jsdom = require('jsdom').JSDOM;

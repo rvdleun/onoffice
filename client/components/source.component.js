@@ -1,3 +1,6 @@
+/*
+    This component displays a source. (a source being a screen)
+ */
 AFRAME.registerSystem('source', {
     assets: null,
     sources: null,
