@@ -7,7 +7,7 @@ import * as introJs from 'intro.js/intro.js';
 
 @Component({
     selector: 'app-screen-settings',
-    styleUrls: ['./settings.screen.css', '../../../../../node_modules/intro.js/minified/introjs.min.css'],
+    styleUrls: ['./settings.screen.css'],
     templateUrl: './settings.screen.html'
 })
 export class SettingsScreen implements OnInit {

@@ -1,12 +1,12 @@
-<div class="page" data-step="1" data-intro="Welcome to On/Office. Here are some pointers on how to use this application">
-    <app-sky style="height: 50%" data-step="2" data-intro="To select a custom panoramic image, click here"></app-sky>
+<div class="page">
+    <app-sky style="height: 50%" data-step="1" data-intro="To select a custom panoramic image, click here."></app-sky>
     <div class="options">
         <div class="form">
             <div class="row components">
-                <div class="col" data-step="4" data-intro="If you have multiple screens on your desktop, select what screen will be displayed in the virtual office here">
+                <div class="col" data-step="3" data-intro="If you have multiple screens on your desktop, select what screen will be displayed in the virtual office here.">
                     <app-select-screens *ngIf="sources" [disabled]="streaming" [sources]="sources"></app-select-screens>
                 </div>
-                <div class="col" data-step="3" data-intro="If you want to set a pincode for security, you can do so here. You will need to insert this code in the virtual environment before the screens are streamed.">
+                <div class="col" data-step="2" data-intro="If you want to set a numeric pincode for security, you can do so here. You will need to insert this code in the virtual environment gaining access to the virtual office.">
                     <app-pin-form [disabled]="streaming"></app-pin-form>
                 </div>
             </div>
@@ -20,6 +20,6 @@
             </div>
         </div>
     </div>
-    <app-start-streaming [sources]="sources" data-step="5" data-intro="Click here once you're ready to start streaming."></app-start-streaming>
+    <app-start-streaming [sources]="sources" data-step="4" data-intro="Click here once you're ready to start streaming."></app-start-streaming>
     <button class="tutorial-button" (click)="startTutorial()">?</button>
 </div>

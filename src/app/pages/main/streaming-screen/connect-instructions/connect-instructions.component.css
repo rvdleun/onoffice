@@ -18,7 +18,10 @@ img {
 }
 
 .ip {
-    text-decoration: underline;
-    border-bottom-width: 1px;
+    border-bottom: solid 1px white;
     padding-bottom: 3px;
+}
+
+.header {
+    font-weight: bold;
 }

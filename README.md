@@ -15,6 +15,7 @@ On/Office was created to give you a private setting. Making use of powerful Virt
 
 ## Roadmap
 
+* Provide separate instructions per supported headset
 * Improve screen resolution
 * Support for multiple screens
 * Move screens using a controller

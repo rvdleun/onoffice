@@ -2,3 +2,7 @@
 body {
     overflow: hidden;
 }
+
+.introjs-helperLayer {
+    opacity: .5;
+}
