@@ -1,6 +1,11 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 
+interface SkyData {
+    default: boolean;
+    sky: string;
+};
+
 @Component({
     selector: 'app-sky',
     styleUrls: ['./sky.component.scss'],
@@ -10,13 +15,12 @@ export class SkyComponent implements OnInit {
     @ViewChild('upload') uploadInput: ElementRef;
 
     backgroundImage: string;
+    default: boolean;
 
     constructor(public changeDetectorRef: ChangeDetectorRef, public electronService: ElectronService) { }
 
     public ngOnInit() {
-        this.electronService.remote.getGlobal('getSky')((sky) => {
-            this.setImage(sky);
-        });
+        this.retrieveImage();
     }
 
     public onClick() {
@@ -43,13 +47,26 @@ export class SkyComponent implements OnInit {
 
             const result = canvas.toDataURL('jpg');
             this.electronService.remote.getGlobal('setSky')(result);
-            this.setImage(result);
+            this.setImage({default: false, sky: result});
         };
         image.src = URL.createObjectURL(file);
     }
 
-    private setImage(image: string) {
-        this.backgroundImage = `url(${image})`;
+    public revert() {
+        console.log('Eyyy, im removing you here');
+        this.electronService.remote.getGlobal('revertSky')(() => this.retrieveImage());
+    }
+
+    private retrieveImage() {
+        this.electronService.remote.getGlobal('getSky')((sky: SkyData) => {
+            console.log('Skydata', sky);
+            this.setImage(sky);
+        });
+    }
+
+    private setImage(sky: SkyData) {
+        this.backgroundImage = `url(${sky.sky})`;
+        this.default = sky.default;
 
         this.changeDetectorRef.detectChanges();
     }

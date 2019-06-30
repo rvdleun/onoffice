@@ -6,8 +6,8 @@ AFRAME.registerComponent('sky', {
 
     init: function() {
         const socket = this.el.sceneEl.systems['socket'];
-        socket.on('sky', (image) => {
-            this.el.setAttribute('src', image);
+        socket.on('sky', (sky) => {
+            this.el.setAttribute('src', sky);
         });
 
         socket.emit('get-sky');

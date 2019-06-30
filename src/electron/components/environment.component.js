@@ -5,18 +5,25 @@ const storage = require('electron-json-storage');
 let sky = require('./environment/default-image');
 
 module.exports.init = function(global) {
+    global.revertSky = function(cb) {
+        storage.remove('sky', () => {
+            sky = require('./environment/default-image');
+            cb();
+        });
+    };
+
     global.getSky = function(cb) {
         storage.get('sky', (error, data) => {
             if (error) {
-                cb(sky);
+                cb({default: true, sky});
                 return;
             }
 
             if (data.sky) {
-                sky = data.sky;
+                cb({default: false, sky});
             }
 
-            cb(sky);
+            cb({default: true, sky});
         });
     };
 

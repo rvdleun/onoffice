@@ -4,5 +4,6 @@
 <div id="hover" (click)="onClick()">
     <div id="overlay"></div>
     <p>Change 360 image</p>
+    <button *ngIf="!default" class="revert" (click)="revert(); $event.stopPropagation()">Revert image</button>
 </div>
 <input #upload class="form-control" type="file" (change)="onFileChange()" id="file" />
