@@ -117,7 +117,17 @@ new Vue({
             this.sessionId = sessionId;
 
             const scene = document.querySelector('a-scene');
+            scene.addEventListener('need-interaction', this.onNeedInteraction);
             scene.addEventListener('source-added', this.onSourceAdded);
+        },
+
+        onNeedInteraction: function() {
+            document.addEventListener('mousedown', () => {
+                Array.from(document.querySelectorAll('.video-source')).forEach((source) => source.play() );
+
+                document.querySelector('a-scene').dispatchEvent(new Event('source-added'));
+            });
+            this.message = 'Please click / tap anywhere on the screen';
         },
 
         onSourceAdded: function() {

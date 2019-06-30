@@ -32,6 +32,7 @@ AFRAME.registerSystem('source', {
 
         const videoEl = document.createElement('video');
         videoEl.setAttribute('autoplay', '');
+        videoEl.setAttribute('class', 'video-source');
         videoEl.setAttribute('id', videoId);
         videoEl.setAttribute('muted', '');
 
@@ -39,32 +40,43 @@ AFRAME.registerSystem('source', {
         videoEl.onloadedmetadata = () => {
             this.assets.appendChild(videoEl);
 
-            const width = videoEl.videoWidth / 2;
-            const height = videoEl.videoHeight / 2;
+            videoEl.onplay = () => {
+                this.playing = true;
 
-            const sizeX = width / height;
-            const sizeY = 1;
+                const width = videoEl.videoWidth / 2;
+                const height = videoEl.videoHeight / 2;
 
-            const screen = document.createElement('a-plane');
-            screen.setAttribute('id', `screen-${event.stream.id}`);
-            screen.setAttribute('manipulate-source', '');
-            screen.setAttribute('position', '0 0 -1');
-            screen.setAttribute('material', 'shader: flat');
-            screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
-            screen.setAttribute('source', '');
+                const sizeX = width / height;
+                const sizeY = 1;
 
-            if (location.search && location.search.indexOf('no-source') >= 0) {
-                screen.setAttribute('color', 'lightgreen');
-            } else {
-                screen.setAttribute('src', `#${videoId}`);
-            }
+                const screen = document.createElement('a-plane');
+                screen.setAttribute('id', `screen-${event.stream.id}`);
+                screen.setAttribute('manipulate-source', '');
+                screen.setAttribute('position', '0 0 -1');
+                screen.setAttribute('material', 'shader: flat');
+                screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
+                screen.setAttribute('source', '');
 
-            const entity = document.createElement('a-entity');
-            entity.setAttribute('scale', '0 0 1');
-            entity.appendChild(screen);
-            this.sources.appendChild(entity);
+                if (location.search && location.search.indexOf('no-source') >= 0) {
+                    screen.setAttribute('color', 'lightgreen');
+                } else {
+                    screen.setAttribute('src', `#${videoId}`);
+                }
 
-            this.el.sceneEl.dispatchEvent(new Event('source-added'));
+                const entity = document.createElement('a-entity');
+                entity.setAttribute('scale', '0 0 1');
+                entity.appendChild(screen);
+                this.sources.appendChild(entity);
+            };
+
+            videoEl.play();
+            setTimeout(() => {
+                if (this.playing) {
+                    this.el.sceneEl.dispatchEvent(new Event('source-added'));
+                } else {
+                    this.el.sceneEl.dispatchEvent(new Event('need-interaction'));
+                }
+            });
         };
     },
 
