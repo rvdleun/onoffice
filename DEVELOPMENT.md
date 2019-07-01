@@ -40,9 +40,9 @@ This will open the application locally. There is currently no hot-reloading avai
 # Build
 [![Codeship Status for realitylab_ruben/virtual-office](https://app.codeship.com/projects/ae839ad0-b113-0136-608f-02af9aea0ff6/status?branch=master)](https://app.codeship.com/projects/310549)
 
-New builds are automatically generated after a new commit in the master branch, using [Codeship](https://codeship.com). The end results are uploaded to an Amazon S3 bucket.
+New builds are automatically generated after a new commit in the master branch, using [Codeship](https://codeship.com). The results are uploaded to an Amazon S3 bucket.
 
-They can be downloaded on: [Windows]() - [Mac]() - [Linux]()
+They can be found at: [Windows](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-windows.zip) - [Mac](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-mac.zip) - [Linux](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-linux.zip)
 
 ## Instructions
 Due to some issues with running the standard commands(in particular the size being 3x as big as it should be), a separate project in the `build` directory is setup to facilitate new builds.
