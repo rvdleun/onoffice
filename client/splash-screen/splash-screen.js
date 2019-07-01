@@ -162,6 +162,7 @@ new Vue({
         },
 
         startVirtualReality: function() {
+            this.socket.emit('setup-environment', 1.3);
             this.scene.enterVR();
         },
 

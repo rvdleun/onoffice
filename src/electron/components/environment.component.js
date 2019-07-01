@@ -50,4 +50,11 @@ module.exports.setupSocket = function(socket) {
     socket.on('source-scale', (scale) => {
         socket.broadcast.emit('source-scale', scale);
     });
+
+    socket.on('setup-environment', (scale) => {
+        setTimeout(() => {
+            socket.broadcast.emit('center-screen');
+            socket.broadcast.emit('source-scale', scale);
+        }, 500);
+    });
 };
