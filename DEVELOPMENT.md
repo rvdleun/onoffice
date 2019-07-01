@@ -39,19 +39,23 @@ This will open the application locally. There is currently no hot-reloading avai
 
 # Build
 [![Codeship Status for realitylab_ruben/virtual-office](https://app.codeship.com/projects/ae839ad0-b113-0136-608f-02af9aea0ff6/status?branch=master)](https://app.codeship.com/projects/310549)
-New builds are automatically generated after a new commit in the master branch, using [Codeship](https://codeship.com).
+
+New builds are automatically generated after a new commit in the master branch, using [Codeship](https://codeship.com). The end results are uploaded to an Amazon S3 bucket.
+
+They can be downloaded on: [Windows]() - [Mac]() - [Linux]()
 
 ## Instructions
 Due to some issues with running the standard commands(in particular the size being 3x as big as it should be), a separate project in the `build` directory is setup to facilitate new builds.
 
 Take the following steps to create a new build...
 
-1. Enter the `build` directory
-1. Run `sh prepare-build.sh`. This will prepare the source files in the directory
+1. Enter the `build` directory.
+1. Run `sh prepare-build.sh`. This will prepare the source files in the directory.
 1. Next, run either `package-mac`, `package-linux` or `package-windows` to build a version for your platform.
+1. The result can be found in the `release-builds` directory.
 
 # Application
-The application is a simple user interface that lets the user setup a 360 panoramic image, pick what screen is going to be displayed in the virtual environment and set a pin for additional security.
+The application is a user interface that lets the user setup a 360 panoramic image, pick what screen is going to be displayed in the virtual environment and set a numeric pincode for additional security.
 
 Once the user starts streaming, an Express web-server will start serving the files for the client. After the user has logged in, a user interface will pop up that lets the user resize and center the screen in the virtual world.
 

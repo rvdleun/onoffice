@@ -30,7 +30,6 @@ AFRAME.registerSystem('manipulate-source', {
 
         const axis = event.detail.axis;
         if(axis[0] === 0 && axis[1] === 0) {
-            console.log('This was no thang');
             return;
         }
 

@@ -9,9 +9,9 @@ On/Office was created to give you a private setting. Making use of powerful Virt
 🏢 Carry a virtual office with you anywhere.
 🌍 Change your environment to anything you'd like with a Panoramic image.
 🔗 Powered by web technology. Runs on any headset supporting WebVR.
-🖱️ A handy virtual cursor to keep your mouse position on the screen updated at all times
+🖱️ A handy virtual cursor to keep your mouse position on the virtual screen updated at all times
 💻 Available for Windows, Mac and Linux.
-😎 Fully open-source. Read the DEVELOPMENT.md file for more background on how the code is structured and how you can get involved.
+😎 Fully open-source. Read the [DEVELOPMENT.md](./DEVELOPMENT.md) file for more background on how the code is structured and how you can get involved.
 
 ## Roadmap
 

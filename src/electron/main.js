@@ -1,5 +1,4 @@
 require('./components/environment.component').init(global);
-require('./components/url-redirect.component').init(global);
 require('./components/webserver.component.js')(global);
 
 

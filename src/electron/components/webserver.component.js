@@ -35,7 +35,7 @@ let pin = '';
 let sessionId = null;
 
 function checkHostClient() {
-    console.log(!!host, !!client);
+    console.log('Checking if host and client are connected', !!host, !!client);
     if (!host || !client) {
         return;
     }
@@ -53,7 +53,6 @@ function initializeSocket() {
         sockets.push(socket);
 
         socket.on('host', (id) => {
-            console.log('Host trying to connect with ', id);
             if (sessionId === id) {
                 console.log('Host signed in!');
                 host = {socket};
@@ -117,11 +116,10 @@ module.exports = function(currentGlobal) {
     };
 
     global.setPin = function(newPin) {
-        console.log('Setting pin to', newPin);
         pin = newPin;
 
         storage.set('pin', { pin }, (error) => {
-            console.log(error);
+            console.error('Error while storing pin', error);
         });
     };
 

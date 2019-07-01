@@ -1,20 +1,15 @@
 const Electron = require('electron');
-// const Robot = require('robot-js');
 
 const displays = Electron.screen.getAllDisplays().map((display) => {
     return { streamId: '', display };
 });
 
-console.log('TEST');
-
 module.exports.registerDisplay = function(displayId, streamId) {
-    console.log('Gonna map', streamId, ' to ', displayId, displays);
-
     const display = displays.find((display) => { return displayId == 'screen:0:0' ||  'screen:' + display.display.id === displayId });
     if (display) {
         display.streamId = streamId;
     } else {
-        console.log('Could not find display');
+        console.error('Could not find display');
     }
 };
 

@@ -10,28 +10,28 @@ Vue.component('pincode-input', {
                 <div><span v-if="pin[2]">*</span></div>
                 <div><span v-if="pin[3]">*</span></div>
             </div>
-            <div id="buttons">
-                <div>
-                    <span v-on:click="addDigit('1')">1</span>
-                    <span v-on:click="addDigit('2')">2</span>
-                    <span v-on:click="addDigit('3')">3</span>
-                </div>
-                <div>
-                    <span v-on:click="addDigit('4')">4</span>
-                    <span v-on:click="addDigit('5')">5</span>
-                    <span v-on:click="addDigit('6')">6</span>
-                </div>
-                <div>
-                    <span v-on:click="addDigit('7')">7</span>
-                    <span v-on:click="addDigit('8')">8</span>
-                    <span v-on:click="addDigit('9')">9</span>
-                </div>
-                <div>
-                    <span style="color: green">0</span>
-                    <span v-on:click="addDigit('0')">0</span>
-                    <span v-on:click="removeDigit()"><</span>
-                </div>
-            </div>
+            <table id="buttons">
+                <tr>
+                    <td v-on:click="addDigit('1')">1</td>
+                    <td v-on:click="addDigit('2')">2</td>
+                    <td v-on:click="addDigit('3')">3</td>
+                </tr>
+                <tr>
+                    <td v-on:click="addDigit('4')">4</td>
+                    <td v-on:click="addDigit('5')">5</td>
+                    <td v-on:click="addDigit('6')">6</td>
+                </tr>
+                <tr>
+                    <td v-on:click="addDigit('7')">7</td>
+                    <td v-on:click="addDigit('8')">8</td>
+                    <td v-on:click="addDigit('9')">9</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td v-on:click="addDigit('0')">0</td>
+                    <td v-on:click="removeDigit()"><</td>
+                </tr>
+            </table>
         </div>`,
 
     data: function() {
@@ -170,7 +170,6 @@ new Vue({
         },
 
         onSendPin: function(pin) {
-            console.log(pin);
             this.message = 'Sending pin';
             this.socket.emit('pin', pin);
         },

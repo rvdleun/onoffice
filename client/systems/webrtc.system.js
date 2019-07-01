@@ -22,10 +22,10 @@ AFRAME.registerSystem('webrtc', {
                             this.pc.setLocalDescription(description, () => {
                                 socket.emit('webrtc-message', {'sdp': description});
                             }, () => {
-                                console.log('set description error')
+                                console.error('set description error')
                             });
                         }, (error) => {
-                            console.log(error);
+                            console.error('Create answer error', error);
                         });
                     }
                 }, (error) => {
@@ -37,12 +37,9 @@ AFRAME.registerSystem('webrtc', {
         });
 
         this.pc.onaddstream = (event) => {
-            console.log('Got a stream');
             if(this.onAddStreamFunc) {
                 this.onAddStreamFunc(event);
             }
         };
-
-        // socket.emit('client');
     }
 });

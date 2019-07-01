@@ -53,13 +53,11 @@ export class SkyComponent implements OnInit {
     }
 
     public revert() {
-        console.log('Eyyy, im removing you here');
         this.electronService.remote.getGlobal('revertSky')(() => this.retrieveImage());
     }
 
     private retrieveImage() {
         this.electronService.remote.getGlobal('getSky')((sky: SkyData) => {
-            console.log('Skydata', sky);
             this.setImage(sky);
         });
     }

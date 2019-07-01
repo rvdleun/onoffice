@@ -24,8 +24,6 @@ export class SelectScreensComponent {
             index = 0;
         }
 
-        console.log(index);
-
         this.sources[index].selected = true;
         this.changeDetectorRef.detectChanges();
     }

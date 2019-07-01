@@ -31,7 +31,9 @@ module.exports.init = function(global) {
         sky = newSky;
 
         storage.set('sky', { sky }, (error) => {
-            console.log(error);
+            if (error) {
+                console.error('Error while storing sky', error);
+            }
         });
     }
 };

@@ -51,10 +51,6 @@ export class StreamService {
                     mandatory: {
                         chromeMediaSource: 'desktop',
                         chromeMediaSourceId: source.source.id,
-                        minWidth: 2880,
-                        maxWidth: 2880,
-                        minHeight: 1800,
-                        maxHeight: 1800,
                     },
                 }
             }).then((stream) => {
@@ -67,19 +63,17 @@ export class StreamService {
                         pc.setLocalDescription(description, () => {
                             this.socketService.emit('webrtc-message', {'sdp': description});
                         }, () => {
-                            console.log('set description error');
+                            console.error('set local description error');
                         });
                     }, (error) => {
-                        console.log('Error', error);
+                        console.error('Error while creating offer', error);
                     });
                 }
             });
         });
 
         pc.addEventListener('iceconnectionstatechange', (event) => {
-            console.log(event.currentTarget['iceConnectionState'], event.currentTarget['iceConnectionState'] === 'completed');
             if (event.currentTarget['iceConnectionState'] === 'completed') {
-                console.log('Setting er to active');
                 this.statusSubject.next({ current: 'active' });
             }
 
@@ -102,10 +96,10 @@ export class StreamService {
                             pc.setLocalDescription(description, () => {
                                 this.socketService.emit('webrtc-message', {'sdp': description});
                             }, () => {
-                                console.log('set description error');
+                                console.error('Set local description error');
                             });
                         }, (error) => {
-                            console.log(error);
+                            console.error('Error while creating answer', error);
                         });
                     }
                 });
