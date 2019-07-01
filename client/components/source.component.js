@@ -53,7 +53,7 @@ AFRAME.registerSystem('source', {
                 screen.setAttribute('id', `screen-${event.stream.id}`);
                 screen.setAttribute('manipulate-source', '');
                 screen.setAttribute('position', '0 0 -1');
-                screen.setAttribute('material', 'shader: flat');
+                screen.setAttribute('material', 'shader: flat; height: ' + videoEl.videoHeight + '; width: ' + videoEl.videoWidth);
                 screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
                 screen.setAttribute('source', '');
 
