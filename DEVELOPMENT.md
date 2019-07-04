@@ -38,11 +38,11 @@ npm start-windows
 This will open the application locally. There is currently no hot-reloading available, so you will need to close down and rerun the command to see your desktop changes.
 
 # Build
-[![Codeship Status for realitylab_ruben/virtual-office](https://app.codeship.com/projects/ae839ad0-b113-0136-608f-02af9aea0ff6/status?branch=master)](https://app.codeship.com/projects/310549)
+[![Codeship Status for rvdleun/onoffice](https://app.codeship.com/projects/7a60cb80-7e6b-0137-53f1-322a9402e464/status?branch=master)](https://app.codeship.com/projects/351651)
 
 New builds are automatically generated after a new commit in the master branch, using [Codeship](https://codeship.com). The results are uploaded to an Amazon S3 bucket.
 
-They can be found at: [Windows](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-windows.zip) - [Mac](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-mac.zip) - [Linux](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-linux.zip)
+The latest builds can be found at: [Windows](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-windows.zip) - [Mac](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-mac.zip) - [Linux](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-linux.zip)
 
 ## Instructions
 Due to some issues with running the standard commands(in particular the size being 3x as big as it should be), a separate project in the `build` directory is setup to facilitate new builds.

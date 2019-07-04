@@ -17,7 +17,7 @@
   "dependencies": {
     "electron-json-storage": "^4.1.1",
     "express": "^4.16.4",
-    "ip": "^1.1.5",
+    "internal-ip": "^4.3.0",
     "jsdom": "^12.2.0",
     "node-minify": "^3.5.1",
     "rimraf": "^2.6.2",
