@@ -1,6 +1,6 @@
 require('./components/environment.component').init(global);
-require('./components/webserver.component.js')(global);
-
+require('./components/internal-ip.component').init(global);
+require('./components/webserver.component.js').init(global);
 
 const electron = require('electron')
 // Module to control application life.
@@ -76,8 +76,3 @@ app.on('activate', function () {
     createWindow()
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-const IP = require('ip');
-global.IP = IP.address() + ':24242';

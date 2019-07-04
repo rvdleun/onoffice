@@ -1,13 +1,16 @@
-<div class="page">
+<div class="page" *ngIf="status.current !== 'inactive'">
     <img src="./assets/img/logo-red.png" />
     <div id="data">
         <app-status></app-status>
     </div>
-    <div id="instructions" *ngIf="status.current !== 'active'">
-        <app-connect-instructions></app-connect-instructions>
+    <div id="error-message" *ngIf="errorMessage">
+        <app-error-message [message]="errorMessage"></app-error-message>
+    </div>
+    <div id="instructions" *ngIf="!errorMessage && status.current !== 'active'">
+        <app-connect-instructions [ip]="ip"></app-connect-instructions>
     </div>
     <div id="controls">
-        <div id="in-scene" *ngIf="status.current === 'active'">
+        <div id="in-scene" *ngIf="!errorMessage && status.current === 'active'">
             <p>Screen controls</p>
             <div class="input">
                 <app-screen-size data-step="1" data-intro="To change the screen size in the virtual world, move this slider."></app-screen-size>

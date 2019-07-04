@@ -27,8 +27,8 @@
     "bootstrap": "^4.3.1",
     "electron-json-storage": "^4.1.1",
     "express": "^4.16.3",
+    "internal-ip": "^4.3.0",
     "intro.js": "^2.9.3",
-    "ip": "^1.1.5",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1"
   },

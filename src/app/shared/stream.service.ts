@@ -5,7 +5,7 @@ import {SourceSelection} from '../pages/main/settings-screen/source-toggle/sourc
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 export interface AppStatus {
-    current: 'inactive' | 'setting-up' | 'waiting-for-client' | 'active';
+    current: 'inactive' | 'setting-up' | 'waiting-for-client' | 'active' | 'unable-to-determine-ip';
 }
 
 @Injectable()

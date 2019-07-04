@@ -101,9 +101,7 @@ function initializeSocket() {
     });
 }
 
-module.exports = function(currentGlobal) {
-    global = currentGlobal;
-
+module.exports.init = function(global) {
     global.getPinFromStorage = function(cb) {
         storage.get('pin', (error, data) => {
             if (error) {

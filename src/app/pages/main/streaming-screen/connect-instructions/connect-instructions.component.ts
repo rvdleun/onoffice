@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 
 @Component({
@@ -6,12 +6,8 @@ import {ElectronService} from 'ngx-electron';
     styleUrls: ['connect-instructions.component.css'],
     templateUrl: 'connect-instructions.component.html'
 })
-export class ConnectInstructionsComponent implements OnInit {
-    private ip: string;
+export class ConnectInstructionsComponent {
+    @Input() ip: string;
 
-    constructor(public electronService: ElectronService) { }
-
-    public ngOnInit() {
-        this.ip = this.electronService.remote.getGlobal('IP');
-    }
+    constructor() { }
 }
