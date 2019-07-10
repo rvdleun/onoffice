@@ -46,8 +46,9 @@ AFRAME.registerSystem('source', {
                 const width = videoEl.videoWidth / 2;
                 const height = videoEl.videoHeight / 2;
 
-                const sizeX = width / height;
-                const sizeY = 1;
+                const initialScale = 1.3;
+                const sizeX = initialScale * (width / height);
+                const sizeY = initialScale;
 
                 const screen = document.createElement('a-plane');
                 screen.setAttribute('id', `screen-${event.stream.id}`);
@@ -83,14 +84,14 @@ AFRAME.registerSystem('source', {
     showAll: function() {
         for (let i = 0; i < this.sources.children.length; i++) {
             this.sources.children[i].setAttribute('animation', 'property: scale; to: 1 1 1');
-            setTimeout(() => this.sources.children[i].setAttribute('visible', 'true'), 5000);
+            setTimeout(() => this.sources.children[i].setAttribute('visible', 'true'), 2000);
         }
     },
 
     hideAll: function() {
         for (let i = 0; i < this.sources.children.length; i++) {
-            this.sources.children[i].setAttribute('animation', 'property: scale; to: 0.0001 1 1');
-            setTimeout(() => this.sources.children[i].setAttribute('visible', 'false'), 5000);
+            this.sources.children[i].setAttribute('animation', 'property: scale; to: 0.0000001 1 1');
+            setTimeout(() => this.sources.children[i].setAttribute('visible', 'false'), 2000);
         }
     }
 });
@@ -104,7 +105,6 @@ AFRAME.registerComponent('source', {
 
         this.el.sceneEl.systems['socket'].on('source-scale', (scale) => {
             this.el.setAttribute('scale', `${x * scale} ${y * scale} ${z * scale}`);
-            console.log(this.el.getAttribute('scale'));
         });
     }
 });

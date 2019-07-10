@@ -96,7 +96,7 @@ new Vue({
         });
 
         this.scene.addEventListener('enter-vr', () => {
-            this.scene.systems['manipulate-source'].centerAllScreens();
+            setTimeout(() => this.scene.systems['manipulate-source'].centerAllScreens());
             this.vrActive = true;
         });
 
