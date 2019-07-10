@@ -4,7 +4,7 @@
   "description": "Instant Office, just add browser.",
   "version": "0.1.0",
   "license": "MIT",
-  "author": "Reality Lab",
+  "author": "Ruben van der Leun",
   "main": "dist/main.js",
   "scripts": {
     "build-electron": "ng build --base-href . && cp -R src/electron/* dist && ln -s ../client dist/client",
