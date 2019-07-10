@@ -44,7 +44,6 @@
 
 #splash-screen img {
     width: 80%;
-    margin-bottom: 40px;
 }
 
 #splash-screen p {
@@ -92,7 +91,7 @@
 }
 
 table td {
-    font-size: 32px;
+    font-size: 18px;
     padding: 10px;
     cursor: pointer;
 }
