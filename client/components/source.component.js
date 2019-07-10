@@ -90,7 +90,7 @@ AFRAME.registerSystem('source', {
 
     hideAll: function() {
         for (let i = 0; i < this.sources.children.length; i++) {
-            this.sources.children[i].setAttribute('animation', 'property: scale; to: 0.0000001 1 1');
+            this.sources.children[i].setAttribute('animation', 'property: scale; to: 0.0001 1 1');
             setTimeout(() => this.sources.children[i].setAttribute('visible', 'false'), 2000);
         }
     }
