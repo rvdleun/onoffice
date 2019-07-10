@@ -16,6 +16,18 @@ On/Office was created to give you some distraction-free privacy during your work
 
 😎 Fully open-source. Read the [DEVELOPMENT.md](./DEVELOPMENT.md) file for more background on how the code is structured and how you can get involved.
 
+## Supported headsets
+
+* HTC Vive
+* Windows MR
+* Oculus Quest
+* Oculus Go
+* Samsung Gear VR
+* Google Daydream
+* Google Cardboard
+
+(but technically, any headset with support for WebVR will work)
+
 ## Roadmap
 
 * Linux support
@@ -24,7 +36,11 @@ On/Office was created to give you some distraction-free privacy during your work
 * Support for multiple screens
 * Move screens using a controller
 * Add support for environments built in AFrame
-* Replace home-brewed WebRTC solution with an existing framework/library.
+* Replace home-brewed WebRTC solution with an existing framework/library
+
+These issues are sorted in random order. Each item has an entry on the [issues page](https://github.com/rvdleun/onoffice/issues). You can find the current progress there. 
+
+Feel free to contribute in any way possible. Anything is welcome: Feedback, thoughts on priority, implementations, ideas for new features, etc.
 
 ## Contributors
 

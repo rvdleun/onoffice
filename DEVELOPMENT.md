@@ -8,6 +8,10 @@ Nonetheless, thank you for taking the time to read this document and are possibl
 * You can reach me via a direct message on Twitter at [@rvdleun](https://twitter.com/rvdleun).
 * Finally, you can also email me at [onoffice@leunix.nl](mailto:onoffice@leunix.nl).
 
+
+## What can I contribute
+The [README.md](./README.md) file contains a roadmap with features that I would like to implement. Please check the issues page for any progress on the feature and indicate if you want to put some work into it.
+
 ## Frameworks and links
 * The project is divided into two parts: The desktop application(that runs on the computer and acts as a server) and the WebVR client that runs in a browser.
 * The application is created using [Electron](https://electronjs.org/), with the code being developed using [Angular](https://angular.io/). The client files are served using [Express](https://expressjs.com/).
