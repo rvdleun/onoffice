@@ -10,7 +10,7 @@
     "build-mac": "npm run dist && npm run package-mac",
     "dist": "sh build.sh",
     "package-mac": "electron-packager . --overwrite --asar=true --platform=darwin --arch=x64 --prune=true --out=release-builds --icon=assets/mac.icns  --electron-version=1.6.2",
-    "package-windows": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds",
+    "package-windows": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --icon=assets/windows.ico  --electron-version=1.6.2",
     "package-linux": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds",
     "start": "npm run build-mac && node server/index.js"
   },
