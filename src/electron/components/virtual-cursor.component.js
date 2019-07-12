@@ -13,12 +13,13 @@ module.exports.registerDisplay = function(displayId, streamId) {
     }
 };
 
+let watchInterval;
 module.exports.watch = function(socket) {
     let prevX = -1;
     let prevY = -1;
 
     socket.on('watch-cursor-position', () => {
-        setInterval(() => {
+        watchInterval = setInterval(() => {
             const mouse = Electron.screen.getCursorScreenPoint();
             if (prevX !== mouse.x || prevY !== mouse.y) {
                 const x = mouse.x;
@@ -33,15 +34,24 @@ module.exports.watch = function(socket) {
                     y >= display.display.bounds.y &&
                     y <= display.display.bounds.y + display.display.bounds.height);
 
-                if (display && display.streamId !== '') {
+                if (display) {
+                    if (display.streamId === '') {
+                        socket.emit('cursor-position', {streamId: false});
+                        return;
+                    }
+
                     const posX = (x - display.display.bounds.x) / display.display.bounds.width;
                     const posY = (y - display.display.bounds.y) / display.display.bounds.height;
 
                     socket.emit('cursor-position', {streamId: display.streamId, x: posX, y: posY});
-                } else {
-                    // console.log('Display not found', display);
                 }
             }
         }, 50);
+    });
+
+    socket.on('stop-streaming', () => {
+        this.displays.forEach((display) => display.streamId = '');
+
+        clearInterval(watchInterval);
     });
 };

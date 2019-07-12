@@ -29,6 +29,7 @@ export class StreamService {
         this.statusSubject.next({current: 'inactive'});
         this.electronService.remote.getGlobal('setWebServerActive')(false);
 
+        this.socketService.emit('stop-streaming');
         this.socketService.removeAllListeners('start');
 
         if (this.pc) {
