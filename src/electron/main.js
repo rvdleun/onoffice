@@ -29,7 +29,6 @@ function createWindow () {
       webPreferences: {backgroundThrottling: false}
   });
 
-  mainWindow.show();
   global.showWindow = () => {
       mainWindow.show();
   };
