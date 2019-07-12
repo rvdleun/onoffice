@@ -20,6 +20,7 @@ export class SkyComponent implements OnInit {
     constructor(public changeDetectorRef: ChangeDetectorRef, public electronService: ElectronService) { }
 
     public ngOnInit() {
+        console.log('!');
         this.retrieveImage();
     }
 
@@ -57,7 +58,9 @@ export class SkyComponent implements OnInit {
     }
 
     private retrieveImage() {
+        console.trace('Retrieving image');
         this.electronService.remote.getGlobal('getSky')((sky: SkyData) => {
+            console.trace(sky.default);
             this.setImage(sky);
         });
     }

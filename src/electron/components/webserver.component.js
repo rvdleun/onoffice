@@ -117,7 +117,9 @@ module.exports.init = function(global) {
         pin = newPin;
 
         storage.set('pin', { pin }, (error) => {
-            console.error('Error while storing pin', error);
+            if (error) {
+                console.error('Error while storing pin', error);
+            }
         });
     };
 

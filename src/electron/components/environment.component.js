@@ -20,7 +20,8 @@ module.exports.init = function(global) {
             }
 
             if (data.sky) {
-                cb({default: false, sky});
+                cb({default: false, sky: data.sky});
+                return;
             }
 
             cb({default: true, sky});
