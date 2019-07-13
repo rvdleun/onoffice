@@ -40,7 +40,7 @@ New builds are automatically generated after a new commit in the master branch, 
 
 The latest builds can be found at: [Windows](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-windows.zip) - [Mac](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-mac.zip) - [Linux](https://on-office.s3.eu-west-2.amazonaws.com/builds/OnOffice-linux.zip)
 
-Note: At the moment, Linux is not officially supported and doesn't have a release yet. A build is created nonetheless, but will likely not function properly at the moment. If you are interested in helping out with that, that'd be great. 😇
+At the moment, I have to admit that I do most of my development and testing on my Macbook. I do try out and test it as thoroughly on Linux and Windows as possible, but not as much as I'd should/want to.
 
 ## Instructions
 Due to some issues with running the standard commands(in particular the size being 3x as big as it should be), a separate project in the `build` directory is setup to facilitate new builds.
