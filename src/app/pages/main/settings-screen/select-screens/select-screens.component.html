@@ -1,13 +1,11 @@
 <div class="row" [ngStyle]="{'pointer-events': disabled ? 'none' : 'all'}">
     <div class="col-1 button">
-        <a *ngIf="sources.length > 1" class="prev-button" (click)="changeSelected(-1)">&lt;</a>
+        <a *ngIf="showArrows" class="prev-button" (click)="changeSelected(-1)">&lt;</a>
     </div>
-    <ng-container *ngFor="let source of sources">
-        <div class="col source" *ngIf="source.selected">
-            <app-source-toggle [source]="source"></app-source-toggle>
-        </div>
-    </ng-container>
+    <div class="col source">
+        <app-source-toggle [source]="sources[selectedSource]"></app-source-toggle>
+    </div>
     <div class="col-1 button">
-        <a *ngIf="sources.length > 1" class="next-button" (click)="changeSelected(1)">&gt;</a>
+        <a *ngIf="showArrows" class="next-button" (click)="changeSelected(1)">&gt;</a>
     </div>
 </div>

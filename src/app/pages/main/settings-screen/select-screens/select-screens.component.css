@@ -1,5 +1,5 @@
 .button {
-    margin-top: 45px;
+    margin-top: 55px;
 }
 
 .prev-button,
@@ -14,8 +14,4 @@
 
 .next-button {
     margin-left: -160px;
-}
-
-.source {
-    pointer-events: none;
 }

@@ -26,10 +26,10 @@ export class SettingsScreen implements OnInit {
 
     public ngOnInit() {
         this.electronService.desktopCapturer.getSources({ types: [ 'screen' ] }, (error, sources) => {
-            this.sources = sources.map((source, index) => {
+            this.sources = sources.map((source) => {
                 return {
                     source,
-                    selected: index === 0,
+                    selected: true,
                 };
             });
 

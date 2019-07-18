@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit} from '@angular/core';
 
 export interface SourceSelection {
     source: any;
@@ -10,16 +10,19 @@ export interface SourceSelection {
     styleUrls: ['./source-toggle.component.scss'],
     templateUrl: 'source-toggle.component.html'
 })
-export class SourceToggleComponent implements OnInit {
+export class SourceToggleComponent implements OnChanges {
     @Input() source: SourceSelection;
 
     public thumbnail: string;
 
-    public ngOnInit() {
+    constructor(public changeDetectorRef: ChangeDetectorRef) { }
+
+    public ngOnChanges() {
         this.thumbnail = this.source.source.thumbnail.toDataURL();
     }
 
     public onToggle() {
-        // this.source.selected = !this.source.selected;
+        this.source.selected = !this.source.selected;
+        this.changeDetectorRef.detectChanges();
     }
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {StreamService} from '../../../../shared/stream.service';
 import {SourceSelection} from '../source-toggle/source-toggle.component';
 
