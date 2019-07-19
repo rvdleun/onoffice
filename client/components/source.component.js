@@ -49,11 +49,13 @@ AFRAME.registerSystem('source', {
                 const initialScale = 1.3;
                 const sizeX = initialScale * (width / height);
                 const sizeY = initialScale;
+                const posY = initialScale * this.sources.children.length;
+                const posZ = 1 + (this.sources.children.length * .1);
 
                 const screen = document.createElement('a-plane');
                 screen.setAttribute('id', `screen-${event.stream.id}`);
                 screen.setAttribute('manipulate-source', '');
-                screen.setAttribute('position', '0 0 -1');
+                screen.setAttribute('position', `0 ${posY} ${-posZ}`);
                 screen.setAttribute('material', 'shader: flat; height: ' + videoEl.videoHeight + '; width: ' + videoEl.videoWidth);
                 screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
                 screen.setAttribute('source', '');

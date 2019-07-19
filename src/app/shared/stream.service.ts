@@ -24,7 +24,7 @@ export class StreamService {
         this.electronService.remote.getGlobal('setWebServerActive')(true);
 
         this.socketService.emit('host', this.electronService.remote.getGlobal('sessionId'));
-        this.socketService.on('client-id', (clientId) => this.setupConnection(clientId, sources));
+        this.socketService.on('client-id', (clientId) => sources.forEach((source) => this.setupConnection(clientId, source)));
     }
 
     public stopStreaming() {
@@ -39,18 +39,17 @@ export class StreamService {
         }
     }
 
-    private async setupConnection(clientId: string, sources: SourceSelection[]) {
-        const source = sources[0];
+    private async setupConnection(clientId: string, source: SourceSelection) {
         const n = <any>navigator;
         const stream = await n.mediaDevices.getUserMedia({
-                audio: false,
-                video: {
-                    mandatory: {
-                        chromeMediaSource: 'desktop',
-                        chromeMediaSourceId: source.source.id,
-                    },
-                }
-            });
+            audio: false,
+            video: {
+                mandatory: {
+                    chromeMediaSource: 'desktop',
+                    chromeMediaSourceId: source.source.id,
+                },
+            }
+        });
 
         this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(source.source.id, stream.id);
 
