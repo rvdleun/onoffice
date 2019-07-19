@@ -4,6 +4,8 @@ import {SocketService} from './socket.service';
 import {SourceSelection} from '../pages/main/settings-screen/source-toggle/source-toggle.component';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
+declare var Peer;
+
 export interface AppStatus {
     current: 'inactive' | 'setting-up' | 'waiting-for-client' | 'active' | 'unable-to-determine-ip';
 }
@@ -22,7 +24,7 @@ export class StreamService {
         this.electronService.remote.getGlobal('setWebServerActive')(true);
 
         this.socketService.emit('host', this.electronService.remote.getGlobal('sessionId'));
-        this.socketService.on('start', () => this.setupConnection(sources));
+        this.socketService.on('client-id', (clientId) => this.setupConnection(clientId, sources));
     }
 
     public stopStreaming() {
@@ -37,16 +39,10 @@ export class StreamService {
         }
     }
 
-    private setupConnection(sources: SourceSelection[]) {
-        const pc = new RTCPeerConnection(
-            {
-                iceServers:
-                    [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }]
-            });
-
-        sources.forEach((source) => {
-            const n = <any>navigator;
-            n.mediaDevices.getUserMedia({
+    private async setupConnection(clientId: string, sources: SourceSelection[]) {
+        const source = sources[0];
+        const n = <any>navigator;
+        const stream = await n.mediaDevices.getUserMedia({
                 audio: false,
                 video: {
                     mandatory: {
@@ -54,61 +50,28 @@ export class StreamService {
                         chromeMediaSourceId: source.source.id,
                     },
                 }
-            }).then((stream) => {
-                pc.addStream(stream);
-
-                this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(source.source.id, stream.id);
-
-                if (pc.getLocalStreams().length === sources.length) {
-                    pc.createOffer((description) => {
-                        pc.setLocalDescription(description, () => {
-                            this.socketService.emit('webrtc-message', {'sdp': description});
-                        }, () => {
-                            console.error('set local description error');
-                        });
-                    }, (error) => {
-                        console.error('Error while creating offer', error);
-                    });
-                }
             });
+
+        this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(source.source.id, stream.id);
+
+        const peer = new Peer(null, {
+            host: 'localhost',
+            port: 24242,
+            path: '/peerjs'
         });
 
-        pc.addEventListener('iceconnectionstatechange', (event) => {
-            if (event.currentTarget['iceConnectionState'] === 'completed') {
-                this.statusSubject.next({ current: 'active' });
-            }
+        peer.on('open', () => {
+            const call = peer.call(clientId, stream);
 
-            if (event.currentTarget['iceConnectionState'] === 'disconnected') {
+            call.on('close', () => {
                 this.statusSubject.next({ current: 'waiting-for-client' });
-            }
+            });
+
+            this.statusSubject.next({ current: 'active' });
         });
 
-        pc.onicecandidate = (event) => {
-            if (event.candidate != null) {
-                this.socketService.emit('webrtc-message', {'ice': event.candidate});
-            }
-        };
-
-        this.socketService.on('webrtc-message', (message) => {
-            if (message.sdp) {
-                pc.setRemoteDescription(new RTCSessionDescription(message.sdp), () => {
-                    if (message.sdp.type === 'offer') {
-                        pc.createAnswer((description) => {
-                            pc.setLocalDescription(description, () => {
-                                this.socketService.emit('webrtc-message', {'sdp': description});
-                            }, () => {
-                                console.error('Set local description error');
-                            });
-                        }, (error) => {
-                            console.error('Error while creating answer', error);
-                        });
-                    }
-                });
-            } else if (message.ice) {
-                pc.addIceCandidate(new RTCIceCandidate(message.ice));
-            }
+        peer.on('error', (error) => {
+            console.error('Connection error', error);
         });
-
-        this.pc = pc;
     }
 }

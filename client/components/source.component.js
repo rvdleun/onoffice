@@ -19,6 +19,8 @@ AFRAME.registerSystem('source', {
     },
 
     onAddStream: function(event) {
+        console.log('BRAHHHH');
+
         if(!this.assets) {
             this.assets = document.querySelector('a-assets');
         }
@@ -37,7 +39,9 @@ AFRAME.registerSystem('source', {
         videoEl.setAttribute('muted', '');
 
         videoEl.srcObject = event.stream;
+        console.log('Gonna, like, load the meta data');
         videoEl.onloadedmetadata = () => {
+            console.log('Loaded that stuff');
             this.assets.appendChild(videoEl);
 
             videoEl.onplay = () => {
