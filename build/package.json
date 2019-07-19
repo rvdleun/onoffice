@@ -20,6 +20,8 @@
     "internal-ip": "^4.3.0",
     "jsdom": "^12.2.0",
     "node-minify": "^3.5.1",
+    "peer": "^0.2.10",
+    "peerjs-server": "^0.2.9",
     "rimraf": "^2.6.2",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1"

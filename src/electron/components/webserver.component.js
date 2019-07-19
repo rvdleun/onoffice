@@ -1,4 +1,5 @@
 const express = require('express');
+const expressPeerServer = require('peer').ExpressPeerServer;
 const webApp = express();
 const webServer = require('http').Server(webApp);
 const storage = require('electron-json-storage');
@@ -82,6 +83,14 @@ function initializeSocket() {
             require('./virtual-cursor.component').watch(socket);
         });
 
+        socket.on('client-id', (id) => {
+            if (host && host.socket) {
+                host.socket.emit('client-id', id);
+            } else {
+                console.log('Tried to send client ID to host, but no host available.');
+            }
+        });
+
         socket.on('pin', (receivedPin) => {
             if (pin === receivedPin) {
                 connections[socket.id].properties.approved = true;
@@ -93,10 +102,6 @@ function initializeSocket() {
 
         socket.on('cursor-position', (message) => {
             socket.broadcast.emit('cursor-position', message);
-        });
-
-        socket.on('webrtc-message', (message) => {
-            socket.broadcast.emit('webrtc-message', message);
         });
     });
 }
@@ -129,6 +134,7 @@ module.exports.init = function(global) {
             global.sessionId = sessionId;
             initializeSocket();
             webServerHandler = webServer.listen(24242);
+            webApp.use('/peerjs', expressPeerServer(webServerHandler));
         } else {
             for(let id in connections) {
                 const connection = connections[id];
