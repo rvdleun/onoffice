@@ -6,12 +6,15 @@
     <div id="error-message" *ngIf="errorMessage">
         <app-error-message [message]="errorMessage"></app-error-message>
     </div>
-    <div id="instructions" *ngIf="!errorMessage && status.current !== 'active'">
+    <div id="instructions" *ngIf="!errorMessage && status.current !== 'active' && false">
         <app-connect-instructions [ip]="ip"></app-connect-instructions>
     </div>
     <div id="controls">
-        <div id="in-scene" *ngIf="!errorMessage && status.current === 'active'">
-            <p>Screen controls</p>
+        <div id="in-scene" *ngIf="!errorMessage && status.current === 'active' || true">
+            <p class="screen-controls-title">Screen controls</p>
+            <div class="select-screen">
+                <app-select-screen></app-select-screen>
+            </div>
             <div class="input">
                 <app-screen-size data-step="1" data-intro="To change the screen size in the virtual world, move this slider."></app-screen-size>
             </div>

@@ -15,3 +15,7 @@
 .next-button {
     margin-left: -160px;
 }
+
+.single-source {
+    pointer-events: none;
+}

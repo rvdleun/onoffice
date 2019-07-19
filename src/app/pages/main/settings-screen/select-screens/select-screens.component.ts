@@ -28,8 +28,6 @@ export class SelectScreensComponent implements OnInit {
             newSource = 0;
         }
 
-        console.log(newSource);
-
         this.selectedSource = newSource;
         this.changeDetectorRef.detectChanges();
     }

@@ -3,7 +3,7 @@
         <a *ngIf="showArrows" class="prev-button" (click)="changeSelected(-1)">&lt;</a>
     </div>
     <div class="col source">
-        <app-source-toggle [source]="sources[selectedSource]"></app-source-toggle>
+        <app-source-toggle [ngClass]="{'single-source': !showArrows }" [source]="sources[selectedSource]"></app-source-toggle>
     </div>
     <div class="col-1 button">
         <a *ngIf="showArrows" class="next-button" (click)="changeSelected(1)">&gt;</a>
