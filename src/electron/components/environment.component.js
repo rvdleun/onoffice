@@ -40,16 +40,16 @@ module.exports.init = function(global) {
 };
 
 module.exports.setupSocket = function(socket) {
-    socket.on('center-screen', () => {
-        socket.broadcast.emit('center-screen');
+    socket.on('center-screen', (data) => {
+        socket.broadcast.emit('center-screen', data);
     });
 
     socket.on('get-sky', () => {
         socket.emit('sky', sky);
     });
 
-    socket.on('source-scale', (scale) => {
-        socket.broadcast.emit('source-scale', scale);
+    socket.on('source-scale', (data) => {
+        socket.broadcast.emit('source-scale', data);
     });
 
     socket.on('setup-environment', (scale) => {

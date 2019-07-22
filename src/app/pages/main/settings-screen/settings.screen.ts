@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {SourceSelection} from './source-toggle/source-toggle.component';
 import {SocketService} from '../../../shared/socket.service';
@@ -10,7 +10,8 @@ import * as introJs from 'intro.js/intro.js';
     styleUrls: ['./settings.screen.css'],
     templateUrl: './settings.screen.html'
 })
-export class SettingsScreen implements OnInit {
+export class SettingsScreen {
+    @Input()
     public sources: SourceSelection[];
     public status: AppStatus;
     public streaming: boolean = false;
@@ -18,31 +19,10 @@ export class SettingsScreen implements OnInit {
 
     public fadeOut: boolean = false;
 
-    constructor(private changeDetectorRef: ChangeDetectorRef, private electronService: ElectronService, public streamService: StreamService, private socketService: SocketService) {
+    constructor(public streamService: StreamService, private socketService: SocketService) {
         this.status = {
             current: 'inactive',
         };
-    }
-
-    public ngOnInit() {
-        this.electronService.desktopCapturer.getSources({ types: [ 'screen' ] }, (error, sources) => {
-            this.sources = sources.map((source) => {
-                return {
-                    source,
-                    selected: true,
-                };
-            });
-
-            this.changeDetectorRef.detectChanges();
-        });
-    }
-
-    public onSourceScaleChange() {
-        this.socketService.emit('source-scale', this.sourceScale);
-    }
-
-    public centerScreen() {
-        this.socketService.emit('center-screen');
     }
 
     public startTutorial() {

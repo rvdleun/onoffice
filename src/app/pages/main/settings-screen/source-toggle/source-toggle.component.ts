@@ -1,8 +1,10 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, OnInit} from '@angular/core';
 
 export interface SourceSelection {
+    scale: number;
     source: any;
     selected: boolean;
+    streamId?: string;
 }
 
 @Component({

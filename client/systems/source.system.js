@@ -52,13 +52,14 @@ AFRAME.registerSystem('source', {
                 const posY = initialScale * this.sources.children.length;
                 const posZ = 1 + (this.sources.children.length * .1);
 
+                console.log(event.stream.id);
+
                 const screen = document.createElement('a-plane');
                 screen.setAttribute('id', `screen-${event.stream.id}`);
-                screen.setAttribute('manipulate-source', '');
+                screen.setAttribute('manipulate-source', `streamId: ${event.stream.id}`);
                 screen.setAttribute('position', `0 ${posY} ${-posZ}`);
                 screen.setAttribute('material', 'shader: flat; height: ' + videoEl.videoHeight + '; width: ' + videoEl.videoWidth);
                 screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
-                screen.setAttribute('source', '');
 
                 if (location.search && location.search.indexOf('no-source') >= 0) {
                     screen.setAttribute('color', 'lightgreen');
@@ -95,18 +96,5 @@ AFRAME.registerSystem('source', {
             this.sources.children[i].setAttribute('animation', 'property: scale; to: 0.0001 1 1');
             setTimeout(() => this.sources.children[i].setAttribute('visible', 'false'), 2000);
         }
-    }
-});
-
-AFRAME.registerComponent('source', {
-    init: function() {
-        const initialScale = this.el.getAttribute('scale');
-        const x = initialScale.x;
-        const y = initialScale.y;
-        const z = initialScale.z;
-
-        this.el.sceneEl.systems['socket'].on('source-scale', (scale) => {
-            this.el.setAttribute('scale', `${x * scale} ${y * scale} ${z * scale}`);
-        });
     }
 });

@@ -50,6 +50,7 @@ export class StreamService {
                 },
             }
         });
+        source.streamId = stream.id;
 
         this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(source.source.id, stream.id);
 

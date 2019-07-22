@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {StreamService} from '../../shared/stream.service';
+import {SourceSelection} from './settings-screen/source-toggle/source-toggle.component';
 
 type ScreenId = 'settings' | 'streaming';
 
@@ -9,10 +10,11 @@ type ScreenId = 'settings' | 'streaming';
     styleUrls: ['./main.page.css'],
     templateUrl: './main.page.html'
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
     public activeScreen: ScreenId = null;
     public active: boolean = true;
     public backgroundClass: 'blue' | 'no-transition' = 'no-transition';
+    public sources: SourceSelection[];
 
     constructor(public electronService: ElectronService, public streamService: StreamService) {
         streamService.statusSubject.subscribe((status) => {
@@ -21,6 +23,20 @@ export class MainPageComponent {
             } else if (this.activeScreen === 'settings') {
                 this.transitionTo('streaming');
             }
+        });
+    }
+
+    public ngOnInit() {
+        this.electronService.desktopCapturer.getSources({ types: [ 'screen' ] }, (error, sources) => {
+            this.sources = sources.map((source) => {
+                return {
+                    scale: 1,
+                    source,
+                    selected: true,
+                };
+            });
+
+            console.log(this.sources);
         });
     }
 

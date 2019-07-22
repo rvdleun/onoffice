@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStatus, StreamService} from '../../../shared/stream.service';
 import * as introJs from 'intro.js/intro';
 import {Subscription} from 'rxjs';
 import {ElectronService} from 'ngx-electron';
+import {SourceSelection} from '../settings-screen/source-toggle/source-toggle.component';
 
 @Component({
     selector: 'app-screen-streaming',
@@ -10,6 +11,8 @@ import {ElectronService} from 'ngx-electron';
     templateUrl: './streaming.screen.html'
 })
 export class StreamingScreen implements OnInit, OnDestroy {
+    @Input()
+    public sources: SourceSelection[];
     public errorMessage: string;
     public ip: string;
     public status: AppStatus;
