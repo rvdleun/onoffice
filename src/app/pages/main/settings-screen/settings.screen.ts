@@ -11,19 +11,7 @@ import * as introJs from 'intro.js/intro.js';
     templateUrl: './settings.screen.html'
 })
 export class SettingsScreen {
-    @Input()
-    public sources: SourceSelection[];
-    public status: AppStatus;
-    public streaming: boolean = false;
-    public sourceScale: number = 1;
-
-    public fadeOut: boolean = false;
-
-    constructor(public streamService: StreamService, private socketService: SocketService) {
-        this.status = {
-            current: 'inactive',
-        };
-    }
+    @Input() sources: SourceSelection[];
 
     public startTutorial() {
         introJs().start();

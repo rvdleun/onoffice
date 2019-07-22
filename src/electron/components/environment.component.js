@@ -4,6 +4,17 @@ const storage = require('electron-json-storage');
 
 let sky = require('./environment/default-image');
 
+storage.get('sky', (error, data) => {
+    if (error) {
+        cb({default: true, sky});
+        return;
+    }
+
+    if (data.sky) {
+        sky = data.sky;
+    }
+});
+
 module.exports.init = function(global) {
     global.revertSky = function(cb) {
         storage.remove('sky', () => {
@@ -40,16 +51,14 @@ module.exports.init = function(global) {
 };
 
 module.exports.setupSocket = function(socket) {
-    socket.on('center-screen', (data) => {
-        socket.broadcast.emit('center-screen', data);
+    ['center-screen', 'source-scale', 'source-select'].forEach((message) => {
+        socket.on(message, (data) => {
+            socket.broadcast.emit(message, data);
+        });
     });
 
     socket.on('get-sky', () => {
         socket.emit('sky', sky);
-    });
-
-    socket.on('source-scale', (data) => {
-        socket.broadcast.emit('source-scale', data);
     });
 
     socket.on('setup-environment', (scale) => {

@@ -1,5 +1,5 @@
 /*
-    This component will allow the user to move the screen
+    This component will allow the user to move and resize the screen
  */
 AFRAME.registerSystem('manipulate-source', {
     controls: null,
@@ -109,8 +109,6 @@ AFRAME.registerComponent('manipulate-source', {
     },
 
     center: function(data, force) {
-        console.log(data, force);
-
         const { streamId } = data;
         if (streamId !== this.data.streamId && !force) {
             return;
@@ -130,6 +128,6 @@ AFRAME.registerComponent('manipulate-source', {
             return;
         }
 
-        this.el.parentElement.setAttribute('scale', `${this.initialScale.x * scale} ${this.initialScale.y * scale} ${this.initialScale.z * scale}`);
+        this.el.setAttribute('scale', `${this.initialScale.x * scale} ${this.initialScale.y * scale} ${this.initialScale.z * scale}`);
     }
 });

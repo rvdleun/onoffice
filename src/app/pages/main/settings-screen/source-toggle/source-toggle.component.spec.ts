@@ -10,7 +10,7 @@ describe('SourceToggleComponent', () => {
             declarations: [SourceToggleComponent],
         });
 
-        source = { source: 'blaaa', selected: false };
+        source = { source: 'blaaa', selected: false, scale: 1 };
         component = TestBed.createComponent(SourceToggleComponent).componentInstance;
         component.source = source;
     });

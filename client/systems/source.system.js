@@ -52,8 +52,6 @@ AFRAME.registerSystem('source', {
                 const posY = initialScale * this.sources.children.length;
                 const posZ = 1 + (this.sources.children.length * .1);
 
-                console.log(event.stream.id);
-
                 const screen = document.createElement('a-plane');
                 screen.setAttribute('id', `screen-${event.stream.id}`);
                 screen.setAttribute('manipulate-source', `streamId: ${event.stream.id}`);
@@ -66,6 +64,14 @@ AFRAME.registerSystem('source', {
                 } else {
                     screen.setAttribute('src', `#${videoId}`);
                 }
+
+                const border = document.createElement('a-plane');
+                border.setAttribute('color', '#ff3c4b');
+                border.setAttribute('position', '0 0 -.01');
+                border.setAttribute('scale', '1.025 1.025 1.025');
+                border.setAttribute('source-border', `streamId: ${event.stream.id}`);
+                border.setAttribute('visible', 'false');
+                screen.appendChild(border);
 
                 const entity = document.createElement('a-entity');
                 entity.setAttribute('scale', '0 0 1');
