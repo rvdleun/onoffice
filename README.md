@@ -30,17 +30,13 @@ On/Office was created to give you some distraction-free privacy during your work
 
 ## Roadmap
 
-* ~~Linux support ([*](https://github.com/rvdleun/onoffice/issues/1))~~
 * Provide separate instructions per supported headset ([*](https://github.com/rvdleun/onoffice/issues/2))
 * Improve screen resolution ([*](https://github.com/rvdleun/onoffice/issues/3))
 * Support for multiple screens ([*](https://github.com/rvdleun/onoffice/issues/4))
 * Move screens using a controller ([*](https://github.com/rvdleun/onoffice/issues/5))
 * Add support for environments built in AFrame ([*](https://github.com/rvdleun/onoffice/issues/6))
-* Replace home-brewed WebRTC solution with an existing framework/library ([*](https://github.com/rvdleun/onoffice/issues/7))
 
 These issues are sorted in random order. Each item has an entry on the [issues page](https://github.com/rvdleun/onoffice/issues). You can find the current progress there. Feel free to contribute in any way possible. Anything is welcome: Feedback, thoughts on priority, implementations, ideas for new features, etc.
-
-Items that are struck through are considered completed and will be removed from this file in the near future.
 
 ## Contributors
 
