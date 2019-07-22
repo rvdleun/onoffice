@@ -116,6 +116,8 @@ new Vue({
             this.message = 'Waiting for source';
             this.sessionId = sessionId;
 
+            this.scene.systems['webrtc'].setup();
+
             const scene = document.querySelector('a-scene');
             scene.addEventListener('need-interaction', this.onNeedInteraction);
             scene.addEventListener('source-added', this.onSourceAdded);

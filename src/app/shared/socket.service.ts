@@ -17,6 +17,10 @@ export class SocketService {
         this.socket.on(event, func);
     }
 
+    once(event: string, func: Function) {
+        this.socket.once(event, func);
+    }
+
     removeListener(event:string, func: Function) {
         this.socket.removeListener(event, func);
     }

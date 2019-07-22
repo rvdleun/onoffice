@@ -111,3 +111,16 @@ Note that you won't need to rerun the start command. Any changes made in the `cl
 * [client/splash-screen](client/splash-screen) - Vue scripts that handle the splash screen
 * [client/systems](client/systems) - AFrame systems
 * [client/vendor](client/vendor) - All vendor files
+
+# WebRTC implementation
+This section will cover how a connection is setup between the desktop and the VR Headset. In the code(and this section), the desktop will be referred to as *host*, and the headset connection as the *client*.
+
+WebRTC has been implemented using [PeerJS](http://peerjs.com). The PeerJS server runs on the host. [Socket.io](socket.io) is used to send the client ID to the host.
+
+* (*host*) After the user has pressed 'Start Streaming', `setWebServerActive` is called in [webserver.component.js](./src/electron/components/webserver.component.js). This boots the Express server to serve the client's files, starts socket.io and initialises the PeerJS server.
+* (*client*) Once the user has opened the client in the browser, it will first initialise the VR scene and then connects to the host via socket.io. This is coded in [splash-screen.js](client/splash-screen/splash-screen.js).
+* (*client*) After receiving a `client_message`(indicating that the host has approved and wants to start streaming), the `setup()` function in [webrtc.system.js](./client/systems/webrtc.system.js) is called.
+* (*client*) A connection the PeerJS server is made. Once this has been opened, the client has received a random ID to identify itself. This ID is sent to the host.
+* (*host*) The `setupConnection()` function in [stream.service.ts](./src/app/shared/stream.service.ts) handles the clientID, along with the sources that it has to stream. At the moment, streaming only one display is supported.
+* (*host*) A stream is created. The host also connects to PeerJS now. Once this is done, it uses the [call()](https://peerjs.com/docs.html#peercall) to connection to the Client ID.
+* (*client*) Back in [webrtc.system.js](./client/systems/webrtc.system.js), the call is received and answered. This results in the stream being available in the `stream` event.
