@@ -13,6 +13,13 @@ export class StartStreamingComponent {
     constructor(public streamService: StreamService) { }
 
     public onClick() {
+        const selectedSources = this.sources.filter((source) => source.selected);
+
+        if (selectedSources.length === 0) {
+            alert('You need to have one display toggled to start streaming.');
+            return;
+        }
+
         this.streamService.startStreaming(this.sources.filter((source) => source.selected));
     }
 }

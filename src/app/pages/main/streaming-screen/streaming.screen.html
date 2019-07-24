@@ -6,13 +6,13 @@
     <div id="error-message" *ngIf="errorMessage">
         <app-error-message [message]="errorMessage"></app-error-message>
     </div>
-    <div id="instructions" *ngIf="!errorMessage && status.current !== 'active' && false">
+    <div id="instructions" *ngIf="!errorMessage && status.current !== 'active'">
         <app-connect-instructions [ip]="ip"></app-connect-instructions>
     </div>
     <div id="controls">
-        <div id="in-scene" *ngIf="!errorMessage && status.current === 'active' || true">
+        <div id="in-scene" *ngIf="!errorMessage && status.current === 'active'">
             <p class="screen-controls-title">Screen controls</p>
-            <div class="select-screen">
+            <div class="select-screen" *ngIf="sources.length > 1">
                 <app-select-screen [sources]="sources" (selected)="onSelectedSource($event)"></app-select-screen>
             </div>
             <div class="input">
