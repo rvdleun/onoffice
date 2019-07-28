@@ -13,6 +13,7 @@ AFRAME.registerSystem('cursor-position', {
 
                     if (this.cursor) {
                         this.cursor.parentNode.removeChild(this.cursor);
+                        this.cursor = null;
                     }
 
                     if (data.streamId === false) {
@@ -26,6 +27,10 @@ AFRAME.registerSystem('cursor-position', {
 
                     this.createCursor();
                     screen.appendChild(this.cursor);
+                }
+
+                if (!this.cursor) {
+                    return;
                 }
 
                 const x = data.x;
