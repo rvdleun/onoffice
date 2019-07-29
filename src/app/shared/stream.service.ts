@@ -13,18 +13,23 @@ export interface AppStatus {
 @Injectable()
 export class StreamService {
     public statusSubject: BehaviorSubject<AppStatus> = new BehaviorSubject<AppStatus>({ current: 'inactive' });
+
+    private clientId: string;
     private pc: RTCPeerConnection;
 
     constructor(private electronService: ElectronService, private socketService: SocketService) { }
 
     public startStreaming(sources: SourceSelection[]) {
-        this.statusSubject.next({current: 'waiting-for-client'});
+        this.statusSubject.next({current: 'active'});
         this.socketService.initialize();
 
         this.electronService.remote.getGlobal('setWebServerActive')(true);
 
         this.socketService.emit('host', this.electronService.remote.getGlobal('sessionId'));
-        this.socketService.on('client-id', (clientId) => sources.forEach((source) => this.setupConnection(clientId, source)));
+        this.socketService.on('client-id', (clientId) => {
+            this.clientId = clientId;
+            sources.forEach((source) => this.addSource(source))
+        });
     }
 
     public stopStreaming() {
@@ -39,7 +44,7 @@ export class StreamService {
         }
     }
 
-    private async setupConnection(clientId: string, source: SourceSelection) {
+    public async addSource(source: SourceSelection) {
         const n = <any>navigator;
         const stream = await n.mediaDevices.getUserMedia({
             audio: false,
@@ -52,7 +57,9 @@ export class StreamService {
         });
         source.streamId = stream.id;
 
-        this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(source.source.id, stream.id);
+        if (source.type === 'screen') {
+            this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(source.source.id, stream.id);
+        }
 
         const peer = new Peer(null, {
             host: 'localhost',
@@ -61,11 +68,11 @@ export class StreamService {
         });
 
         peer.on('open', () => {
-            const call = peer.call(clientId, stream);
+            const call = peer.call(this.clientId, stream);
 
-            call.on('close', () => {
-                this.statusSubject.next({ current: 'waiting-for-client' });
-            });
+            // call.on('close', () => {
+            //     this.statusSubject.next({ current: 'waiting-for-client' });
+            // });
 
             this.statusSubject.next({ current: 'active' });
         });

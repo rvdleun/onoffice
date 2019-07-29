@@ -29,11 +29,14 @@ export class MainPageComponent implements OnInit {
     public ngOnInit() {
         this.electronService.desktopCapturer.getSources({ types: [ 'screen' ] }, (error, sources) => {
             this.sources = sources.map((source) => {
-                return {
+                const sourceSelection: SourceSelection = {
                     scale: 1,
                     source,
                     selected: true,
+                    type: 'screen',
                 };
+
+                return sourceSelection;
             });
 
             console.log(this.sources);

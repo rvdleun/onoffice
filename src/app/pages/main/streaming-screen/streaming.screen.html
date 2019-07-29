@@ -12,6 +12,9 @@
     <div id="controls">
         <div id="in-scene" *ngIf="!errorMessage && status.current === 'active'">
             <p class="screen-controls-title">Screen controls</p>
+            <div class="select-screen">
+                <app-add-window (newWindow)="onNewWindow($event)"></app-add-window>
+            </div>
             <div class="select-screen" *ngIf="sources.length > 1">
                 <app-select-screen [sources]="sources" (selected)="onSelectedSource($event)"></app-select-screen>
             </div>

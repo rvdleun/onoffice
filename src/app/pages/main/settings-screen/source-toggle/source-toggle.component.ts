@@ -1,10 +1,12 @@
-import {ChangeDetectorRef, Component, Input, OnChanges, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
 
 export interface SourceSelection {
     scale: number;
     source: any;
     selected: boolean;
     streamId?: string;
+    title?: string;
+    type: 'screen' | 'window';
 }
 
 @Component({

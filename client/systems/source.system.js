@@ -12,13 +12,14 @@ AFRAME.registerSystem('source', {
             this.el.systems['webrtc'].onAddStreamFunc = this.onAddStream.bind(this);
 
             this.el.addEventListener('enter-vr', () => this.showAll());
-            this.el.addEventListener('exit-vr', () => this.hideAll());
 
             this.el.addEventListener('socket-disconnected', () => this.hideAll());
         });
     },
 
     onAddStream: function(event) {
+        let playing = false;
+
         if(!this.assets) {
             this.assets = document.querySelector('a-assets');
         }
@@ -41,7 +42,7 @@ AFRAME.registerSystem('source', {
             this.assets.appendChild(videoEl);
 
             videoEl.onplay = () => {
-                this.playing = true;
+                playing = true;
 
                 const width = videoEl.videoWidth / 2;
                 const height = videoEl.videoHeight / 2;
@@ -49,13 +50,13 @@ AFRAME.registerSystem('source', {
                 const initialScale = 1.3;
                 const sizeX = initialScale * (width / height);
                 const sizeY = initialScale;
-                const posY = initialScale * this.sources.children.length;
+                // const posY = initialScale * this.sources.children.length;
                 const posZ = 1 + (this.sources.children.length * .1);
 
                 const screen = document.createElement('a-plane');
                 screen.setAttribute('id', `screen-${event.stream.id}`);
                 screen.setAttribute('manipulate-source', `streamId: ${event.stream.id}`);
-                screen.setAttribute('position', `0 ${posY} ${-posZ}`);
+                screen.setAttribute('position', `0 0 ${-posZ}`);
                 screen.setAttribute('material', 'shader: flat; height: ' + videoEl.videoHeight + '; width: ' + videoEl.videoWidth);
                 screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
 
@@ -74,14 +75,14 @@ AFRAME.registerSystem('source', {
                 screen.appendChild(border);
 
                 const entity = document.createElement('a-entity');
-                entity.setAttribute('scale', '0 0 1');
+                entity.setAttribute('scale', '1 1 1');
                 entity.appendChild(screen);
                 this.sources.appendChild(entity);
             };
 
             videoEl.play();
             setTimeout(() => {
-                if (this.playing) {
+                if (playing) {
                     this.el.sceneEl.dispatchEvent(new Event('source-added'));
                 } else {
                     this.el.sceneEl.dispatchEvent(new Event('need-interaction'));

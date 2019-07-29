@@ -10,11 +10,13 @@ import {ConnectInstructionsComponent} from './connect-instructions/connect-instr
 import {CommonModule} from '@angular/common';
 import {ErrorMessageComponent} from './error-message/error-message.component';
 import {SelectActiveScreenComponent} from './select-active-screen/select-active-screen.component';
+import {AddWindowComponent} from './add-window/add-window.component';
 
 @NgModule({
     declarations: [
         StreamingScreen,
 
+        AddWindowComponent,
         CenterScreenComponent,
         ConnectInstructionsComponent,
         ErrorMessageComponent,

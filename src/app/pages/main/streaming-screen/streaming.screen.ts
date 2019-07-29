@@ -42,6 +42,10 @@ export class StreamingScreen implements OnInit, OnDestroy {
         this.statusSubscription.unsubscribe();
     }
 
+    public onNewWindow(source: SourceSelection) {
+        this.sources.push(source);
+    }
+
     public onSelectedSource(selectedSource: SourceSelection) {
         this.selectedSource = selectedSource;
     }
