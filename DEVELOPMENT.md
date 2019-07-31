@@ -8,6 +8,14 @@ Nonetheless, thank you for taking the time to read this document and are possibl
 * You can reach me via a direct message on Twitter at [@rvdleun](https://twitter.com/rvdleun).
 * Finally, you can also email me at [onoffice@leunix.nl](mailto:onoffice@leunix.nl).
 
+# Vision
+To create a virtual environment where Windows, Mac and Linux users can work in peace using any HMD that supports WebVR.
+
+On/Office can promote the pro's of building a VR application with standard browser technology. For years, we've been building apps that work on nearly any device, from the mobile to the desktop. WebVR offers this as well, letting us build something that can work from the Cardboard to the Vive.
+
+This is why it's key that any feature in On/Office should be accessible on any device, regardless of whether it is 3DOF, 6DOF or has controllers. The Electron application allows us to develop an interface that the user can access to control his environment.
+
+However, this doesn't mean that we should ignore the hardware with more capabilities. If a feature can be enhanced with controller input, it should. But my personal preference is to first get something working on less powerful hardware and then move upwards.
 
 ## What can I contribute
 The [README.md](./README.md) file contains a roadmap with features that I would like to implement. Please check the issues page for any progress on the feature and indicate if you want to put some work into it.
