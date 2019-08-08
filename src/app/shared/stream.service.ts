@@ -61,12 +61,7 @@ export class StreamService {
         });
 
         peer.on('open', () => {
-            const call = peer.call(clientId, stream);
-
-            call.on('close', () => {
-                this.statusSubject.next({ current: 'waiting-for-client' });
-            });
-
+            peer.call(clientId, stream);
             this.statusSubject.next({ current: 'active' });
         });
 

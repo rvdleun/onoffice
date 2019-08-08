@@ -12,8 +12,6 @@ AFRAME.registerComponent('source-border', {
     },
 
     highlight: function(data) {
-        console.log(data);
-
         if (data.streamId !== this.data.streamId) {
             return;
         }
