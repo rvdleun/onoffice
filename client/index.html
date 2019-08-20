@@ -8,8 +8,9 @@
 <script src="systems/cursor-position.system.js"></script>
 <script src="./components/manipulate-source.component.js"></script>
 <script src="./components/sky.component.js"></script>
-<script src="./components/source.component.js"></script>
+<script src="./components/source-border.component.js"></script>
 <script src="./systems/socket.system.js"></script>
+<script src="./systems/source.system.js"></script>
 <script src="./systems/webrtc.system.js"></script>
 
 <link rel="stylesheet" type="text/css" href="assets/splash-screen.css">
@@ -27,7 +28,7 @@
         </div>
     </div>
 </div>
-<a-scene embedded vr-mode-ui="enabled: false" antialias="true">
+<a-scene vr-mode-ui="enabled: false" antialias="true">
     <a-assets>
         <img id="cursorImg" src="./assets/cursor.svg" />
         <video id="remote" muted autoplay></video>

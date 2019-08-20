@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStatus, StreamService} from '../../../shared/stream.service';
 import * as introJs from 'intro.js/intro';
 import {Subscription} from 'rxjs';
 import {ElectronService} from 'ngx-electron';
+import {SourceSelection} from '../settings-screen/source-toggle/source-toggle.component';
 
 @Component({
     selector: 'app-screen-streaming',
@@ -10,8 +11,10 @@ import {ElectronService} from 'ngx-electron';
     templateUrl: './streaming.screen.html'
 })
 export class StreamingScreen implements OnInit, OnDestroy {
+    @Input() sources: SourceSelection[];
     public errorMessage: string;
     public ip: string;
+    public selectedSource: SourceSelection;
     public status: AppStatus;
 
     private statusSubscription: Subscription;
@@ -31,10 +34,16 @@ export class StreamingScreen implements OnInit, OnDestroy {
             this.streamService.statusSubject.next({ current: 'unable-to-determine-ip' });
             this.errorMessage = 'Unable to get the internal IP Address. Are you connected to a network?';
         }
+
+        this.selectedSource = this.sources[0];
     }
 
     public ngOnDestroy() {
         this.statusSubscription.unsubscribe();
+    }
+
+    public onSelectedSource(selectedSource: SourceSelection) {
+        this.selectedSource = selectedSource;
     }
 
     public startTutorial() {

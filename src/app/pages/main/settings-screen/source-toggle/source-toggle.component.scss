@@ -1,10 +1,9 @@
 img {
   cursor: pointer;
-  margin: 2px;
   height: 150px;
+  border: solid 4px #ffffff;
 }
 
 .selected {
-  margin: 0;
-  border: solid 4px #262261;
+  border-color: #ff3c4b;
 }

@@ -17,11 +17,9 @@ AFRAME.registerSystem('webrtc', {
             peer.on('call', (mediaConnection) => {
                 mediaConnection.on('stream', (stream) => {
                     this.onAddStreamFunc({stream});
-                    console.log('Retrieved a stream');
                 });
 
                 mediaConnection.answer();
-                console.log('Getting a stream');
             });
 
             socket.emit('client-id', id);

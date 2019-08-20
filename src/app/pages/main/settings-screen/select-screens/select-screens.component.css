@@ -1,5 +1,5 @@
 .button {
-    margin-top: 45px;
+    margin-top: 55px;
 }
 
 .prev-button,
@@ -16,6 +16,6 @@
     margin-left: -160px;
 }
 
-.source {
+.single-source {
     pointer-events: none;
 }

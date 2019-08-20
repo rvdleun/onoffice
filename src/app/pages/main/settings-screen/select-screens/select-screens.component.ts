@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {SourceSelection} from '../source-toggle/source-toggle.component';
 
 @Component({
@@ -6,25 +6,29 @@ import {SourceSelection} from '../source-toggle/source-toggle.component';
     styleUrls: ['select-screens.component.css'],
     templateUrl: 'select-screens.component.html'
 })
-export class SelectScreensComponent {
+export class SelectScreensComponent implements OnInit {
     @Input() sources: SourceSelection[] = [];
     @Input() disabled: boolean;
 
+    public selectedSource: number = 0;
+    public showArrows: boolean = false;
+
     constructor(public changeDetectorRef: ChangeDetectorRef) { }
 
+    public ngOnInit() {
+        this.showArrows = this.sources.length > 1;
+    }
+
     public changeSelected(change: number) {
-        let index = -1;
+        let newSource = this.selectedSource + change;
 
-        this.sources.forEach((source, i) => { if (source.selected ) { index = i; source.selected = false; }});
-        index+=change;
-
-        if (index < 0) {
-            index = this.sources.length - 1;
-        } else if (index >= this.sources.length) {
-            index = 0;
+        if (newSource < 0) {
+            newSource = this.sources.length - 1;
+        } else if (newSource >= this.sources.length) {
+            newSource = 0;
         }
 
-        this.sources[index].selected = true;
+        this.selectedSource = newSource;
         this.changeDetectorRef.detectChanges();
     }
 }

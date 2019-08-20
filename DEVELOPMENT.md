@@ -120,6 +120,9 @@ Note that you won't need to rerun the start command. Any changes made in the `cl
 * [client/systems](client/systems) - AFrame systems
 * [client/vendor](client/vendor) - All vendor files
 
+## Tips
+* When adding `?no-source` to the URL, then no video will be streamed and the splashscreen is automatically removed once the client has finished connecting. This was added to ease development.
+
 # WebRTC implementation
 This section will cover how a connection is setup between the desktop and the VR Headset. In the code(and this section), the desktop will be referred to as *host*, and the headset connection as the *client*.
 
