@@ -5,10 +5,11 @@
 <script src="./vendor/vue.min.js"></script>
 
 <script src="./socket.io/socket.io.js"></script>
-<script src="systems/cursor-position.system.js"></script>
 <script src="./components/manipulate-source.component.js"></script>
+<script src="./components/moveable.component.js"></script>
 <script src="./components/sky.component.js"></script>
 <script src="./components/source-border.component.js"></script>
+<script src="./systems/cursor-position.system.js"></script>
 <script src="./systems/socket.system.js"></script>
 <script src="./systems/source.system.js"></script>
 <script src="./systems/webrtc.system.js"></script>
@@ -37,6 +38,8 @@
     <a-entity position="0 0 0" camera look-controls>
         <a-text id="connection-lost" align="center" value="Connection lost\nPlease refresh your browser" position="0 0 -.5" scale=".2 .2 .2"></a-text>
     </a-entity>
+    <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: .interactable" line="color: #118A7E"></a-entity>
+    <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .interactable" line="color: #118A7E"></a-entity>
 
     <a-entity id="sources"></a-entity>
     <a-plane id="cursor" src="#cursorImg" color="#ff3c4b" position="-.5 0 .001" material="shader: flat; opacity: .5; transparent: true" scale=".02 .03 .01"></a-plane>
