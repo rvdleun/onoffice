@@ -57,7 +57,6 @@ AFRAME.registerSystem('source', {
                 screen.setAttribute('class', 'interactable');
                 screen.setAttribute('id', `screen-${event.stream.id}`);
                 screen.setAttribute('manipulate-source', `streamId: ${event.stream.id}`);
-                screen.setAttribute('moveable', '');
                 screen.setAttribute('position', `0 0 ${-posZ}`);
                 screen.setAttribute('material', 'shader: flat; height: ' + videoEl.videoHeight + '; width: ' + videoEl.videoWidth);
                 screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
