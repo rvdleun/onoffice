@@ -19,10 +19,10 @@ export class StreamService {
 
     public startStreaming(sources: SourceSelection[]) {
         this.statusSubject.next({current: 'waiting-for-client'});
-        this.socketService.initialize();
 
         this.electronService.remote.getGlobal('setWebServerActive')(true);
 
+        this.socketService.initialize();
         this.socketService.emit('host', this.electronService.remote.getGlobal('sessionId'));
         this.socketService.on('client-id', (clientId) => this.setupConnection(clientId, sources));
     }
@@ -33,6 +33,7 @@ export class StreamService {
 
         this.socketService.emit('stop-streaming');
         this.socketService.removeAllListeners('start');
+        this.socketService.destroy();
 
         if (this.pc) {
             this.pc.close();
