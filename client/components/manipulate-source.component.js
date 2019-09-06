@@ -28,6 +28,25 @@ AFRAME.registerComponent('manipulate-source', {
 
         this.el.sceneEl.systems['socket'].on('center-screen', (data) => this.center(data) );
         this.el.sceneEl.systems['socket'].on('source-scale', (data) => this.setScale(data) );
+
+        this.el.addEventListener('mouseup', () => {
+            if (!this.moving) {
+                return;
+            }
+
+            THREE.SceneUtils.detach(this.el.parentElement.object3D, this.controller.object3D, this.el.sceneEl.object3D);
+            this.moving = false;
+        });
+
+        this.el.addEventListener('mousedown', (e) => {
+            if (this.moving) {
+                return;
+            }
+
+            this.controller = e.detail.cursorEl;
+            this.moving = true;
+            THREE.SceneUtils.attach(this.el.parentElement.object3D, this.el.sceneEl.object3D, this.controller.object3D);
+        });
     },
 
     center: function(data, force) {
@@ -53,3 +72,42 @@ AFRAME.registerComponent('manipulate-source', {
         this.el.setAttribute('scale', `${this.initialScale.x * scale} ${this.initialScale.y * scale} ${this.initialScale.z * scale}`);
     }
 });
+
+/**
+ * @author alteredq / http://alteredqualia.com/
+ */
+
+THREE.SceneUtils = {
+
+    createMultiMaterialObject: function ( geometry, materials ) {
+
+        var group = new THREE.Group();
+
+        for ( var i = 0, l = materials.length; i < l; i ++ ) {
+
+            group.add( new THREE.Mesh( geometry, materials[ i ] ) );
+
+        }
+
+        return group;
+
+    },
+
+    detach: function ( child, parent, scene ) {
+
+        child.applyMatrix( parent.matrixWorld );
+        parent.remove( child );
+        scene.add( child );
+
+    },
+
+    attach: function ( child, scene, parent ) {
+
+        child.applyMatrix( new THREE.Matrix4().getInverse( parent.matrixWorld ) );
+
+        scene.remove( child );
+        parent.add( child );
+
+    }
+
+};
