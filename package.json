@@ -2,7 +2,7 @@
   "name": "on-office",
   "productName": "OnOffice",
   "description": "Instant Office, just add browser.",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "MIT",
   "author": "Ruben van der Leun",
   "main": "dist/main.js",
@@ -31,8 +31,8 @@
     "peer": "^0.2.10",
     "peerjs": "^1.0.1",
     "peerjs-server": "^0.2.9",
-    "socket.io": "^2.1.1",
-    "socket.io-client": "^2.1.1"
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "@angular/cli": "1.7.4",

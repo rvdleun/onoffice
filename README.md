@@ -1,5 +1,9 @@
 # On/Office
 
+<div align="center">
+<img src="https://electronjs.org/app-img/onoffice/onoffice-icon-128.png">
+</div>
+
 On/Office was created to give you some distraction-free privacy during your work. Making use of powerful Virtual Reality and Web technologies, this application offers you a customisable, virtual room where the screen from your computer is streamed in front of you. Fetch a comfy seat, wear your headset and get ready to work distraction-free.
 
 ## Features

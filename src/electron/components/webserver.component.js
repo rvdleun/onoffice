@@ -23,17 +23,17 @@ webApp.get('/check-virtual-office-availability', (req, res) => {
     res.send('Available')
 });
 
-let global = null;
 let connections = {};
+let global = null;
+let io;
+let pin = '';
+let sessionId = null;
 let sockets = [];
+let webServerHandler;
 
 let host = null;
 let client = null;
 
-let webServerHandler;
-let pin = '';
-
-let sessionId = null;
 
 function checkHostClient() {
     console.log('Checking if host and client are connected', !!host, !!client);
@@ -128,13 +128,20 @@ module.exports.init = function(global) {
         });
     };
 
+    let initialized = false;
     global.setWebServerActive = function(active) {
         if (active) {
             sessionId = '12345';
             global.sessionId = sessionId;
             initializeSocket();
-            webServerHandler = webServer.listen(24242);
-            webApp.use('/peerjs', expressPeerServer(webServerHandler));
+            if (initialized) {
+                webServer.listen(24242)
+            } else {
+                webServerHandler = webServer.listen(24242);
+                webApp.use('/peerjs', expressPeerServer(webServerHandler));
+
+                initialized = true;
+            }
         } else {
             for(let id in connections) {
                 const connection = connections[id];
