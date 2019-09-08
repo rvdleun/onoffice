@@ -2,7 +2,7 @@
   "name": "on-office",
   "productName": "OnOffice",
   "description": "Instant Office, just add browser.",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "MIT",
   "author": "Ruben van der Leun",
   "main": "dist/main.js",

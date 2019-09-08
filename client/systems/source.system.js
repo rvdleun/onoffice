@@ -54,6 +54,7 @@ AFRAME.registerSystem('source', {
                 const posZ = 1 + (this.sources.children.length * .1);
 
                 const screen = document.createElement('a-plane');
+                screen.setAttribute('class', 'interactable');
                 screen.setAttribute('id', `screen-${event.stream.id}`);
                 screen.setAttribute('manipulate-source', `streamId: ${event.stream.id}`);
                 screen.setAttribute('position', `0 0 ${-posZ}`);
