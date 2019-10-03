@@ -2,68 +2,6 @@
     This component will allow the user to move and resize the screen
  */
 AFRAME.registerSystem('manipulate-source', {
-    controls: null,
-    dragging: false,
-    target: null,
-    touchStartData: null,
-
-    tick: function() {
-        if(!this.controls) {
-            this.controls = document.querySelector('#controls');
-
-            if(this.controls) {
-                this.controls.addEventListener('axismove', (event) => this.onAxisMove(event));
-                this.controls.addEventListener('touchend', (event) => this.onTouchEnd(event));
-            }
-        }
-
-        if(this.target && this.dragging) {
-            const rot = this.controls.getAttribute('rotation');
-            this.target.setAttribute('rotation', `0 ${rot.y} 0`);
-        }
-    },
-
-    onAxisMove: function(event) {
-        if(!this.target) {
-            return;
-        }
-
-        const axis = event.detail.axis;
-        if(axis[0] === 0 && axis[1] === 0) {
-            return;
-        }
-
-        if(this.touchStartData) {
-            const startAxisZ = this.touchStartData.startAxis[1];
-            const axisZ = axis[1];
-            const changeZ = startAxisZ - axisZ;
-            const newZ = Math.min(-.5, this.touchStartData.startZ - changeZ);
-
-            this.target.querySelector('a-plane').setAttribute('position', `0 1.6 ${newZ}`);
-        } else {
-            this.touchStartData = {
-                startAxis: [axis[0], axis[1]],
-                startZ: this.target.querySelector('a-plane').getAttribute('position').z
-            };
-        }
-    },
-
-    onTouchEnd: function() {
-        this.touchStartData = null;
-    },
-
-    setTarget: function(target) {
-        this.target = target;
-
-        if(!target) {
-            this.touchStartData = null;
-        }
-    },
-
-    setDragging: function(dragging) {
-        this.dragging = dragging;
-    },
-
     centerAllScreens: function() {
         const sources = document.querySelectorAll('[manipulate-source]');
         for(let i = 0; i <sources.length; i++) {
@@ -88,24 +26,27 @@ AFRAME.registerComponent('manipulate-source', {
             z: initialScale.z,
         };
 
-        this.el.addEventListener('mouseenter', () => {
-            this.system.setTarget(this.el.parentElement);
-        });
-
-        this.el.addEventListener('mouseleave', () => {
-            this.system.setTarget();
-        });
-
-        this.el.addEventListener('mousedown', () => {
-            this.system.setDragging(true);
-        });
-
-        this.el.addEventListener('mouseup', () => {
-            this.system.setDragging(false);
-        });
-
         this.el.sceneEl.systems['socket'].on('center-screen', (data) => this.center(data) );
         this.el.sceneEl.systems['socket'].on('source-scale', (data) => this.setScale(data) );
+
+        this.el.addEventListener('mouseup', () => {
+            if (!this.moving) {
+                return;
+            }
+
+            THREE.SceneUtils.detach(this.el.parentElement.object3D, this.controller.object3D, this.el.sceneEl.object3D);
+            this.moving = false;
+        });
+
+        this.el.addEventListener('mousedown', (e) => {
+            if (this.moving) {
+                return;
+            }
+
+            this.controller = e.detail.cursorEl;
+            this.moving = true;
+            THREE.SceneUtils.attach(this.el.parentElement.object3D, this.el.sceneEl.object3D, this.controller.object3D);
+        });
     },
 
     center: function(data, force) {
@@ -131,3 +72,42 @@ AFRAME.registerComponent('manipulate-source', {
         this.el.setAttribute('scale', `${this.initialScale.x * scale} ${this.initialScale.y * scale} ${this.initialScale.z * scale}`);
     }
 });
+
+/**
+ * @author alteredq / http://alteredqualia.com/
+ */
+
+THREE.SceneUtils = {
+
+    createMultiMaterialObject: function ( geometry, materials ) {
+
+        var group = new THREE.Group();
+
+        for ( var i = 0, l = materials.length; i < l; i ++ ) {
+
+            group.add( new THREE.Mesh( geometry, materials[ i ] ) );
+
+        }
+
+        return group;
+
+    },
+
+    detach: function ( child, parent, scene ) {
+
+        child.applyMatrix( parent.matrixWorld );
+        parent.remove( child );
+        scene.add( child );
+
+    },
+
+    attach: function ( child, scene, parent ) {
+
+        child.applyMatrix( new THREE.Matrix4().getInverse( parent.matrixWorld ) );
+
+        scene.remove( child );
+        parent.add( child );
+
+    }
+
+};
