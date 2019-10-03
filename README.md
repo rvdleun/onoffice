@@ -24,17 +24,17 @@ On/Office was created to give you some distraction-free privacy during your work
 * Oculus Go
 * Samsung Gear VR
 * Google Daydream
-* Google Cardboard
 
 (but technically, any headset with support for WebVR will work)
+
+At the moment, Google Cardboard is not available. The HTTPS and DeviceMotion issues on the roadmap should return support for these platforms.
 
 ## Roadmap
 
 * Provide separate instructions per supported headset ([*](https://github.com/rvdleun/onoffice/issues/2))
-* Improve screen resolution ([*](https://github.com/rvdleun/onoffice/issues/3))
-* Support for multiple screens ([*](https://github.com/rvdleun/onoffice/issues/4))
-* Move screens using a controller ([*](https://github.com/rvdleun/onoffice/issues/5))
 * Add support for environments built in AFrame ([*](https://github.com/rvdleun/onoffice/issues/6))
+* Implement HTTPS support ([*](https://github.com/rvdleun/onoffice/issues/16))
+* Implement DeviceMotion Permissions API for iOS ([*](https://github.com/rvdleun/onoffice/issues/20))
 
 These issues are sorted in random order. Each item has an entry on the [issues page](https://github.com/rvdleun/onoffice/issues). You can find the current progress there. Feel free to contribute in any way possible. Anything is welcome: Feedback, thoughts on priority, implementations, ideas for new features, etc.
 
