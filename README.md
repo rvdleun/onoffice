@@ -1,5 +1,9 @@
 # On/Office
 
+<div align="center">
+<img src="https://electronjs.org/app-img/onoffice/onoffice-icon-128.png">
+</div>
+
 On/Office was created to give you some distraction-free privacy during your work. Making use of powerful Virtual Reality and Web technologies, this application offers you a customisable, virtual room where the screen from your computer is streamed in front of you. Fetch a comfy seat, wear your headset and get ready to work distraction-free.
 
 ## Features
@@ -35,6 +39,7 @@ At the moment, Google Cardboard is not available. The HTTPS and DeviceMotion iss
 * Add support for environments built in AFrame ([*](https://github.com/rvdleun/onoffice/issues/6))
 * Implement HTTPS support ([*](https://github.com/rvdleun/onoffice/issues/16))
 * Implement DeviceMotion Permissions API for iOS ([*](https://github.com/rvdleun/onoffice/issues/20))
+* Place applications as separate windows in the virtual environments ([*](https://github.com/rvdleun/onoffice/issues/13))
 
 These issues are sorted in random order. Each item has an entry on the [issues page](https://github.com/rvdleun/onoffice/issues). You can find the current progress there. Feel free to contribute in any way possible. Anything is welcome: Feedback, thoughts on priority, implementations, ideas for new features, etc.
 

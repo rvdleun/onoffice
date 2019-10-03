@@ -19,6 +19,8 @@ AFRAME.registerSystem('source', {
     },
 
     onAddStream: function(event) {
+        const noSource = location.search && location.search.indexOf('no-source') >= 0;
+
         if(!this.assets) {
             this.assets = document.querySelector('a-assets');
         }
@@ -49,25 +51,41 @@ AFRAME.registerSystem('source', {
                 const initialScale = 1.3;
                 const sizeX = initialScale * (width / height);
                 const sizeY = initialScale;
+                const posZ = 1 + (this.sources.children.length * .1);
 
                 const screen = document.createElement('a-plane');
                 screen.setAttribute('id', `screen-${event.stream.id}`);
-                screen.setAttribute('manipulate-source', '');
-                screen.setAttribute('position', '0 0 -1');
+                screen.setAttribute('manipulate-source', `streamId: ${event.stream.id}`);
+                screen.setAttribute('position', `0 0 ${-posZ}`);
                 screen.setAttribute('material', 'shader: flat; height: ' + videoEl.videoHeight + '; width: ' + videoEl.videoWidth);
                 screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
-                screen.setAttribute('source', '');
 
-                if (location.search && location.search.indexOf('no-source') >= 0) {
+                if (noSource) {
                     screen.setAttribute('color', 'lightgreen');
                 } else {
                     screen.setAttribute('src', `#${videoId}`);
                 }
 
+                const border = document.createElement('a-plane');
+                border.setAttribute('color', '#ff3c4b');
+                border.setAttribute('position', '0 0 -.01');
+                border.setAttribute('scale', '1.025 1.025 1.025');
+                border.setAttribute('source-border', `streamId: ${event.stream.id}`);
+                border.setAttribute('visible', 'false');
+                screen.appendChild(border);
+
                 const entity = document.createElement('a-entity');
+                entity.setAttribute('position', '0 1 0');
                 entity.setAttribute('scale', '0 0 1');
                 entity.appendChild(screen);
                 this.sources.appendChild(entity);
+
+                if (noSource) {
+                    const splashScreen = document.querySelector('#splash-screen');
+                    splashScreen.parentNode.removeChild(splashScreen);
+
+                    this.showAll();
+                }
             };
 
             videoEl.play();
@@ -93,18 +111,5 @@ AFRAME.registerSystem('source', {
             this.sources.children[i].setAttribute('animation', 'property: scale; to: 0.0001 1 1');
             setTimeout(() => this.sources.children[i].setAttribute('visible', 'false'), 2000);
         }
-    }
-});
-
-AFRAME.registerComponent('source', {
-    init: function() {
-        const initialScale = this.el.getAttribute('scale');
-        const x = initialScale.x;
-        const y = initialScale.y;
-        const z = initialScale.z;
-
-        this.el.sceneEl.systems['socket'].on('source-scale', (scale) => {
-            this.el.setAttribute('scale', `${x * scale} ${y * scale} ${z * scale}`);
-        });
     }
 });

@@ -9,6 +9,7 @@ import {ScreenSizeComponent} from './screen-size/screen-size.component';
 import {ConnectInstructionsComponent} from './connect-instructions/connect-instructions.component';
 import {CommonModule} from '@angular/common';
 import {ErrorMessageComponent} from './error-message/error-message.component';
+import {SelectActiveScreenComponent} from './select-active-screen/select-active-screen.component';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import {ErrorMessageComponent} from './error-message/error-message.component';
         ConnectInstructionsComponent,
         ErrorMessageComponent,
         ScreenSizeComponent,
+        SelectActiveScreenComponent,
         StatusComponent,
         StopStreamingComponent,
     ],

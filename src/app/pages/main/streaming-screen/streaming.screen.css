@@ -50,3 +50,8 @@ img {
     right: 15px;
     font-size: 24px;
 }
+
+.select-screen {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
