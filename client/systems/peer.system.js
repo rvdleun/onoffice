@@ -1,14 +1,30 @@
 AFRAME.registerSystem('peer', {
+    schema: {
+        connectionLostText: {type: 'selector', default: '#connection-lost'}
+    },
+
     onAddStreamFunc: null,
 
     listeners: [],
+
+    init: function() {
+        this.data.connectionLostText.setAttribute('visible', 'false');
+    },
 
     connect: function() {
         console.log(this.onAddStreamFunc);
         const peer = new SimplePeer({ initiator: true, streams: [] });
 
-        peer.on('connect', () => {
-            console.log('Got a connection, yo');
+        peer._pc.onconnectionstatechange = () => {
+            const state = peer._pc.connectionState;
+            console.log(state);
+            if (state === 'disconnected' || state === 'closed') {
+                this.onDisconnect();
+            }
+        };
+
+        peer.on('close', () => {
+            this.onDisconnect();
         });
 
         peer.on('data', (message) => {
@@ -60,5 +76,11 @@ AFRAME.registerSystem('peer', {
 
     emit: function(event, data) {
         this.peer.send(JSON.stringify({event, data}));
-    }
+    },
+
+    onDisconnect: function() {
+        this.el.systems['source'].hideAll();
+        this.data.connectionLostText.setAttribute('visible', 'true');
+        this.el.dispatchEvent(new Event('socket-disconnected'));
+    },
 });

@@ -2,10 +2,6 @@
     This system connects to the socket.io server running on the desktop
  */
 AFRAME.registerSystem('socket', {
-    schema: {
-        connectionLostText: {type: 'selector', default: '#connection-lost'}
-    },
-
     socket: null,
 
     init_old: function() {

@@ -3,6 +3,7 @@ const webApp = express();
 const webServer = require('http').Server(webApp);
 const storage = require('electron-json-storage');
 
+let onClose;
 let onSignal;
 let sendPeerMessageFunc;
 let peerListeners = [];
@@ -66,6 +67,10 @@ module.exports.init = function(electronGlobal) {
         sendPeerMessageFunc = cb;
     };
 
+    global.onClose = function(cb) {
+        onClose = cb;
+    };
+
     global.onSignal = function(cb) {
         onSignal = cb;
     };
@@ -94,6 +99,7 @@ module.exports.init = function(electronGlobal) {
             webServerHandler = webServer.listen(24242);
         } else {
             webServerHandler.close();
+            onClose();
         }
     };
 };

@@ -5,7 +5,6 @@ import {SourceSelection} from '../pages/main/settings-screen/source-toggle/sourc
 
 @Injectable()
 export class PeerService {
-    public onConnection: Function = () => {};
     public peer: SimplePeer;
 
     constructor(
@@ -32,7 +31,6 @@ export class PeerService {
         });
 
         peer.on('data', (data) => {
-            console.log('Got this message', data);
             this.electronService.remote.getGlobal('onPeerMessage')(JSON.parse(data.toString()));
         });
 
@@ -43,6 +41,10 @@ export class PeerService {
         this.electronService.remote.getGlobal('onSendPeerMessageFunc')((event: string, data: any) => {
             console.log('Gonna send', {event, data});
             this.peer.send(JSON.stringify({ event, data }))
+        });
+
+        this.electronService.remote.getGlobal('onClose')(() => {
+            this.peer.destroy();
         });
 
         this.electronService.remote.getGlobal('onSignal')((signal) => {
@@ -65,7 +67,6 @@ export class PeerService {
         });
         source.streamId = stream.id;
 
-        this.peer.send('Have omse dats');
         this.peer.addStream(stream);
         this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(source.source.id, stream.id);
     }
