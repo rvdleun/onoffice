@@ -8,6 +8,7 @@ import {MainPageModule} from './pages/main/main.page.module';
 import {NgxElectronModule} from 'ngx-electron';
 import {HttpClientModule} from '@angular/common/http';
 import {StreamService} from './shared/stream.service';
+import {PeerService} from './shared/peer.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import {StreamService} from './shared/stream.service';
 
     MainPageModule,
   ],
-  providers: [SocketService, StreamService],
+  providers: [PeerService, SocketService, StreamService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

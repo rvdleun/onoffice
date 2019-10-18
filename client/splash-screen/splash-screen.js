@@ -84,15 +84,11 @@ new Vue({
         this.scene.addEventListener('renderstart', () => {
             this.message = 'Connecting to client';
 
-            this.socket = this.scene.systems.socket.socket;
+            this.scene.systems['peer'].connect();
 
-            this.socket.on('client_accepted', this.onClientAccepted.bind(this));
-            this.socket.on('pin_required', this.onPinRequired.bind(this));
-            this.socket.on('pin_correct', this.onPinCorrect.bind(this));
-            this.socket.on('pin_incorrect', this.onPinIncorrect.bind(this));
-            this.socket.on('session_expired', this.onSessionExpired.bind(this));
-
-            this.socket.emit('client');
+            const scene = document.querySelector('a-scene');
+            scene.addEventListener('need-interaction', this.onNeedInteraction);
+            scene.addEventListener('source-added', this.onSourceAdded);
         });
 
         this.scene.addEventListener('enter-vr', () => {
@@ -118,9 +114,6 @@ new Vue({
 
             this.scene.systems['webrtc'].setup();
 
-            const scene = document.querySelector('a-scene');
-            scene.addEventListener('need-interaction', this.onNeedInteraction);
-            scene.addEventListener('source-added', this.onSourceAdded);
         },
 
         onNeedInteraction: function() {
@@ -139,13 +132,14 @@ new Vue({
             scene.removeEventListener('source-added', this.onSourceAdded);
 
             const onCursorPosition = () => {
-                this.socket.removeListener('cursor-position', onCursorPosition);
+                // this.socket.removeListener('cursor-position', onCursorPosition);
 
                 this.message = 'Status: Active';
                 this.readyToEnterVR = true;
             };
-            this.socket.on('cursor-position', onCursorPosition);
-            this.socket.emit('watch-cursor-position');
+            onCursorPosition();
+            // this.socket.on('cursor-position', onCursorPosition);
+            // this.socket.emit('watch-cursor-position');
         },
 
         onPinRequired: function() {
@@ -164,7 +158,7 @@ new Vue({
         },
 
         startVirtualReality: function() {
-            this.socket.emit('setup-environment', 1.3);
+            // this.socket.emit('setup-environment', 1.3);
             this.scene.enterVR();
         },
 

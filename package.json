@@ -31,6 +31,7 @@
     "peer": "^0.2.10",
     "peerjs": "^1.0.1",
     "peerjs-server": "^0.2.9",
+    "simple-peer": "^9.6.0",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0"
   },
