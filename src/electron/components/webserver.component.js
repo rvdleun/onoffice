@@ -4,6 +4,8 @@ const webServer = require('http').Server(webApp);
 const storage = require('electron-json-storage');
 
 let onSignal;
+let sendPeerMessageFunc;
+let peerListeners = [];
 let pin = '';
 let webServerHandler;
 
@@ -15,6 +17,24 @@ webApp.post('/signal', (request, response) => {
     global.signalResponses.push(response);
     onSignal(request.body);
 });
+
+module.exports.onPeerEvent = function(event, cb) {
+    let listener = peerListeners.find((search) => search.event === event);
+    if (!listener) {
+        listener = {
+            event,
+            callbacks: [],
+        };
+
+        peerListeners.push(listener);
+    }
+
+    listener.callbacks.push(cb);
+};
+
+module.exports.sendPeerMessage = function(event, data) {
+    sendPeerMessageFunc(event, data);
+};
 
 module.exports.init = function(electronGlobal) {
     global = electronGlobal;
@@ -30,6 +50,21 @@ module.exports.init = function(electronGlobal) {
             pin = data.pin;
             cb(data.pin);
         });
+    };
+
+    global.onPeerMessage = function(message) {
+        const listener = peerListeners.find((search) => search.event === message.event);
+        if (!listener) {
+            return;
+        }
+
+        listener.callbacks.forEach((cb) => {
+            cb(message.data);
+        });
+    };
+
+    global.onSendPeerMessageFunc = function(cb) {
+        sendPeerMessageFunc = cb;
     };
 
     global.onSignal = function(cb) {

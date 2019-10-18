@@ -23,15 +23,26 @@ export class PeerService {
                 },
             }
         });
+        this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(sources[0].source.id, stream.id);
 
         const peer = new SimplePeer({ stream });
 
         peer.on('connect', () => {
-            // sources.forEach((source) => this.setupConnection(source));
+            this.electronService.remote.getGlobal('watchVirtualCursor')();
+        });
+
+        peer.on('data', (data) => {
+            console.log('Got this message', data);
+            this.electronService.remote.getGlobal('onPeerMessage')(JSON.parse(data.toString()));
         });
 
         peer.on('signal', (signal) => {
             this.electronService.remote.getGlobal('sendSignal')(signal);
+        });
+
+        this.electronService.remote.getGlobal('onSendPeerMessageFunc')((event: string, data: any) => {
+            console.log('Gonna send', {event, data});
+            this.peer.send(JSON.stringify({ event, data }))
         });
 
         this.electronService.remote.getGlobal('onSignal')((signal) => {

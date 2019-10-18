@@ -7,7 +7,7 @@ AFRAME.registerSystem('cursor-position', {
 
     init: function() {
         setTimeout(() => {
-            this.el.systems['socket'].on('cursor-position', (data) => {
+            this.el.systems['peer'].on('cursor-position', (data) => {
                 if (this.streamId !== data.streamId) {
                     this.streamId = data.streamId;
 

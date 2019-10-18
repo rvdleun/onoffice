@@ -1,7 +1,3 @@
-require('./components/environment.component').init(global);
-require('./components/internal-ip.component').init(global);
-require('./components/webserver.component.js').init(global);
-
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app;
@@ -16,6 +12,11 @@ const url = require('url');
 let mainWindow;
 
 function createWindow () {
+  require('./components/environment.component').init(global);
+  require('./components/internal-ip.component').init(global);
+  require('./components/virtual-cursor.component.js').init(global);
+  require('./components/webserver.component.js').init(global);
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
       fullscreenable: false,

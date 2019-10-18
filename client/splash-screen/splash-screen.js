@@ -70,6 +70,7 @@ new Vue({
         connectionLost: false,
         message: '',
         insertPin: false,
+        peerSystem: null,
         pincodeRequired: false,
         scene: null,
         sessionId: '',
@@ -81,10 +82,11 @@ new Vue({
         this.message = 'Initializing scene';
 
         this.scene = document.querySelector('a-scene');
+        this.peerSystem = this.scene.systems['peer'];
         this.scene.addEventListener('renderstart', () => {
             this.message = 'Connecting to client';
 
-            this.scene.systems['peer'].connect();
+            this.peerSystem.connect();
 
             const scene = document.querySelector('a-scene');
             scene.addEventListener('need-interaction', this.onNeedInteraction);
@@ -137,9 +139,8 @@ new Vue({
                 this.message = 'Status: Active';
                 this.readyToEnterVR = true;
             };
-            onCursorPosition();
-            // this.socket.on('cursor-position', onCursorPosition);
-            // this.socket.emit('watch-cursor-position');
+            this.peerSystem.on('cursor-position', onCursorPosition);
+            this.peerSystem.emit('watch-cursor-position');
         },
 
         onPinRequired: function() {

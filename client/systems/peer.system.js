@@ -1,6 +1,8 @@
 AFRAME.registerSystem('peer', {
     onAddStreamFunc: null,
 
+    listeners: [],
+
     connect: function() {
         console.log(this.onAddStreamFunc);
         const peer = new SimplePeer({ initiator: true, streams: [] });
@@ -9,9 +11,16 @@ AFRAME.registerSystem('peer', {
             console.log('Got a connection, yo');
         });
 
-        peer.on('data', (data) => {
-            console.log(peer._pc);
-            console.log('Data', data.toString());
+        peer.on('data', (message) => {
+            const json = JSON.parse(message);
+
+            const listener = this.listeners.find((search) => search.event === json.event);
+
+            if (!listener) {
+                return;
+            }
+
+            listener.callbacks.forEach((cb) => cb(json.data));
         });
 
         peer.on('signal', async (signal) => {
@@ -31,5 +40,25 @@ AFRAME.registerSystem('peer', {
             console.log('Got a stream');
             this.onAddStreamFunc(stream);
         });
+
+        this.peer = peer;
+    },
+
+    on: function(event, cb) {
+        let listener = this.listeners.find((search) => search.event === event);
+        if (!listener) {
+            listener = {
+                event,
+                callbacks: [],
+            };
+
+            this.listeners.push(listener);
+        }
+
+        listener.callbacks.push(cb);
+    },
+
+    emit: function(event, data) {
+        this.peer.send(JSON.stringify({event, data}));
     }
 });
