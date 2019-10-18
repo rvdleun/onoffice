@@ -12,10 +12,10 @@ const url = require('url');
 let mainWindow;
 
 function createWindow () {
+  require('./components/webserver.component.js').init(global);
   require('./components/environment.component').init(global);
   require('./components/internal-ip.component').init(global);
   require('./components/virtual-cursor.component.js').init(global);
-  require('./components/webserver.component.js').init(global);
 
   // Create the browser window.
   mainWindow = new BrowserWindow({

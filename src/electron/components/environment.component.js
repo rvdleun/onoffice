@@ -44,7 +44,18 @@ module.exports.init = function(global) {
                 console.error('Error while storing sky', error);
             }
         });
-    }
+    };
+
+    require('./webserver.component').webApp.get('/sky', (req, res) => {
+        const base64Data = sky.replace(/^data:image\/png;base64,/, '');
+        const img = Buffer.from(base64Data, 'base64');
+
+        res.writeHead(200, {
+            'Content-Type': 'image/png',
+            'Content-Length': img.length
+        });
+        res.end(img);
+    });
 };
 
 module.exports.setupSocket = function(socket) {
@@ -52,10 +63,6 @@ module.exports.setupSocket = function(socket) {
         socket.on(message, (data) => {
             socket.broadcast.emit(message, data);
         });
-    });
-
-    socket.on('get-sky', () => {
-        socket.emit('sky', sky);
     });
 
     socket.on('setup-environment', (scale) => {

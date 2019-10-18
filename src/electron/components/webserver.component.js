@@ -9,7 +9,6 @@ let peerListeners = [];
 let pin = '';
 let webServerHandler;
 
-webApp.use(express.urlencoded());
 webApp.use(express.json());
 webApp.use(express.static(__dirname + '/../client'));
 
@@ -98,3 +97,5 @@ module.exports.init = function(electronGlobal) {
         }
     };
 };
+
+module.exports.webApp = webApp;
