@@ -11,13 +11,11 @@ AFRAME.registerSystem('peer', {
         this.data.connectionLostText.setAttribute('visible', 'false');
     },
 
-    connect: function() {
-        console.log(this.onAddStreamFunc);
+    connect: function(sessionId) {
         const peer = new SimplePeer({ initiator: true, streams: [] });
 
         peer._pc.onconnectionstatechange = () => {
             const state = peer._pc.connectionState;
-            console.log(state);
             if (state === 'disconnected' || state === 'closed') {
                 this.onDisconnect();
             }
@@ -29,6 +27,7 @@ AFRAME.registerSystem('peer', {
 
         peer.on('data', (message) => {
             const json = JSON.parse(message);
+            console.log('Got data', json);
 
             const listener = this.listeners.find((search) => search.event === json.event);
 
@@ -40,7 +39,7 @@ AFRAME.registerSystem('peer', {
         });
 
         peer.on('signal', async (signal) => {
-            const response = await fetch('/signal', {
+            const response = await fetch(`/signal/${sessionId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -53,7 +52,6 @@ AFRAME.registerSystem('peer', {
         });
 
         peer.on('stream', (stream) => {
-            console.log('Got a stream');
             this.onAddStreamFunc(stream);
         });
 

@@ -21,6 +21,12 @@ module.exports.init = function(global) {
 
         const webserverComponent = require('./webserver.component');
         webserverComponent.onPeerEvent('watch-cursor-position', () => {
+            if (watchInterval) {
+                return;
+            }
+
+            console.log('Gonna watch');
+
             watchInterval = setInterval(() => {
                 const mouse = Electron.screen.getCursorScreenPoint();
                 if (prevX !== mouse.x || prevY !== mouse.y) {
@@ -45,6 +51,7 @@ module.exports.init = function(global) {
                         const posX = (x - display.display.bounds.x) / display.display.bounds.width;
                         const posY = (y - display.display.bounds.y) / display.display.bounds.height;
 
+                        console.log('Gonna send', posX, posY);
                         webserverComponent.sendPeerMessage('cursor-position', {streamId: display.streamId, x: posX, y: posY});
                     }
                 }
@@ -55,6 +62,7 @@ module.exports.init = function(global) {
             displays.forEach((display) => display.streamId = '');
 
             clearInterval(watchInterval);
+            watchInterval = null;
         });
     };
 };

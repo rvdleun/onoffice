@@ -61,9 +61,6 @@ Vue.component('pincode-input', {
     }
 });
 
-/*
-    Handles the splash screen element, updating the user on what is going on.
- */
 new Vue({
     el: '#splash-screen',
     data: {
@@ -86,7 +83,7 @@ new Vue({
         this.scene.addEventListener('renderstart', () => {
             this.message = 'Connecting to client';
 
-            this.peerSystem.connect();
+            this.connect();
 
             const scene = document.querySelector('a-scene');
             scene.addEventListener('need-interaction', this.onNeedInteraction);
@@ -110,12 +107,42 @@ new Vue({
     },
 
     methods: {
+        connect: async function(pin) {
+            const response = await fetch(`/connect`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pin }),
+            });
+
+            const data = await response.json();
+            switch(data.result) {
+                case 'pin-correct':
+                    this.onPinIncorrect(data.sessionId);
+                    break;
+
+                case 'pin-incorrect':
+                    this.onPinIncorrect();
+                    break;
+
+                case 'pin-required':
+                    this.onPinRequired();
+                    break;
+
+                case 'success':
+                    this.onClientAccepted(data.sessionId);
+                    break;
+            }
+        },
+
         onClientAccepted: function(sessionId) {
+            if (!sessionId) {
+                return;
+            }
+
             this.message = 'Waiting for source';
-            this.sessionId = sessionId;
-
-            this.scene.systems['webrtc'].setup();
-
+            this.peerSystem.connect(sessionId);
         },
 
         onNeedInteraction: function() {
@@ -134,8 +161,6 @@ new Vue({
             scene.removeEventListener('source-added', this.onSourceAdded);
 
             const onCursorPosition = () => {
-                // this.socket.removeListener('cursor-position', onCursorPosition);
-
                 this.message = 'Status: Active';
                 this.readyToEnterVR = true;
             };
@@ -148,9 +173,13 @@ new Vue({
             this.pincodeRequired = true;
         },
 
-        onPinCorrect: function() {
+        onPinCorrect: function(sessionId) {
+            if (!sessionId) {
+                return;
+            }
+
             this.message = 'Pin accepted';
-            this.socket.emit('client');
+            this.peerSystem.connect(sessionId);
             this.pincodeRequired = false;
         },
 

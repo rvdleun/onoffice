@@ -2,9 +2,13 @@ const express = require('express');
 const webApp = express();
 const webServer = require('http').Server(webApp);
 const storage = require('electron-json-storage');
+const uniqid = require('uniqid');
 
+const signalResponses = [];
 let onClose;
 let onSignal;
+let createPeerFunc;
+let global;
 let sendPeerMessageFunc;
 let peerListeners = [];
 let pin = '';
@@ -13,10 +17,36 @@ let webServerHandler;
 webApp.use(express.json());
 webApp.use(express.static(__dirname + '/../client'));
 
-webApp.post('/signal', (request, response) => {
-    global.signalResponses.push(response);
-    onSignal(request.body);
+webApp.post('/connect', (request, response) => {
+    const responseData = {
+        result: '',
+        sessionId: null,
+    };
+
+    const sessionId = uniqid();
+    responseData.result = 'success';
+    responseData.sessionId = sessionId;
+    signalResponses.push({ sessionId, responses: []});
+
+    createPeerFunc(sessionId);
+    response.send(responseData);
 });
+
+webApp.post('/signal/:sessionId', (request, response) => {
+    const sessionId = request.params.sessionId;
+    const signalResponse = getSignalResponse(sessionId);
+
+    if (!signalResponse) {
+        return;
+    }
+
+    signalResponse.responses.push(response);
+    onSignal(sessionId, request.body);
+});
+
+function getSignalResponse(sessionId) {
+    return signalResponses.find((signalResponse) => signalResponse.sessionId === sessionId);
+}
 
 module.exports.onPeerEvent = function(event, cb) {
     let listener = peerListeners.find((search) => search.event === event);
@@ -39,8 +69,6 @@ module.exports.sendPeerMessage = function(event, data) {
 module.exports.init = function(electronGlobal) {
     global = electronGlobal;
 
-    global.signalResponses = [];
-
     global.getPinFromStorage = function(cb) {
         storage.get('pin', (error, data) => {
             if (error) {
@@ -50,6 +78,10 @@ module.exports.init = function(electronGlobal) {
             pin = data.pin;
             cb(data.pin);
         });
+    };
+
+    global.onCreatePeerFunc = function(cb) {
+        createPeerFunc = cb;
     };
 
     global.onPeerMessage = function(message) {
@@ -75,8 +107,10 @@ module.exports.init = function(electronGlobal) {
         onSignal = cb;
     };
 
-    global.sendSignal = function(signal) {
-        const response = global.signalResponses.pop();
+    global.sendSignal = function(sessionId, signal) {
+        const signalResponse = getSignalResponse(sessionId);
+
+        const response = signalResponse.responses.pop();
         if (!response) {
             return;
         }

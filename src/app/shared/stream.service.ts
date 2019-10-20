@@ -27,9 +27,6 @@ export class StreamService {
         this.electronService.remote.getGlobal('setWebServerActive')(true);
 
         this.peerService.initialize(sources);
-        // this.socketService.initialize();
-        // this.socketService.emit('host', this.electronService.remote.getGlobal('sessionId'));
-        // this.socketService.on('client-id', (clientId) => sources.forEach((source) => this.setupConnection(clientId, source)));
     }
 
     public stopStreaming() {
