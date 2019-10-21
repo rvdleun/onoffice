@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {StreamService} from '../../../../shared/stream.service';
 import {SourceSelection} from '../source-toggle/source-toggle.component';
+import {PeerService} from '../../../../shared/peer.service';
 
 @Component({
     selector: 'app-start-streaming',
@@ -10,7 +11,10 @@ import {SourceSelection} from '../source-toggle/source-toggle.component';
 export class StartStreamingComponent {
     @Input() sources: SourceSelection[];
 
-    constructor(public streamService: StreamService) { }
+    constructor(
+        public peerService: PeerService,
+        public streamService: StreamService
+    ) { }
 
     public onClick() {
         const selectedSources = this.sources.filter((source) => source.selected);
@@ -20,6 +24,8 @@ export class StartStreamingComponent {
             return;
         }
 
-        this.streamService.startStreaming(this.sources.filter((source) => source.selected));
+        const sources = this.sources.filter((source) => source.selected);
+        this.peerService.initialize(sources);
+        this.streamService.startStreaming();
     }
 }

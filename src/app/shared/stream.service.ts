@@ -1,11 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {SocketService} from './socket.service';
-import {SourceSelection} from '../pages/main/settings-screen/source-toggle/source-toggle.component';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {PeerService} from './peer.service';
-
-declare var Peer;
 
 export interface AppStatus {
     current: 'inactive' | 'setting-up' | 'waiting-for-client' | 'active' | 'unable-to-determine-ip';
@@ -18,15 +14,11 @@ export class StreamService {
 
     constructor(
         private electronService: ElectronService,
-        private peerService: PeerService,
         private socketService: SocketService) { }
 
-    public startStreaming(sources: SourceSelection[]) {
-        this.statusSubject.next({current: 'waiting-for-client'});
-
+    public startStreaming() {
         this.electronService.remote.getGlobal('setWebServerActive')(true);
-
-        this.peerService.initialize(sources);
+        this.statusSubject.next({current: 'waiting-for-client'});
     }
 
     public stopStreaming() {

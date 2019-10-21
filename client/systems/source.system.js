@@ -8,10 +8,8 @@ AFRAME.registerSystem('source', {
     id: 0,
 
     init: function() {
-        console.log('!!!!!!');
         window.setTimeout(() => {
             this.el.systems['peer'].onAddStreamFunc = this.onAddStream.bind(this);
-            console.log('Adding function');
 
             this.el.addEventListener('enter-vr', () => this.showAll());
             this.el.addEventListener('exit-vr', () => this.hideAll());

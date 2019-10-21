@@ -27,7 +27,6 @@ AFRAME.registerSystem('peer', {
 
         peer.on('data', (message) => {
             const json = JSON.parse(message);
-            console.log('Got data', json);
 
             const listener = this.listeners.find((search) => search.event === json.event);
 

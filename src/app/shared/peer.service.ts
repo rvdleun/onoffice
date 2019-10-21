@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import * as SimplePeer from 'simple-peer';
 import {SourceSelection} from '../pages/main/settings-screen/source-toggle/source-toggle.component';
+import {StreamService} from './stream.service';
 
 interface PeerConnection {
     sessionId: string;
@@ -14,20 +15,20 @@ export class PeerService {
     private streams: MediaStream[] = [];
 
     constructor(
-        private electronService: ElectronService
+        private electronService: ElectronService,
+        private streamService: StreamService,
     ) {
         this.electronService.remote.getGlobal('onCreatePeerFunc')((id: string) => {
             this.createPeer(id);
         });
 
         this.electronService.remote.getGlobal('onClose')(() => {
-            this.connections.forEach((connection) => connection.peer.destroy());
+            this.connections
+                .forEach((connection) => connection.peer.destroy());
         });
 
         this.electronService.remote.getGlobal('onSendPeerMessageFunc')((event: string, data: any) => {
-            this.connections.forEach((connection) => {
-                connection.peer.send(JSON.stringify({ event, data }))
-            });
+            this.emit(event, data);
         });
 
         this.electronService.remote.getGlobal('onSignal')((sessionId: string, signal: any) => {
@@ -42,6 +43,7 @@ export class PeerService {
     }
 
     public initialize(sources: SourceSelection[]) {
+        this.connections = [];
         this.streams = [];
 
         sources.forEach(async (source) => {
@@ -55,9 +57,19 @@ export class PeerService {
                     },
                 }
             });
-            this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(sources[0].source.id, stream.id);
+            source.streamId = stream.id;
+
+            this.electronService.remote.require('./components/virtual-cursor.component').registerDisplay(source.source.id, stream.id);
             this.streams.push(stream);
         });
+    }
+
+    public emit(event: string, data: any) {
+        return this.connections
+            .filter((connection) => !!connection.peer._channel)
+            .forEach((connection) => {
+                connection.peer.send(JSON.stringify({ event, data }))
+            });
     }
 
     private createPeer(sessionId: string) {
@@ -65,9 +77,11 @@ export class PeerService {
 
         peer.on('connect', () => {
             this.electronService.remote.getGlobal('watchVirtualCursor')();
+            this.streamService.statusSubject.next({ current: 'active' });
         });
 
         peer.on('data', (data) => {
+            console.log(data.toString());
             this.electronService.remote.getGlobal('onPeerMessage')(JSON.parse(data.toString()));
         });
 

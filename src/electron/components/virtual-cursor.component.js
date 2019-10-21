@@ -51,7 +51,6 @@ module.exports.init = function(global) {
                         const posX = (x - display.display.bounds.x) / display.display.bounds.width;
                         const posY = (y - display.display.bounds.y) / display.display.bounds.height;
 
-                        console.log('Gonna send', posX, posY);
                         webserverComponent.sendPeerMessage('cursor-position', {streamId: display.streamId, x: posX, y: posY});
                     }
                 }

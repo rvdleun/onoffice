@@ -26,8 +26,8 @@ AFRAME.registerComponent('manipulate-source', {
             z: initialScale.z,
         };
 
-        this.el.sceneEl.systems['socket'].on('center-screen', (data) => this.center(data) );
-        this.el.sceneEl.systems['socket'].on('source-scale', (data) => this.setScale(data) );
+        this.el.sceneEl.systems['peer'].on('center-screen', (data) => this.center(data) );
+        this.el.sceneEl.systems['peer'].on('source-scale', (data) => this.setScale(data) );
 
         this.el.addEventListener('mouseup', () => {
             if (!this.moving) {
@@ -50,6 +50,8 @@ AFRAME.registerComponent('manipulate-source', {
     },
 
     center: function(data, force) {
+        console.log('Center', data, force);
+
         const { streamId } = data;
         if (streamId !== this.data.streamId && !force) {
             return;

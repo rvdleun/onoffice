@@ -11,6 +11,7 @@ AFRAME.registerSystem('cursor-position', {
                 if (this.streamId !== data.streamId) {
                     this.streamId = data.streamId;
 
+                    console.log(this.streamId);
                     if (this.cursor) {
                         this.cursor.parentNode.removeChild(this.cursor);
                         this.cursor = null;
@@ -22,6 +23,7 @@ AFRAME.registerSystem('cursor-position', {
 
                     const screen = document.querySelector('#screen-' + data.streamId);
                     if (!screen) {
+                        console.log('Screen not found');
                         return;
                     }
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStatus, StreamService} from '../../../shared/stream.service';
 import * as introJs from 'intro.js/intro';
 import {Subscription} from 'rxjs';
@@ -19,12 +19,18 @@ export class StreamingScreen implements OnInit, OnDestroy {
 
     private statusSubscription: Subscription;
 
-    constructor(private electronService: ElectronService, private streamService: StreamService) { }
+    constructor(
+        private changeDetector: ChangeDetectorRef,
+        private electronService: ElectronService,
+        private streamService: StreamService
+    ) { }
 
     public ngOnInit() {
         this.statusSubscription = this.streamService.statusSubject.subscribe((status) => {
             this.errorMessage = null;
             this.status = status;
+
+            this.changeDetector.detectChanges();
         });
 
         const ip = this.electronService.remote.getGlobal('getInternalIP')();
