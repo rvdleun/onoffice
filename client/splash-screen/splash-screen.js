@@ -71,7 +71,6 @@ new Vue({
         pincodeRequired: false,
         scene: null,
         sessionId: '',
-        socket: null,
         readyToEnterVR: false,
         vrActive: false,
     },
@@ -99,7 +98,7 @@ new Vue({
             this.vrActive = false;
         });
 
-        this.scene.addEventListener('socket-disconnected', () => {
+        this.scene.addEventListener('peer-disconnected', () => {
             this.message = 'Status: Disconnected';
             this.connectionLost = true;
             this.readyToEnterVR = false;
@@ -188,7 +187,6 @@ new Vue({
         },
 
         startVirtualReality: function() {
-            // this.socket.emit('setup-environment', 1.3);
             this.scene.enterVR();
         },
 
@@ -198,7 +196,6 @@ new Vue({
 
         onSendPin: function(pin) {
             this.message = 'Sending pin';
-            this.socket.emit('pin', pin);
         },
 
         onSessionExpired: function() {

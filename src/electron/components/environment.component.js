@@ -57,18 +57,3 @@ module.exports.init = function(global) {
         res.end(img);
     });
 };
-
-module.exports.setupSocket = function(socket) {
-    ['center-screen', 'source-scale', 'source-select'].forEach((message) => {
-        socket.on(message, (data) => {
-            socket.broadcast.emit(message, data);
-        });
-    });
-
-    socket.on('setup-environment', (scale) => {
-        setTimeout(() => {
-            socket.broadcast.emit('center-screen');
-            socket.broadcast.emit('source-scale', scale);
-        }, 500);
-    });
-};

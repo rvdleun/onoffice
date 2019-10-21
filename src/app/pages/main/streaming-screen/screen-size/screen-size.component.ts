@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {SocketService} from '../../../../shared/socket.service';
 import {SourceSelection} from '../../settings-screen/source-toggle/source-toggle.component';
 import {PeerService} from '../../../../shared/peer.service';
 

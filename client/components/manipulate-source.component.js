@@ -50,8 +50,6 @@ AFRAME.registerComponent('manipulate-source', {
     },
 
     center: function(data, force) {
-        console.log('Center', data, force);
-
         const { streamId } = data;
         if (streamId !== this.data.streamId && !force) {
             return;

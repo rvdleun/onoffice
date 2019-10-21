@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SourceSelection} from '../../settings-screen/source-toggle/source-toggle.component';
-import {SocketService} from '../../../../shared/socket.service';
+import {PeerService} from '../../../../shared/peer.service';
 
 @Component({
     selector: 'app-select-screen',
@@ -14,7 +14,7 @@ export class SelectActiveScreenComponent {
 
     public currentSelected: number = 0;
 
-    constructor(private socketService: SocketService) { }
+    constructor(private peerService: PeerService) { }
 
     public changeSelected(change: number) {
         this.currentSelected+=change;
@@ -35,8 +35,6 @@ export class SelectActiveScreenComponent {
 
         const selected = this.sources[this.currentSelected];
         this.selected.emit(selected);
-        this.socketService.emit('source-select', { streamId: selected.streamId });
-
-        console.log('source-select', { streamId: selected.streamId })
+        this.peerService.emit('source-select', { streamId: selected.streamId });
     }
 }

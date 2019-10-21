@@ -14,7 +14,7 @@ AFRAME.registerSystem('source', {
             this.el.addEventListener('enter-vr', () => this.showAll());
             this.el.addEventListener('exit-vr', () => this.hideAll());
 
-            this.el.addEventListener('socket-disconnected', () => this.hideAll());
+            this.el.addEventListener('peer-disconnected', () => this.hideAll());
         });
     },
 

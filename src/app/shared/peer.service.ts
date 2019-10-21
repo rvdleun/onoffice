@@ -64,12 +64,16 @@ export class PeerService {
         });
     }
 
-    public emit(event: string, data: any) {
+    public emit(event: string, data: any = null) {
         return this.connections
             .filter((connection) => !!connection.peer._channel)
             .forEach((connection) => {
                 connection.peer.send(JSON.stringify({ event, data }))
             });
+    }
+
+    public destroy() {
+        this.connections.forEach((connection) => connection.peer.destroy());
     }
 
     private createPeer(sessionId: string) {
