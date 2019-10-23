@@ -178,12 +178,13 @@ new Vue({
             }
 
             this.message = 'Pin accepted';
-            this.peerSystem.connect(sessionId);
             this.pincodeRequired = false;
+            this.peerSystem.connect(sessionId);
         },
 
         onPinIncorrect: function() {
             this.message = 'Incorrect pin';
+            this.pincodeRequired = true;
         },
 
         startVirtualReality: function() {
@@ -196,10 +197,8 @@ new Vue({
 
         onSendPin: function(pin) {
             this.message = 'Sending pin';
+            this.pincodeRequired = false;
+            this.connect(pin);
         },
-
-        onSessionExpired: function() {
-            alert('Your session has expired. Please refresh to try again.');
-        }
     },
 });

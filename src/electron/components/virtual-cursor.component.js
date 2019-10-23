@@ -14,7 +14,13 @@ module.exports.registerDisplay = function(displayId, streamId) {
 };
 
 module.exports.init = function(global) {
+    let sendPosition = false;
     let watchInterval;
+
+    global.sendVirtualCursorPosition = function() {
+        sendPosition = true;
+    };
+
     global.watchVirtualCursor = function() {
         let prevX = -1;
         let prevY = -1;
@@ -25,11 +31,12 @@ module.exports.init = function(global) {
                 return;
             }
 
-            console.log('Gonna watch');
-
             watchInterval = setInterval(() => {
                 const mouse = Electron.screen.getCursorScreenPoint();
-                if (prevX !== mouse.x || prevY !== mouse.y) {
+                if (
+                    sendPosition ||
+                    (prevX !== mouse.x || prevY !== mouse.y)
+                ) {
                     const x = mouse.x;
                     const y = mouse.y;
 
@@ -52,6 +59,7 @@ module.exports.init = function(global) {
                         const posY = (y - display.display.bounds.y) / display.display.bounds.height;
 
                         webserverComponent.sendPeerMessage('cursor-position', {streamId: display.streamId, x: posX, y: posY});
+                        sendPosition = false;
                     }
                 }
             }, 50);

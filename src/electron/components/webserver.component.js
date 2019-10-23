@@ -20,15 +20,25 @@ webApp.use(express.static(__dirname + '/../client'));
 webApp.post('/connect', (request, response) => {
     const responseData = {
         result: '',
-        sessionId: null,
     };
 
-    const sessionId = uniqid();
-    responseData.result = 'success';
-    responseData.sessionId = sessionId;
-    signalResponses.push({ sessionId, responses: []});
+    if (pin) {
+        if (!request.body.pin) {
+            responseData.result = 'pin-required';
+        } else if(request.body.pin !== pin) {
+            responseData.result = 'pin-incorrect';
+        }
+    }
 
-    createPeerFunc(sessionId);
+    if (!responseData.result) {
+        const sessionId = uniqid();
+        responseData.result = 'success';
+        responseData.sessionId = sessionId;
+        signalResponses.push({ sessionId, responses: []});
+
+        createPeerFunc(sessionId);
+    }
+
     response.send(responseData);
 });
 

@@ -82,10 +82,13 @@ export class PeerService {
         peer.on('connect', () => {
             this.electronService.remote.getGlobal('watchVirtualCursor')();
             this.streamService.statusSubject.next({ current: 'active' });
+
+            setTimeout(() => {
+                this.electronService.remote.getGlobal('sendVirtualCursorPosition')();
+            });
         });
 
         peer.on('data', (data) => {
-            console.log(data.toString());
             this.electronService.remote.getGlobal('onPeerMessage')(JSON.parse(data.toString()));
         });
 

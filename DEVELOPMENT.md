@@ -17,15 +17,27 @@ This is why it's key that any feature in On/Office should be accessible on any d
 
 However, this doesn't mean that we should ignore the hardware with more capabilities. If a feature can be enhanced with controller input, it should. But my personal preference is to first get something working on less powerful hardware and then move upwards.
 
-## What can I contribute
+## Why a standalone Electron application?
+Technically, everything in On/Office could also be done by hosting a server online to exchange WebRTC information, and the client could be hosted online as well. This was actually the original setup. The main reason why I went for this route instead is two-fold...
+
+### Mouse tracker
+This is the big one. There is still a lot of lag when streaming the desktop to the headset. To accommodate this, the cursor position is sent to the client whenever it moves. This data is so small that it's basically sent instantaneously, and the cursor can be updated automatically on the client. 
+
+Because the mouse reacts nearly one-on-one with what the user is doing, it kinda feels like working with a remote computer. It makes the implementation actually useful.
+
+Unfortunately, I have not found a way to replicate this in a browser. I can only track the cursor if it is within an active browser window. If there is way to do this via, say, an extension in the browser, I might be interested in getting an online option to work.
+
+### No need to host anything
+I will have to be honest that this is the other reason why I prefer an Electron application. This project is very much a hobby project, and I do not want people to be dependent off me to keep the application running. That is why I want it to be as standalone as possible.
+
+# How can I contribute?
 The [README.md](./README.md) file contains a roadmap with features that I would like to implement. Please check the issues page for any progress on the feature and indicate if you want to put some work into it.
 
-## Frameworks and links
+# Frameworks and links
 * The project is divided into two parts: The desktop application(that runs on the computer and acts as a server) and the WebVR client that runs in a browser.
 * The application is created using [Electron](https://electronjs.org/), with the code being developed using [Angular](https://angular.io/). The client files are served using [Express](https://expressjs.com/).
 * The VR Client application is developed with [vue.js](https://vuejs.org/) for the splashscreen and [AFrame](https://aframe.io) for the WebVR part.
 * The [Angular2-Electron-Boilerplate](https://github.com/stokingerl/Angular2-Electron-Boilerplate) was used as a starting point.
-* Communication between the application and client are done via [socket.io](https://socket.io) and [WebRTC](https://webrtc.org/).
 
 # Getting Started
 
@@ -126,12 +138,18 @@ Note that you won't need to rerun the start command. Any changes made in the `cl
 # WebRTC implementation
 This section will cover how a connection is setup between the desktop and the VR Headset. In the code(and this section), the desktop will be referred to as *host*, and the headset connection as the *client*.
 
-WebRTC has been implemented using [PeerJS](http://peerjs.com). The PeerJS server runs on the host. [Socket.io](socket.io) is used to send the client ID to the host.
+WebRTC has been implemented using [SimplePeer](https://github.com/feross/simple-peer).
 
-* (*host*) After the user has pressed 'Start Streaming', `setWebServerActive` is called in [webserver.component.js](./src/electron/components/webserver.component.js). This boots the Express server to serve the client's files, starts socket.io and initialises the PeerJS server.
-* (*client*) Once the user has opened the client in the browser, it will first initialise the VR scene and then connects to the host via socket.io. This is coded in [splash-screen.js](client/splash-screen/splash-screen.js).
-* (*client*) After receiving a `client_message`(indicating that the host has approved and wants to start streaming), the `setup()` function in [webrtc.system.js](./client/systems/webrtc.system.js) is called.
-* (*client*) A connection the PeerJS server is made. Once this has been opened, the client has received a random ID to identify itself. This ID is sent to the host.
-* (*host*) The `setupConnection()` function in [stream.service.ts](./src/app/shared/stream.service.ts) handles the clientID, along with the sources that it has to stream. At the moment, streaming only one display is supported.
-* (*host*) A stream is created. The host also connects to PeerJS now. Once this is done, it uses the [call()](https://peerjs.com/docs.html#peercall) to connection to the Client ID.
-* (*client*) Back in [webrtc.system.js](./client/systems/webrtc.system.js), the call is received and answered. This results in the stream being available in the `stream` event.
+* (*host*) After the user has pressed 'Start Streaming', `setWebServerActive` is called in [webserver.component.js](./src/electron/components/webserver.component.js). This boots the Express server to serve the client's files and an API to exchange signal information.
+* (*client*) Once the user has opened the client in the browser, it will first initialise the VR scene. After that, it will try to connect to the server and create a session. This is coded in [splash-screen.js](client/splash-screen/splash-screen.js).
+* (*server*) The server creates a new session by creating a new ID(using [uniqid](http://github.com/adamhalasz/uniqid/)) and preparing an array to store responses. More on that later.
+* (*host*) The host creates a new SimplePeer object for this session in [peer.service.ts](src/app/shared/peer.service.ts).
+* (*client*) Once the connection has been established, the [peer system](client/systems/peer.system.js) will create a new SimplePeer instance and start creating signals. These signals are sent to the server by doing a POST request to `/signal` and supplying it with the Session ID. It will send 2-3 signals.
+* (*server*) The response object is stored in the session's object(so no response given yet), and the signal is passed to host.
+* (*host*) The signals are passed to the peer's session object. New signals are created and passed back to the server.
+* (*server*) At this point, the server grabs one of the open requests from the client and returns the signal from the server.
+* (*client*) The client passes the received signal to the SimplePeer object.
+* (*client*) Eventually, the two browsers are connected.
+
+## Shouldn't the client just get the signals by polling?
+I suppose. I wanted to avoid polling and thought this was a neat way to solve it. If there are any drawbacks, I could refactor it.
