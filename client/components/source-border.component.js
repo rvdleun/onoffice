@@ -16,9 +16,9 @@ AFRAME.registerComponent('source-border', {
             this.setVisible(false);
         });
 
-        this.el.sceneEl.systems['socket'].on('center-screen', (data) => this.highlight(data) );
-        this.el.sceneEl.systems['socket'].on('source-scale', (data) => this.highlight(data) );
-        this.el.sceneEl.systems['socket'].on('source-select', (data) => this.highlight(data) );
+        this.el.sceneEl.systems['peer'].on('center-screen', (data) => this.highlight(data) );
+        this.el.sceneEl.systems['peer'].on('source-scale', (data) => this.highlight(data) );
+        this.el.sceneEl.systems['peer'].on('source-select', (data) => this.highlight(data) );
     },
 
     highlight: function(data) {

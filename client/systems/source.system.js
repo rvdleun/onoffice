@@ -9,16 +9,18 @@ AFRAME.registerSystem('source', {
 
     init: function() {
         window.setTimeout(() => {
-            this.el.systems['webrtc'].onAddStreamFunc = this.onAddStream.bind(this);
+            this.el.systems['peer'].onAddStreamFunc = this.onAddStream.bind(this);
 
             this.el.addEventListener('enter-vr', () => this.showAll());
             this.el.addEventListener('exit-vr', () => this.hideAll());
 
-            this.el.addEventListener('socket-disconnected', () => this.hideAll());
+            this.el.addEventListener('peer-disconnected', () => this.hideAll());
         });
     },
 
-    onAddStream: function(event) {
+    onAddStream: function(stream) {
+        console.log('Adding stream', stream);
+
         const noSource = location.search && location.search.indexOf('no-source') >= 0;
 
         if(!this.assets) {
@@ -38,7 +40,7 @@ AFRAME.registerSystem('source', {
         videoEl.setAttribute('id', videoId);
         videoEl.setAttribute('muted', '');
 
-        videoEl.srcObject = event.stream;
+        videoEl.srcObject = stream;
         videoEl.onloadedmetadata = () => {
             this.assets.appendChild(videoEl);
 
@@ -55,8 +57,8 @@ AFRAME.registerSystem('source', {
 
                 const screen = document.createElement('a-plane');
                 screen.setAttribute('class', 'interactable');
-                screen.setAttribute('id', `screen-${event.stream.id}`);
-                screen.setAttribute('manipulate-source', `streamId: ${event.stream.id}`);
+                screen.setAttribute('id', `screen-${stream.id}`);
+                screen.setAttribute('manipulate-source', `streamId: ${stream.id}`);
                 screen.setAttribute('position', `0 0 ${-posZ}`);
                 screen.setAttribute('material', 'shader: flat; height: ' + videoEl.videoHeight + '; width: ' + videoEl.videoWidth);
                 screen.setAttribute('scale', `${sizeX} ${sizeY} 1`);
@@ -71,7 +73,7 @@ AFRAME.registerSystem('source', {
                 border.setAttribute('color', '#ff3c4b');
                 border.setAttribute('position', '0 0 -.01');
                 border.setAttribute('scale', '1.025 1.025 1.025');
-                border.setAttribute('source-border', `streamId: ${event.stream.id}`);
+                border.setAttribute('source-border', `streamId: ${stream.id}`);
                 border.setAttribute('visible', 'false');
                 screen.appendChild(border);
 
@@ -89,14 +91,15 @@ AFRAME.registerSystem('source', {
                 }
             };
 
-            videoEl.play();
             setTimeout(() => {
+                console.log(this.playing);
                 if (this.playing) {
                     this.el.sceneEl.dispatchEvent(new Event('source-added'));
                 } else {
                     this.el.sceneEl.dispatchEvent(new Event('need-interaction'));
                 }
             });
+            videoEl.play();
         };
     },
 

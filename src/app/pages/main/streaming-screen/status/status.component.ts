@@ -15,6 +15,7 @@ export class StatusComponent {
 
     constructor(private streamService: StreamService) {
         this.streamService.statusSubject.subscribe((status) => {
+            console.log('New subject');
             this.status = status;
         });
     }

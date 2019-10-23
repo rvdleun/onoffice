@@ -13,45 +13,63 @@ module.exports.registerDisplay = function(displayId, streamId) {
     }
 };
 
-let watchInterval;
-module.exports.watch = function(socket) {
-    let prevX = -1;
-    let prevY = -1;
+module.exports.init = function(global) {
+    let sendPosition = false;
+    let watchInterval;
 
-    socket.on('watch-cursor-position', () => {
-        watchInterval = setInterval(() => {
-            const mouse = Electron.screen.getCursorScreenPoint();
-            if (prevX !== mouse.x || prevY !== mouse.y) {
-                const x = mouse.x;
-                const y = mouse.y;
+    global.sendVirtualCursorPosition = function() {
+        sendPosition = true;
+    };
 
-                prevX = x;
-                prevY = y;
+    global.watchVirtualCursor = function() {
+        let prevX = -1;
+        let prevY = -1;
 
-                const display = displays.find((display) =>
-                    x >= display.display.bounds.x &&
-                    x <= display.display.bounds.x + display.display.bounds.width &&
-                    y >= display.display.bounds.y &&
-                    y <= display.display.bounds.y + display.display.bounds.height);
-
-                if (display) {
-                    if (display.streamId === '') {
-                        socket.emit('cursor-position', {streamId: false});
-                        return;
-                    }
-
-                    const posX = (x - display.display.bounds.x) / display.display.bounds.width;
-                    const posY = (y - display.display.bounds.y) / display.display.bounds.height;
-
-                    socket.emit('cursor-position', {streamId: display.streamId, x: posX, y: posY});
-                }
+        const webserverComponent = require('./webserver.component');
+        webserverComponent.onPeerEvent('watch-cursor-position', () => {
+            if (watchInterval) {
+                return;
             }
-        }, 50);
-    });
 
-    socket.on('stop-streaming', () => {
-        this.displays.forEach((display) => display.streamId = '');
+            watchInterval = setInterval(() => {
+                const mouse = Electron.screen.getCursorScreenPoint();
+                if (
+                    sendPosition ||
+                    (prevX !== mouse.x || prevY !== mouse.y)
+                ) {
+                    const x = mouse.x;
+                    const y = mouse.y;
 
-        clearInterval(watchInterval);
-    });
+                    prevX = x;
+                    prevY = y;
+
+                    const display = displays.find((display) =>
+                        x >= display.display.bounds.x &&
+                        x <= display.display.bounds.x + display.display.bounds.width &&
+                        y >= display.display.bounds.y &&
+                        y <= display.display.bounds.y + display.display.bounds.height);
+
+                    if (display) {
+                        if (display.streamId === '') {
+                            webserverComponent.sendPeerMessage('cursor-position', {streamId: false});
+                            return;
+                        }
+
+                        const posX = (x - display.display.bounds.x) / display.display.bounds.width;
+                        const posY = (y - display.display.bounds.y) / display.display.bounds.height;
+
+                        webserverComponent.sendPeerMessage('cursor-position', {streamId: display.streamId, x: posX, y: posY});
+                        sendPosition = false;
+                    }
+                }
+            }, 50);
+        });
+
+        webserverComponent.onPeerEvent('stop-streaming', () => {
+            displays.forEach((display) => display.streamId = '');
+
+            clearInterval(watchInterval);
+            watchInterval = null;
+        });
+    };
 };

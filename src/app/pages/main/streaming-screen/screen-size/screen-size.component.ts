@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {SocketService} from '../../../../shared/socket.service';
 import {SourceSelection} from '../../settings-screen/source-toggle/source-toggle.component';
+import {PeerService} from '../../../../shared/peer.service';
 
 @Component({
     selector: 'app-screen-size',
@@ -11,9 +11,9 @@ export class ScreenSizeComponent {
     @Input() source: SourceSelection;
     public sourceScale: number = 1;
 
-    constructor(public socketService: SocketService) { }
+    constructor(public peerService: PeerService) { }
 
     public onInput() {
-        this.socketService.emit('source-scale', {streamId: this.source.streamId, scale: this.source.scale});
+        this.peerService.emit('source-scale', {streamId: this.source.streamId, scale: this.source.scale});
     }
 }

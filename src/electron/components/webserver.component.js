@@ -1,112 +1,84 @@
 const express = require('express');
-const expressPeerServer = require('peer').ExpressPeerServer;
 const webApp = express();
 const webServer = require('http').Server(webApp);
 const storage = require('electron-json-storage');
+const uniqid = require('uniqid');
 
-webApp.use(express.static(__dirname + '/../client'));
-
-webApp.get('/manifest.json', (req, res) => {
-    const manifest = {
-        "short_name": "On/Office",
-        "name": "On/Office",
-        "icon": "icon.png",
-        "start_url": "http://" + global.IP + ':24242'
-    };
-
-    res.send(JSON.stringify(manifest));
-});
-
-webApp.get('/check-virtual-office-availability', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.send('Available')
-});
-
-let connections = {};
-let global = null;
-let io;
+const signalResponses = [];
+let onClose;
+let onSignal;
+let createPeerFunc;
+let global;
+let sendPeerMessageFunc;
+let peerListeners = [];
 let pin = '';
-let sessionId = null;
-let sockets = [];
 let webServerHandler;
 
-let host = null;
-let client = null;
+webApp.use(express.json());
+webApp.use(express.static(__dirname + '/../client'));
 
+webApp.post('/connect', (request, response) => {
+    const responseData = {
+        result: '',
+    };
 
-function checkHostClient() {
-    console.log('Checking if host and client are connected', !!host, !!client);
-    if (!host || !client) {
+    if (pin) {
+        if (!request.body.pin) {
+            responseData.result = 'pin-required';
+        } else if(request.body.pin !== pin) {
+            responseData.result = 'pin-incorrect';
+        }
+    }
+
+    if (!responseData.result) {
+        const sessionId = uniqid();
+        responseData.result = 'success';
+        responseData.sessionId = sessionId;
+        signalResponses.push({ sessionId, responses: []});
+
+        createPeerFunc(sessionId);
+    }
+
+    response.send(responseData);
+});
+
+webApp.post('/signal/:sessionId', (request, response) => {
+    const sessionId = request.params.sessionId;
+    const signalResponse = getSignalResponse(sessionId);
+
+    if (!signalResponse) {
         return;
     }
 
-    host.socket.emit('start');
+    signalResponse.responses.push(response);
+    onSignal(sessionId, request.body);
+});
+
+function getSignalResponse(sessionId) {
+    return signalResponses.find((signalResponse) => signalResponse.sessionId === sessionId);
 }
 
-function initializeSocket() {
-    const io = require('socket.io')(webServer);
+module.exports.onPeerEvent = function(event, cb) {
+    let listener = peerListeners.find((search) => search.event === event);
+    if (!listener) {
+        listener = {
+            event,
+            callbacks: [],
+        };
 
-    io.on('connect', (socket) => {
-        require('./environment.component').setupSocket(socket);
+        peerListeners.push(listener);
+    }
 
-        connections[socket.id] = { properties: { approved: false }, socket };
-        sockets.push(socket);
+    listener.callbacks.push(cb);
+};
 
-        socket.on('host', (id) => {
-            if (sessionId === id) {
-                console.log('Host signed in!');
-                host = {socket};
-                checkHostClient();
+module.exports.sendPeerMessage = function(event, data) {
+    sendPeerMessageFunc(event, data);
+};
 
-                socket.emit('host_accepted');
-            }
-        });
+module.exports.init = function(electronGlobal) {
+    global = electronGlobal;
 
-        socket.on('client', (id) => {
-            if (id && id !== sessionId) {
-                socket.emit('session_expired', sessionId);
-                return;
-            }
-
-            if(pin && !connections[socket.id].properties.approved) {
-                socket.emit('pin_required');
-                return;
-            }
-
-            console.log('Client signed in!');
-            socket.emit('client_accepted', sessionId);
-
-            client = {socket};
-            checkHostClient();
-
-            require('./virtual-cursor.component').watch(socket);
-        });
-
-        socket.on('client-id', (id) => {
-            if (host && host.socket) {
-                host.socket.emit('client-id', id);
-            } else {
-                console.log('Tried to send client ID to host, but no host available.');
-            }
-        });
-
-        socket.on('pin', (receivedPin) => {
-            if (pin === receivedPin) {
-                connections[socket.id].properties.approved = true;
-                socket.emit('pin_correct');
-            } else {
-                socket.emit('pin_incorrect');
-            }
-        });
-
-        socket.on('cursor-position', (message) => {
-            socket.broadcast.emit('cursor-position', message);
-        });
-    });
-}
-
-module.exports.init = function(global) {
     global.getPinFromStorage = function(cb) {
         storage.get('pin', (error, data) => {
             if (error) {
@@ -116,6 +88,56 @@ module.exports.init = function(global) {
             pin = data.pin;
             cb(data.pin);
         });
+    };
+
+    global.onCreatePeerFunc = function(cb) {
+        createPeerFunc = cb;
+    };
+
+    global.onPeerMessage = function(message) {
+        const listener = peerListeners.find((search) => search.event === message.event);
+        if (!listener) {
+            return;
+        }
+
+        listener.callbacks.forEach((cb) => {
+            cb(message.data);
+        });
+    };
+
+    global.onSendPeerMessageFunc = function(cb) {
+        sendPeerMessageFunc = cb;
+    };
+
+    global.onClose = function(cb) {
+        onClose = cb;
+    };
+
+    global.onSignal = function(cb) {
+        onSignal = cb;
+    };
+
+    global.clearResponses = function(sessionId) {
+        const signalResponse = getSignalResponse(sessionId);
+        if (!signalResponse) {
+            return;
+        }
+
+        while(signalResponse.responses.length > 0) {
+            const response = signalResponse.responses.pop();
+            response.send({});
+        }
+    };
+
+    global.sendSignal = function(sessionId, signal) {
+        const signalResponse = getSignalResponse(sessionId);
+
+        const response = signalResponse.responses.pop();
+        if (!response) {
+            return;
+        }
+
+        response.send({ signal });
     };
 
     global.setPin = function(newPin) {
@@ -128,31 +150,14 @@ module.exports.init = function(global) {
         });
     };
 
-    let initialized = false;
     global.setWebServerActive = function(active) {
         if (active) {
-            sessionId = '12345';
-            global.sessionId = sessionId;
-            initializeSocket();
-            if (initialized) {
-                webServer.listen(24242)
-            } else {
-                webServerHandler = webServer.listen(24242);
-                webApp.use('/peerjs', expressPeerServer(webServerHandler));
-
-                initialized = true;
-            }
+            webServerHandler = webServer.listen(24242);
         } else {
-            for(let id in connections) {
-                const connection = connections[id];
-                connection.socket.disconnect();
-            }
-
-            client = null;
-            host = null;
-            sessionId = null;
-            global.sessionId = null;
             webServerHandler.close();
+            onClose();
         }
     };
 };
+
+module.exports.webApp = webApp;

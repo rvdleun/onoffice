@@ -61,19 +61,16 @@ Vue.component('pincode-input', {
     }
 });
 
-/*
-    Handles the splash screen element, updating the user on what is going on.
- */
 new Vue({
     el: '#splash-screen',
     data: {
         connectionLost: false,
         message: '',
         insertPin: false,
+        peerSystem: null,
         pincodeRequired: false,
         scene: null,
         sessionId: '',
-        socket: null,
         readyToEnterVR: false,
         vrActive: false,
     },
@@ -81,18 +78,15 @@ new Vue({
         this.message = 'Initializing scene';
 
         this.scene = document.querySelector('a-scene');
+        this.peerSystem = this.scene.systems['peer'];
         this.scene.addEventListener('renderstart', () => {
             this.message = 'Connecting to client';
 
-            this.socket = this.scene.systems.socket.socket;
+            this.connect();
 
-            this.socket.on('client_accepted', this.onClientAccepted.bind(this));
-            this.socket.on('pin_required', this.onPinRequired.bind(this));
-            this.socket.on('pin_correct', this.onPinCorrect.bind(this));
-            this.socket.on('pin_incorrect', this.onPinIncorrect.bind(this));
-            this.socket.on('session_expired', this.onSessionExpired.bind(this));
-
-            this.socket.emit('client');
+            const scene = document.querySelector('a-scene');
+            scene.addEventListener('need-interaction', this.onNeedInteraction);
+            scene.addEventListener('source-added', this.onSourceAdded);
         });
 
         this.scene.addEventListener('enter-vr', () => {
@@ -104,7 +98,7 @@ new Vue({
             this.vrActive = false;
         });
 
-        this.scene.addEventListener('socket-disconnected', () => {
+        this.scene.addEventListener('peer-disconnected', () => {
             this.message = 'Status: Disconnected';
             this.connectionLost = true;
             this.readyToEnterVR = false;
@@ -112,15 +106,42 @@ new Vue({
     },
 
     methods: {
+        connect: async function(pin) {
+            const response = await fetch(`/connect`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pin }),
+            });
+
+            const data = await response.json();
+            switch(data.result) {
+                case 'pin-correct':
+                    this.onPinIncorrect(data.sessionId);
+                    break;
+
+                case 'pin-incorrect':
+                    this.onPinIncorrect();
+                    break;
+
+                case 'pin-required':
+                    this.onPinRequired();
+                    break;
+
+                case 'success':
+                    this.onClientAccepted(data.sessionId);
+                    break;
+            }
+        },
+
         onClientAccepted: function(sessionId) {
+            if (!sessionId) {
+                return;
+            }
+
             this.message = 'Waiting for source';
-            this.sessionId = sessionId;
-
-            this.scene.systems['webrtc'].setup();
-
-            const scene = document.querySelector('a-scene');
-            scene.addEventListener('need-interaction', this.onNeedInteraction);
-            scene.addEventListener('source-added', this.onSourceAdded);
+            this.peerSystem.connect(sessionId);
         },
 
         onNeedInteraction: function() {
@@ -139,13 +160,11 @@ new Vue({
             scene.removeEventListener('source-added', this.onSourceAdded);
 
             const onCursorPosition = () => {
-                this.socket.removeListener('cursor-position', onCursorPosition);
-
                 this.message = 'Status: Active';
                 this.readyToEnterVR = true;
             };
-            this.socket.on('cursor-position', onCursorPosition);
-            this.socket.emit('watch-cursor-position');
+            this.peerSystem.on('cursor-position', onCursorPosition);
+            this.peerSystem.emit('watch-cursor-position');
         },
 
         onPinRequired: function() {
@@ -153,18 +172,22 @@ new Vue({
             this.pincodeRequired = true;
         },
 
-        onPinCorrect: function() {
+        onPinCorrect: function(sessionId) {
+            if (!sessionId) {
+                return;
+            }
+
             this.message = 'Pin accepted';
-            this.socket.emit('client');
             this.pincodeRequired = false;
+            this.peerSystem.connect(sessionId);
         },
 
         onPinIncorrect: function() {
             this.message = 'Incorrect pin';
+            this.pincodeRequired = true;
         },
 
         startVirtualReality: function() {
-            this.socket.emit('setup-environment', 1.3);
             this.scene.enterVR();
         },
 
@@ -174,11 +197,8 @@ new Vue({
 
         onSendPin: function(pin) {
             this.message = 'Sending pin';
-            this.socket.emit('pin', pin);
+            this.pincodeRequired = false;
+            this.connect(pin);
         },
-
-        onSessionExpired: function() {
-            alert('Your session has expired. Please refresh to try again.');
-        }
     },
 });

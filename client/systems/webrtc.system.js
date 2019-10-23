@@ -6,7 +6,6 @@ AFRAME.registerSystem('webrtc', {
     onAddStreamFunc: null,
 
     setup: function() {
-        const socket = this.el.systems['socket'];
         const peer = new Peer(null, {
             host: window.location.hostname,
             port: 24242,
@@ -21,8 +20,6 @@ AFRAME.registerSystem('webrtc', {
 
                 mediaConnection.answer();
             });
-
-            socket.emit('client-id', id);
         });
 
         peer.on('error', (error) => {

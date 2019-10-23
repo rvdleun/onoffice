@@ -20,6 +20,8 @@ export class SelectScreensComponent implements OnInit {
     }
 
     public changeSelected(change: number) {
+        this.sources.forEach((source) => source.selected = false);
+
         let newSource = this.selectedSource + change;
 
         if (newSource < 0) {
@@ -27,6 +29,8 @@ export class SelectScreensComponent implements OnInit {
         } else if (newSource >= this.sources.length) {
             newSource = 0;
         }
+
+        this.sources[newSource].selected = true;
 
         this.selectedSource = newSource;
         this.changeDetectorRef.detectChanges();

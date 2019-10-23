@@ -1,6 +1,6 @@
 import {SelectActiveScreenComponent} from './select-active-screen.component';
 import {TestBed} from '@angular/core/testing';
-import {SocketService} from '../../../../shared/socket.service';
+import {PeerService} from '../../../../shared/peer.service';
 
 describe('SelectActiveScreenComponent', () => {
     let component: SelectActiveScreenComponent;
@@ -8,7 +8,7 @@ describe('SelectActiveScreenComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [SelectActiveScreenComponent],
-            providers: [{ provide: SocketService, useValue: jasmine.createSpyObj('SocketService', ['emit']) }],
+            providers: [{ provide: PeerService, useValue: jasmine.createSpyObj('PeerService', ['emit']) }],
         });
 
         component = TestBed.createComponent(SelectActiveScreenComponent).componentInstance;

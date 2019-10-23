@@ -1,15 +1,13 @@
 <html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <body>
 <script src="./vendor/aframe.min.js"></script>
-<script src="./vendor/peerjs.min.js"></script>
+<script src="./vendor/simplepeer.min.js"></script>
 <script src="./vendor/vue.min.js"></script>
 
-<script src="./socket.io/socket.io.js"></script>
 <script src="./components/manipulate-source.component.js"></script>
-<script src="./components/sky.component.js"></script>
 <script src="./components/source-border.component.js"></script>
 <script src="./systems/cursor-position.system.js"></script>
-<script src="./systems/socket.system.js"></script>
+<script src="./systems/peer.system.js"></script>
 <script src="./systems/source.system.js"></script>
 <script src="./systems/webrtc.system.js"></script>
 
@@ -28,7 +26,7 @@
         </div>
     </div>
 </div>
-<a-scene vr-mode-ui="enabled: false" antialias="true">
+<a-scene vr-mode-ui="enabled: false" renderer="antialias: true">
     <a-assets>
         <img id="cursorImg" src="./assets/cursor.svg" />
         <video id="remote" muted autoplay></video>
@@ -43,7 +41,7 @@
     <a-entity id="sources"></a-entity>
     <a-plane id="cursor" src="#cursorImg" color="#ff3c4b" position="-.5 0 .001" material="shader: flat; opacity: .5; transparent: true" scale=".02 .03 .01"></a-plane>
 
-    <a-sky sky rotation="0 270 0"></a-sky>
+    <a-sky src="/sky" rotation="0 270 0"></a-sky>
 </a-scene>
 
 <script src="./splash-screen/splash-screen.js"></script>

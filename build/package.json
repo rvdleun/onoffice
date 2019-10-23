@@ -24,7 +24,8 @@
     "peerjs-server": "^0.2.9",
     "rimraf": "^2.6.2",
     "socket.io": "^2.1.1",
-    "socket.io-client": "^2.1.1"
+    "socket.io-client": "^2.1.1",
+    "uniqid": "^5.0.3"
   },
   "devDependencies": {
     "electron": "^4.2.6",

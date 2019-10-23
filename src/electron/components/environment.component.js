@@ -44,24 +44,16 @@ module.exports.init = function(global) {
                 console.error('Error while storing sky', error);
             }
         });
-    }
-};
+    };
 
-module.exports.setupSocket = function(socket) {
-    ['center-screen', 'source-scale', 'source-select'].forEach((message) => {
-        socket.on(message, (data) => {
-            socket.broadcast.emit(message, data);
+    require('./webserver.component').webApp.get('/sky', (req, res) => {
+        const base64Data = sky.replace(/^data:image\/png;base64,/, '');
+        const img = Buffer.from(base64Data, 'base64');
+
+        res.writeHead(200, {
+            'Content-Type': 'image/png',
+            'Content-Length': img.length
         });
-    });
-
-    socket.on('get-sky', () => {
-        socket.emit('sky', sky);
-    });
-
-    socket.on('setup-environment', (scale) => {
-        setTimeout(() => {
-            socket.broadcast.emit('center-screen');
-            socket.broadcast.emit('source-scale', scale);
-        }, 500);
+        res.end(img);
     });
 };

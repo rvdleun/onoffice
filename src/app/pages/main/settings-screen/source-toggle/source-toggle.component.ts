@@ -24,7 +24,8 @@ export class SourceToggleComponent implements OnChanges {
     }
 
     public onToggle() {
-        this.source.selected = !this.source.selected;
+        // @TODO: Enable for multiple sources
+        // this.source.selected = !this.source.selected;
         this.changeDetectorRef.detectChanges();
     }
 }
