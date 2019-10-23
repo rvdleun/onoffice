@@ -24,8 +24,7 @@ export class StartStreamingComponent {
             return;
         }
 
-        const sources = this.sources.filter((source) => source.selected);
-        this.peerService.initialize(sources);
+        this.peerService.initialize(selectedSources);
         this.streamService.startStreaming();
     }
 }

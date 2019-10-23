@@ -32,11 +32,11 @@ export class MainPageComponent implements OnInit {
                 return {
                     scale: 1,
                     source,
-                    selected: true,
+                    selected: false,
                 };
             });
 
-            console.log(this.sources);
+            this.sources[0].selected = true;
         });
     }
 
