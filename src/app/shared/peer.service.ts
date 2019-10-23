@@ -80,6 +80,7 @@ export class PeerService {
         const peer = new SimplePeer({ streams: this.streams });
 
         peer.on('connect', () => {
+            this.electronService.remote.getGlobal('clearResponses')(sessionId);
             this.electronService.remote.getGlobal('watchVirtualCursor')();
             this.streamService.statusSubject.next({ current: 'active' });
 

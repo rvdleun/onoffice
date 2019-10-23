@@ -117,6 +117,18 @@ module.exports.init = function(electronGlobal) {
         onSignal = cb;
     };
 
+    global.clearResponses = function(sessionId) {
+        const signalResponse = getSignalResponse(sessionId);
+        if (!signalResponse) {
+            return;
+        }
+
+        while(signalResponse.responses.length > 0) {
+            const response = signalResponse.responses.pop();
+            response.send({});
+        }
+    };
+
     global.sendSignal = function(sessionId, signal) {
         const signalResponse = getSignalResponse(sessionId);
 
@@ -125,7 +137,7 @@ module.exports.init = function(electronGlobal) {
             return;
         }
 
-        response.send(signal);
+        response.send({ signal });
     };
 
     global.setPin = function(newPin) {

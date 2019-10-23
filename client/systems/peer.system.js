@@ -47,7 +47,9 @@ AFRAME.registerSystem('peer', {
             });
 
             const returnSignal = await response.json();
-            peer.signal(returnSignal);
+            if (returnSignal.signal) {
+                peer.signal(returnSignal.signal);
+            }
         });
 
         peer.on('stream', (stream) => {
