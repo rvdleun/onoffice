@@ -1,6 +1,5 @@
 const express = require('express');
-const webApp = express();
-const webServer = require('http').Server(webApp);
+const fs = require('fs');
 const storage = require('electron-json-storage');
 const uniqid = require('uniqid');
 
@@ -12,12 +11,16 @@ let global;
 let sendPeerMessageFunc;
 let peerListeners = [];
 let pin = '';
-let webServerHandler;
+let ssl;
+let webServer;
 
+const webApp = express();
 webApp.use(express.json());
 webApp.use(express.static(__dirname + '/../client'));
+webApp.post('/connect', postConnect);
+webApp.post('/signal/:sessionId', postSignal);
 
-webApp.post('/connect', (request, response) => {
+function postConnect(request, response) {
     const responseData = {
         result: '',
     };
@@ -40,9 +43,9 @@ webApp.post('/connect', (request, response) => {
     }
 
     response.send(responseData);
-});
+}
 
-webApp.post('/signal/:sessionId', (request, response) => {
+function postSignal(request, response) {
     const sessionId = request.params.sessionId;
     const signalResponse = getSignalResponse(sessionId);
 
@@ -52,7 +55,18 @@ webApp.post('/signal/:sessionId', (request, response) => {
 
     signalResponse.responses.push(response);
     onSignal(sessionId, request.body);
-});
+}
+
+function createServer() {
+    if (ssl) {
+        return require('https').Server({
+            cert: fs.readFileSync(__dirname + '/webserver/server.cert'),
+            key: fs.readFileSync(__dirname + '/webserver/server.key'),
+        }, webApp)
+    } else {
+        return require('http').Server(webApp);
+    }
+}
 
 function getSignalResponse(sessionId) {
     return signalResponses.find((signalResponse) => signalResponse.sessionId === sessionId);
@@ -87,6 +101,21 @@ module.exports.init = function(electronGlobal) {
 
             pin = data.pin;
             cb(data.pin);
+        });
+    };
+
+    global.getSslFromStorage = function(cb) {
+        storage.get('ssl', (error, data) => {
+            if (error) {
+                return;
+            }
+
+            if (data.ssl === undefined) {
+                data.ssl = true;
+            }
+
+            ssl = data.ssl;
+            cb(data.ssl);
         });
     };
 
@@ -150,11 +179,26 @@ module.exports.init = function(electronGlobal) {
         });
     };
 
+    global.setSsl = function(newSsl) {
+        ssl = newSsl;
+
+        storage.set('ssl', { ssl }, (error) => {
+            if (error) {
+                console.error('Error while storing ssl', error);
+            }
+        });
+    };
+
     global.setWebServerActive = function(active) {
         if (active) {
-            webServerHandler = webServer.listen(24242);
+            if (webServer) {
+                global.setWebServerActive(false);
+            }
+
+            webServer = createServer();
+            webServer.listen(24242);
         } else {
-            webServerHandler.close();
+            webServer.close();
             onClose();
         }
     };

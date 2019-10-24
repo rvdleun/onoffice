@@ -4,18 +4,13 @@
         <div class="form">
             <div class="row components">
                 <div class="col" data-step="3" data-intro="If you have multiple screens on your desktop, select what screen will be displayed in the virtual office here.">
+                    <h2>Select display</h2>
                     <app-select-screens *ngIf="sources" [sources]="sources"></app-select-screens>
                 </div>
                 <div class="col" data-step="2" data-intro="If you want to set a numeric pincode for security, you can do so here. You will need to insert this code in the virtual environment gaining access to the virtual office.">
-                    <app-pin-form></app-pin-form>
-                </div>
-            </div>
-            <div class="row titles">
-                <div class="col">
-                    <h2>Select display</h2>
-                </div>
-                <div class="col">
                     <h2>Pincode</h2>
+                    <app-pin-form></app-pin-form>
+                    <app-ssl-connection></app-ssl-connection>
                 </div>
             </div>
         </div>

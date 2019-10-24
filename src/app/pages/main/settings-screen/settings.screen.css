@@ -31,11 +31,6 @@
     margin-top: 15px;
 }
 
-app-pin-form {
-    position: relative;
-    top: calc(5vh);
-}
-
 app-start-streaming {
     position: fixed;
     top: calc(50vh);
@@ -43,6 +38,12 @@ app-start-streaming {
     width: calc(27vw);
     height: calc(10.6vh);
     transform: translate(calc(-13.5vw), calc(-5.3vh)) !important;
+}
+
+app-ssl-connection {
+    display: block;
+    clear: left;
+    transform: translateY(57px);
 }
 
 .tutorial-button {
