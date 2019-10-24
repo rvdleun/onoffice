@@ -19,6 +19,7 @@ export class SslConnectionComponent implements OnInit {
             this.changeDetectorRef.detectChanges();
         });
     }
+
     public onClick() {
         this.sslConnection = !this.sslConnection;
         this.sslConnectionChange.emit(this.sslConnection);

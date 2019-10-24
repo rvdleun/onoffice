@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 
 @Component({
@@ -6,8 +6,20 @@ import {ElectronService} from 'ngx-electron';
     styleUrls: ['connect-instructions.component.css'],
     templateUrl: 'connect-instructions.component.html'
 })
-export class ConnectInstructionsComponent {
+export class ConnectInstructionsComponent implements OnInit {
     @Input() ip: string;
 
-    constructor() { }
+    public sslActive = false;
+
+    constructor(
+        private changeDetectorRef: ChangeDetectorRef,
+        private electronService: ElectronService
+    ) { }
+
+    public ngOnInit() {
+        this.electronService.remote.getGlobal('getSslFromStorage')((ssl) => {
+            this.sslActive = ssl;
+            this.changeDetectorRef.detectChanges();
+        });
+    }
 }
