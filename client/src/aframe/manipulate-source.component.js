@@ -76,7 +76,6 @@ AFRAME.registerComponent('manipulate-source', {
 /**
  * @author alteredq / http://alteredqualia.com/
  */
-
 THREE.SceneUtils = {
 
     createMultiMaterialObject: function ( geometry, materials ) {

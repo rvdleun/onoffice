@@ -50,6 +50,8 @@ module.exports.init = function(global) {
         const base64Data = sky.replace(/^data:image\/png;base64,/, '');
         const img = Buffer.from(base64Data, 'base64');
 
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.writeHead(200, {
             'Content-Type': 'image/png',
             'Content-Length': img.length

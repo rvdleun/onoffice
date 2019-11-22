@@ -19,7 +19,7 @@ AFRAME.registerSystem('source', {
     },
 
     onAddStream: function(stream) {
-        console.log('Adding stream', stream);
+        window.console.log('Adding stream', stream);
 
         const noSource = location.search && location.search.indexOf('no-source') >= 0;
 
@@ -92,7 +92,7 @@ AFRAME.registerSystem('source', {
             };
 
             setTimeout(() => {
-                console.log(this.playing);
+                window.console.log(this.playing);
                 if (this.playing) {
                     this.el.sceneEl.dispatchEvent(new Event('source-added'));
                 } else {
