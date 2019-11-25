@@ -1,3 +1,5 @@
+import * as AFRAME from 'aframe';
+
 /*
     This component displays a source. (a source being a screen)
  */
@@ -11,7 +13,6 @@ AFRAME.registerSystem('source', {
         window.setTimeout(() => {
             this.el.systems['peer'].onAddStreamFunc = this.onAddStream.bind(this);
 
-            this.el.addEventListener('enter-vr', () => this.showAll());
             this.el.addEventListener('exit-vr', () => this.hideAll());
 
             this.el.addEventListener('peer-disconnected', () => this.hideAll());
@@ -19,8 +20,6 @@ AFRAME.registerSystem('source', {
     },
 
     onAddStream: function(stream) {
-        window.console.log('Adding stream', stream);
-
         const noSource = location.search && location.search.indexOf('no-source') >= 0;
 
         if(!this.assets) {
@@ -42,9 +41,11 @@ AFRAME.registerSystem('source', {
 
         videoEl.srcObject = stream;
         videoEl.onloadedmetadata = () => {
+            window.console.log('Metadata is here');
             this.assets.appendChild(videoEl);
 
             videoEl.onplay = () => {
+                window.console.log('We are playing');
                 this.playing = true;
 
                 const width = videoEl.videoWidth / 2;
@@ -79,7 +80,7 @@ AFRAME.registerSystem('source', {
 
                 const entity = document.createElement('a-entity');
                 entity.setAttribute('position', '0 1 0');
-                entity.setAttribute('scale', '0 0 1');
+                entity.setAttribute('scale', '1 1 1');
                 entity.appendChild(screen);
                 this.sources.appendChild(entity);
 
@@ -91,23 +92,17 @@ AFRAME.registerSystem('source', {
                 }
             };
 
-            setTimeout(() => {
-                window.console.log(this.playing);
-                if (this.playing) {
-                    this.el.sceneEl.dispatchEvent(new Event('source-added'));
-                } else {
-                    this.el.sceneEl.dispatchEvent(new Event('need-interaction'));
-                }
-            });
+            // setTimeout(() => {
+            //     window.console.log(this.playing);
+            //     if (this.playing) {
+            //         this.el.sceneEl.dispatchEvent(new Event('source-added'));
+            //     } else {
+            //         this.el.sceneEl.dispatchEvent(new Event('need-interaction'));
+            //     }
+            // });
             videoEl.play();
+            this.el.sceneEl.dispatchEvent(new Event('source-added'));
         };
-    },
-
-    showAll: function() {
-        for (let i = 0; i < this.sources.children.length; i++) {
-            this.sources.children[i].setAttribute('animation', 'property: scale; to: 1 1 1');
-            setTimeout(() => this.sources.children[i].setAttribute('visible', 'true'), 2000);
-        }
     },
 
     hideAll: function() {

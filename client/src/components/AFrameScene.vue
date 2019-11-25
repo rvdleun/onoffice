@@ -1,6 +1,6 @@
 <template>
     <a-scene ref="scene" :class="{ active: vrActive }" @renderstart="this.onRenderStart" @enter-vr="onEnterVR" @exit-vr="onExitVR()">
-        <a-assets>
+        <a-assets ref="assets">
             <img id="cursorImg" src="../assets/images/cursor.svg" />
             <video id="remote" muted autoplay></video>
         </a-assets>
@@ -20,10 +20,11 @@
 
 <script>
     import 'aframe';
+    import 'simple-peer';
     import '../aframe/cursor-position.system';
     import '../aframe/manipulate-source.component';
     import '../aframe/peer.system';
-    import '../aframe/source-border.component';
+    import '../aframe/source.system';
     import '../aframe/source-border.component';
     import '../aframe/webrtc.system';
 
@@ -44,6 +45,9 @@
         },
         methods: {
             onEnterVR() {
+                Array.from(this.$refs.assets.querySelectorAll('.video-source')).forEach((source) => source.play() );
+                setTimeout(() => this.$refs.scene.systems['manipulate-source'].centerAllScreens(), 500);
+
                 this.vrActive = true;
             },
             onExitVR() {

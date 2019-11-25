@@ -12,6 +12,19 @@
         name: 'ReadyPage',
         components: {
             EnterVirtualRealityButton
+        },
+        created() {
+            const scene = document.querySelector('a-scene');
+            scene.addEventListener('peer-disconnected', this.onPeerDisconnected);
+        },
+        destroyed() {
+            const scene = document.querySelector('a-scene');
+            scene.removeEventListener('peer-disconnected', this.onPeerDisconnected);
+        },
+        methods: {
+            onPeerDisconnected() {
+                this.$router.push('disconnected');
+            }
         }
     }
 </script>

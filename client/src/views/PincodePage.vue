@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>Enter PIN</p>
+        <p>{{ message }}</p>
         <PincodeForm @pincode="onPincode($event)" />
     </div>
 </template>
@@ -13,9 +13,15 @@
         components: {
             PincodeForm,
         },
+        computed: {
+            message() {
+                return this.$store.state.pinMessage;
+            }
+        },
         methods: {
-            onPincode() {
-                this.$router.push('ready');
+            onPincode(pin) {
+                this.$store.dispatch('setPincode', pin);
+                this.$router.push('connecting-to-client');
             }
         }
     }

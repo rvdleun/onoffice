@@ -14,7 +14,7 @@
                     return;
                 }
 
-                this.$router.push('pincode');
+                this.$router.push('connecting-to-client');
             }
         }
     }

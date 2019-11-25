@@ -21,9 +21,9 @@
       AFrameScene,
     },
     watch: {
-      // $route() {
-      //   history.pushState("", document.title, window.location.pathname);
-      // }
+      $route() {
+        history.pushState('', document.title, window.location.pathname);
+      }
     }
   }
 </script>
