@@ -42,11 +42,9 @@ AFRAME.registerSystem('source', {
 
         videoEl.srcObject = stream;
         videoEl.onloadedmetadata = () => {
-            window.console.log('Metadata is here');
             this.assets.appendChild(videoEl);
 
             videoEl.onplay = () => {
-                window.console.log('We are playing');
                 this.playing = true;
 
                 const width = videoEl.videoWidth / 2;
@@ -93,14 +91,6 @@ AFRAME.registerSystem('source', {
                 }
             };
 
-            // setTimeout(() => {
-            //     window.console.log(this.playing);
-            //     if (this.playing) {
-            //         this.el.sceneEl.dispatchEvent(new Event('source-added'));
-            //     } else {
-            //         this.el.sceneEl.dispatchEvent(new Event('need-interaction'));
-            //     }
-            // });
             videoEl.play();
             this.el.sceneEl.dispatchEvent(new Event('source-added'));
         };
