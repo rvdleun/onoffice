@@ -7,7 +7,7 @@
   "author": "Ruben van der Leun",
   "main": "dist/main.js",
   "scripts": {
-    "build-electron": "ng build --base-href . && cp -R src/electron/* dist && ln -s ../client dist/client",
+    "build-electron": "ng build --base-href . && cp -R src/electron/* dist && ln -s ../client/dist dist/client",
     "build-electron-windows": "ng build --base-href . && xcopy .\\src\\electron\\* dist /s && xcopy .\\client .\\dist\\client /I /S",
     "start": "npm run build-electron && electron dist/main.js",
     "start-windows": "npm run build-electron-windows && electron dist/main.js",
@@ -22,6 +22,7 @@
     "@types/peerjs": "0.0.30",
     "@types/webrtc": "0.0.25",
     "bootstrap": "^4.3.1",
+    "cors": "^2.8.5",
     "electron-json-storage": "^4.1.6",
     "express": "^4.16.3",
     "install": "^0.13.0",

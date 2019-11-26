@@ -1,6 +1,9 @@
 /*
     This component tracks the cursor position and updates the position of the entity accordingly
  */
+
+import * as AFRAME from 'aframe';
+
 AFRAME.registerSystem('cursor-position', {
     cursor: null,
     streamId: '',

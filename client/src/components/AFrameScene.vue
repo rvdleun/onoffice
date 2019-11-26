@@ -26,7 +26,6 @@
     import '../aframe/peer.system';
     import '../aframe/source.system';
     import '../aframe/source-border.component';
-    import '../aframe/webrtc.system';
 
     export default {
         name: 'AFrameScene',

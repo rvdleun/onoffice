@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const fs = require('fs');
 const storage = require('electron-json-storage');
@@ -15,6 +16,7 @@ let ssl;
 let webServer;
 
 const webApp = express();
+webApp.use(cors());
 webApp.use(express.json());
 webApp.use(express.static(__dirname + '/../client'));
 webApp.post('/connect', postConnect);

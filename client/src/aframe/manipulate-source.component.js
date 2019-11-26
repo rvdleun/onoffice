@@ -1,6 +1,12 @@
 /*
     This component will allow the user to move and resize the screen
  */
+
+import { THREE } from 'aframe';
+import * as AFRAME from 'aframe';
+
+window.console.log(AFRAME, THREE);
+
 AFRAME.registerSystem('manipulate-source', {
     centerAllScreens: function() {
         const sources = document.querySelectorAll('[manipulate-source]');

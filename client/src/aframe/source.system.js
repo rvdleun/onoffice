@@ -1,8 +1,9 @@
-import * as AFRAME from 'aframe';
-
 /*
     This component displays a source. (a source being a screen)
  */
+
+import * as AFRAME from 'aframe';
+
 AFRAME.registerSystem('source', {
     assets: null,
     sources: null,

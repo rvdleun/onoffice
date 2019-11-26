@@ -1,3 +1,5 @@
+import * as AFRAME from 'aframe';
+
 AFRAME.registerComponent('source-border', {
     schema: {
         streamId: { type: 'string' },
