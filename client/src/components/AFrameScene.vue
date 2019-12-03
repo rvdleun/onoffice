@@ -14,7 +14,7 @@
         <a-entity id="sources"></a-entity>
         <a-plane id="cursor" src="#cursorImg" color="#ff3c4b" position="-.5 0 .001" material="shader: flat; opacity: .5; transparent: true" scale=".02 .03 .01"></a-plane>
 
-        <a-sky src="http://localhost:24242/sky" rotation="0 270 0"></a-sky>
+        <a-sky :src="skySrc" rotation="0 270 0"></a-sky>
     </a-scene>
 </template>
 
@@ -32,6 +32,11 @@
         data() {
             return {
                 vrActive: false,
+            }
+        },
+        computed: {
+            skySrc() {
+                return `${process.env.VUE_APP_APPLICATION_URL}/sky`
             }
         },
         created() {

@@ -17,13 +17,13 @@ AFRAME.registerSystem('peer', {
     connect: function(sessionId) {
         const peer = new SimplePeer({ initiator: true, streams: [] });
 
-        peer._pc.onconnectionstatechange = () => {
-            const state = peer._pc.connectionState;
-            if (state === 'disconnected' || state === 'closed') {
-                this.onDisconnect();
-            }
-        };
-
+        // peer._pc.onconnectionstatechange = () => {
+        //     const state = peer._pc.connectionState;
+        //     if (state === 'disconnected' || state === 'closed') {
+        //         this.onDisconnect();
+        //     }
+        // };
+        //
         peer.on('close', () => {
             this.onDisconnect();
         });
@@ -41,7 +41,7 @@ AFRAME.registerSystem('peer', {
         });
 
         peer.on('signal', async (signal) => {
-            const response = await fetch(`http://localhost:24242/signal/${sessionId}`, {
+            const response = await fetch(`${process.env.VUE_APP_APPLICATION_URL}/signal/${sessionId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

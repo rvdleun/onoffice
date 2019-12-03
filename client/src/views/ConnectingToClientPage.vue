@@ -7,7 +7,7 @@
         name: 'ConnectingToClientPage',
         created: async function() {
             const pin = this.$store.state.pincode;
-            const response = await fetch(`http://localhost:24242/connect`, {
+            const response = await fetch(`${process.env.VUE_APP_APPLICATION_URL}/connect`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
