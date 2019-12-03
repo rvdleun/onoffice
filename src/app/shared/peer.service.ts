@@ -77,7 +77,7 @@ export class PeerService {
     }
 
     private createPeer(sessionId: string) {
-        const peer = new SimplePeer({ streams: this.streams });
+        const peer = new SimplePeer({ stream: this.streams[0] });
 
         peer.on('connect', () => {
             this.electronService.remote.getGlobal('clearResponses')(sessionId);
@@ -86,7 +86,7 @@ export class PeerService {
 
             setTimeout(() => {
                 this.electronService.remote.getGlobal('sendVirtualCursorPosition')();
-            });
+            }, 1000);
         });
 
         peer.on('data', (data) => {
