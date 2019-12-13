@@ -7,9 +7,9 @@
   "author": "Ruben van der Leun",
   "main": "dist/main.js",
   "scripts": {
-    "package-mac": "electron-packager . --overwrite --asar=true --platform=darwin --arch=x64 --prune=true --out=release-builds --icon=assets/mac.icns  --electron-version=4.2.6",
-    "package-windows": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --icon=assets/windows.ico --electron-version=4.2.6",
-    "package-linux": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds --electron-version=4.2.6"
+    "package-mac": "electron-packager ./dist/main.js --overwrite --platform=darwin --arch=x64 --prune=true --out=release-builds --icon=assets/mac.icns  --electron-version=4.2.6",
+    "package-windows": "electron-packager ./dist/main.js --ignore=virtual-office --overwrite --platform=win32 --arch=ia32 --prune=true --out=release-builds --icon=assets/windows.ico --electron-version=4.2.6",
+    "package-linux": "electron-packager ./dist/main.js --ignore=virtual-office --overwrite --platform=linux --arch=x64 --prune=true --out=release-builds --electron-version=4.2.6"
   },
   "dependencies": {
     "cors": "^2.8.5",

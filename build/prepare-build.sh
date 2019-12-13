@@ -19,4 +19,10 @@ if [ -d "dist" ]; then
 fi
 cp -r ../dist .
 
+# Remove the symlink and copy the client directory
+cd dist
+rm -rf client
+cp -r ../../client/dist ./client
+cd ..
+
 echo 'Now run npm run package-linux / package-mac / package-windows to create a build'
