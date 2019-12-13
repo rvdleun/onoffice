@@ -7,14 +7,12 @@
   "author": "Ruben van der Leun",
   "main": "dist/main.js",
   "scripts": {
+    "build": "npm run build-client && npm run build-electron",
     "build-electron": "ng build --base-href . && cp -R src/electron/* dist && ln -s ../client/dist dist/client",
-    "build-electron-windows": "ng build --base-href . && xcopy .\\src\\electron\\* dist /s && xcopy .\\client .\\dist\\client /I /S",
-    "start": "npm run build-electron && electron dist/main.js",
-    "start:client": "cd client && npm run build && cd .. && npm run start",
-    "start-windows": "npm run build-electron-windows && electron dist/main.js",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "build-electron:windows": "ng build --base-href . && xcopy .\\src\\electron\\* dist /s && xcopy .\\client .\\dist\\client /I /S",
+    "build-client": "cd client && npm run build && cd ..",
+    "start": "npm run build && electron dist/main.js",
+    "start-windows": "npm run build-client && npm run build-electron:windows && electron dist/main.js"
   },
   "private": true,
   "dependencies": {

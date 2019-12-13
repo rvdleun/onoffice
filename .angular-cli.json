@@ -18,6 +18,9 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
+      "scripts": [
+        "../node_modules/webrtc-adapter/dist/adapter_core.js"
+      ],
       "styles": [
         "styles.css",
         "../node_modules/intro.js/introjs.css",
