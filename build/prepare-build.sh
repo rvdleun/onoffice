@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Install client dependencies
+cd ../client
+npm install
+
 # Build application
 cd ..
 npm install
