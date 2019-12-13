@@ -1,5 +1,6 @@
 import * as AFRAME from 'aframe';
 import * as SimplePeer from 'simple-peer';
+import 'webrtc-adapter';
 
 AFRAME.registerSystem('peer', {
     schema: {
@@ -15,15 +16,15 @@ AFRAME.registerSystem('peer', {
     },
 
     connect: function(sessionId) {
-        const peer = new SimplePeer({ initiator: true, streams: [] });
+        const peer = new SimplePeer({
+            initiator: true,
+            stream: false,
+            offerOptions: {
+                offerToReceiveAudio: true,
+                offerToReceiveVideo: true,
+            }
+        });
 
-        // peer._pc.onconnectionstatechange = () => {
-        //     const state = peer._pc.connectionState;
-        //     if (state === 'disconnected' || state === 'closed') {
-        //         this.onDisconnect();
-        //     }
-        // };
-        //
         peer.on('close', () => {
             this.onDisconnect();
         });
@@ -57,6 +58,10 @@ AFRAME.registerSystem('peer', {
 
         peer.on('stream', (stream) => {
             this.onAddStreamFunc(stream);
+        });
+
+        peer.on('error', () => {
+            this.onDisconnect();
         });
 
         this.peer = peer;

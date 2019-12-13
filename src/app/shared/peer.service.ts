@@ -3,6 +3,7 @@ import {ElectronService} from 'ngx-electron';
 import * as SimplePeer from 'simple-peer';
 import {SourceSelection} from '../pages/main/settings-screen/source-toggle/source-toggle.component';
 import {StreamService} from './stream.service';
+import 'webrtc-adapter';
 
 interface PeerConnection {
     sessionId: string;
@@ -77,7 +78,13 @@ export class PeerService {
     }
 
     private createPeer(sessionId: string) {
-        const peer = new SimplePeer({ stream: this.streams[0] });
+        const peer = new SimplePeer({
+            initiator: false,
+            streams: this.streams,
+            answerOptions: {
+                offerToReceiveAudio: false,
+                offerToReceiveVideo: false
+            }});
 
         peer.on('connect', () => {
             this.electronService.remote.getGlobal('clearResponses')(sessionId);
