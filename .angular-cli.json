@@ -23,9 +23,6 @@
         "../node_modules/intro.js/introjs.css",
         "../node_modules/bootstrap/dist/css/bootstrap.css"
       ],
-      "scripts": [
-        "../node_modules/peerjs/dist/peerjs.min.js"
-      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
