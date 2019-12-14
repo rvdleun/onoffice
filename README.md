@@ -45,3 +45,4 @@ These issues are sorted in random order. Each item has an entry on the [issues p
 
 - [Nick van Manen](https://www.linkedin.com/in/nvanmanen/) for his invaluable contributions in getting this project up and running.
 - [Janine Terlouw](http://janineterlouw.nl) for the wonderful UX designs
+- [Peter Kassenaar](https://www.kassenaar.com/) whose workshop inspired me to rewrite the client to a VueJS project.
