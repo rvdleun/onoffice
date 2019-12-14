@@ -78,7 +78,6 @@ The application is a user interface that lets the user setup a 360 panoramic ima
 Once the user starts streaming, an Express web-server will start serving the files for the client. After the user has logged in, a user interface will pop up that lets the user resize and center the screen in the virtual world.
 
 ## To start development
-
 * Run `npm start` or `npm start-windows` to build and run the project.
 
 This will open the application locally. There is currently no hot-reloading available, so you will need to close down and rerun the command to see your desktop changes.
@@ -115,22 +114,56 @@ Contains the main.js Electron script that initializes the application
 Contains components files, each one responsible for a certain feature within the application
 
 # Client
-The client contains the browser application that the user visits on his headset to view the Virtual Office.
+The client contains the browser application that the user visits on his headset to view the Virtual Office. It's built with vue.js and AFrame.
+
+## How it works
+The app is responsible for two things... 
+
+* A splash screen that tracks the progress with initialising the environment and connecting to the server. 
+* The virtual environment that streams the user's desktop
+
+### Splashscreen
+The splash screen is what the user first sees when opening the app. It undergoes a number of steps until the user is ready to enter the VR part. Each step is encapsulated in a View components and can be found in the `client/src/views` directory. Because each step needs to be run sequentially, the hash tag is removed every time a page is changed.
+
+The steps are as follows...
+
+#### InitializingPage
+This step waits for AFrame to finish setting up and waits for the first frame to render. When this happens, the AFrameScene component will fire off an action in the Vuex store.
+
+#### ConnectingToClientPage
+In this step, it will try to start a session, including an optional pin it was entered. If it receives either a `pin-incorrect` or `pin-required` message, it will move to the `PincodePage`. On a `success`, the SessionID is stored in the Vuex Store and will move to the `WaitingForSourcePage`.
+
+#### PincodePage
+If a pincode is required, the user can enter it here. Once the four digits are entered, the pin is stored in the VueX store and moves back to the `ConnectingToClientPage`.
+
+#### WaitingForSourcePage
+The `PeerSystem` in AFrame is responsible for fetching the source, a source being a stream containing the desktop. Once the peer system has received a source, it will fire a `source-added` event on the `a-scene` element. This step will wait for this to happen and then move to `RequestingVirtualCursorPage`.
+
+#### RequestingVirtualCursorPage
+This step will wait for a `cursor-position` to be emitted from the peerSystem, indicating the location of the cursor. Once this has been fired, the app can be certain that the cursor is active. Once that's done, it will move to the `ReadyPage`.
+
+#### ReadyPage
+Everything is setup and ready. The `EnterVirtualRealityButton` is available for the user to enter the AFrame scene.
+
+If the connection to the server is lost, it will move to the `DisconnectedPage`.
+
+#### DisconnectedPage
+This step will only inform the user that he has lost his connection, and will need to refresh the page to reconnect.
 
 ## To start development
-
-* Run `npm start` or `npm start-windows` to open the Electron app.  
+* Run `npm dev` or `npm dev-windows` to open the Electron app and start serving the vue.js client.
 * Press 'Start Streaming'
-* Open a browser and connect to `http://localhost:24242`
+* Open a browser and connect to `http://localhost:8080`
 
-Note that you won't need to rerun the start command. Any changes made in the `client` directory will immediately be displayed on refreshing the page.
+Note that you won't need to rerun the start command. Any changes made in the `client` directory will immediately refresh the page.
 
 ## Important directories
+* [client/aframe](client/aframe) - AFrame components and systems
 * [client/assets](client/assets) - Assets(images, fonts, etc))
-* [client/components](client/components) - AFrame components
-* [client/splash-screen](client/splash-screen) - Vue scripts that handle the splash screen
-* [client/systems](client/systems) - AFrame systems
-* [client/vendor](client/vendor) - All vendor files
+* [client/components](client/components) - Vue.js components
+* [client/router](client/router) - Vue.js router file
+* [client/store](client/store) - VueX store file
+* [client/views](client/views) - Vue.js views, each representing a step on the splash screen
 
 ## Tips
 * When adding `?no-source` to the URL, then no video will be streamed and the splashscreen is automatically removed once the client has finished connecting. This was added to ease development.
@@ -152,4 +185,4 @@ WebRTC has been implemented using [SimplePeer](https://github.com/feross/simple-
 * (*client*) Eventually, the two browsers are connected.
 
 ## Shouldn't the client just get the signals by polling?
-I suppose. I wanted to avoid polling and thought this was a neat way to solve it. If there are any drawbacks, I could refactor it.
+I suppose. I wanted to avoid polling and thought this was a neat way to solve it. If there are any drawbacks, I can be refactored.

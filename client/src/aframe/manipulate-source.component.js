@@ -1,6 +1,10 @@
 /*
     This component will allow the user to move and resize the screen
  */
+
+import { THREE } from 'aframe';
+import * as AFRAME from 'aframe';
+
 AFRAME.registerSystem('manipulate-source', {
     centerAllScreens: function() {
         const sources = document.querySelectorAll('[manipulate-source]');
@@ -76,7 +80,6 @@ AFRAME.registerComponent('manipulate-source', {
 /**
  * @author alteredq / http://alteredqualia.com/
  */
-
 THREE.SceneUtils = {
 
     createMultiMaterialObject: function ( geometry, materials ) {

@@ -1,3 +1,7 @@
+import * as AFRAME from 'aframe';
+import * as SimplePeer from 'simple-peer';
+import 'webrtc-adapter';
+
 AFRAME.registerSystem('peer', {
     schema: {
         connectionLostText: {type: 'selector', default: '#connection-lost'}
@@ -12,14 +16,14 @@ AFRAME.registerSystem('peer', {
     },
 
     connect: function(sessionId) {
-        const peer = new SimplePeer({ initiator: true, streams: [] });
-
-        peer._pc.onconnectionstatechange = () => {
-            const state = peer._pc.connectionState;
-            if (state === 'disconnected' || state === 'closed') {
-                this.onDisconnect();
+        const peer = new SimplePeer({
+            initiator: true,
+            stream: false,
+            offerOptions: {
+                offerToReceiveAudio: true,
+                offerToReceiveVideo: true,
             }
-        };
+        });
 
         peer.on('close', () => {
             this.onDisconnect();
@@ -38,7 +42,7 @@ AFRAME.registerSystem('peer', {
         });
 
         peer.on('signal', async (signal) => {
-            const response = await fetch(`/signal/${sessionId}`, {
+            const response = await fetch(`${process.env.VUE_APP_APPLICATION_URL}/signal/${sessionId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -56,6 +60,10 @@ AFRAME.registerSystem('peer', {
             this.onAddStreamFunc(stream);
         });
 
+        peer.on('error', () => {
+            this.onDisconnect();
+        });
+
         this.peer = peer;
     },
 
@@ -71,6 +79,15 @@ AFRAME.registerSystem('peer', {
         }
 
         listener.callbacks.push(cb);
+    },
+
+    removeListener: function(event, cb) {
+        let listener = this.listeners.find((search) => search.event === event);
+        if (!listener) {
+            return;
+        }
+
+        listener.callbacks = listener.callbacks.filter((search) => search !== cb);
     },
 
     emit: function(event, data) {

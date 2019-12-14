@@ -1,17 +1,19 @@
 /*
     This component tracks the cursor position and updates the position of the entity accordingly
  */
+
+import * as AFRAME from 'aframe';
+
 AFRAME.registerSystem('cursor-position', {
     cursor: null,
-    streamId: '',
+    streamId: null,
 
     init: function() {
         setTimeout(() => {
             this.el.systems['peer'].on('cursor-position', (data) => {
-                if (this.streamId !== data.streamId) {
+                if (this.streamId === null || this.streamId !== data.streamId) {
                     this.streamId = data.streamId;
 
-                    console.log(this.streamId);
                     if (this.cursor) {
                         this.cursor.parentNode.removeChild(this.cursor);
                         this.cursor = null;
@@ -23,7 +25,7 @@ AFRAME.registerSystem('cursor-position', {
 
                     const screen = document.querySelector('#screen-' + data.streamId);
                     if (!screen) {
-                        console.log('Screen not found');
+                        this.streamId = null;
                         return;
                     }
 

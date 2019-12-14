@@ -7,24 +7,15 @@
   "author": "Ruben van der Leun",
   "main": "dist/main.js",
   "scripts": {
-    "build-mac": "npm run dist && npm run package-mac",
-    "dist": "sh build.sh",
     "package-mac": "electron-packager . --overwrite --asar=true --platform=darwin --arch=x64 --prune=true --out=release-builds --icon=assets/mac.icns  --electron-version=4.2.6",
     "package-windows": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --icon=assets/windows.ico --electron-version=4.2.6",
-    "package-linux": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds --electron-version=4.2.6",
-    "start": "npm run build-mac && node server/index.js"
+    "package-linux": "electron-packager . --ignore=virtual-office --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds --electron-version=4.2.6"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "electron-json-storage": "^4.1.1",
     "express": "^4.16.4",
     "internal-ip": "^4.3.0",
-    "jsdom": "^12.2.0",
-    "node-minify": "^3.5.1",
-    "peer": "^0.2.10",
-    "peerjs-server": "^0.2.9",
-    "rimraf": "^2.6.2",
-    "socket.io": "^2.1.1",
-    "socket.io-client": "^2.1.1",
     "uniqid": "^5.0.3"
   },
   "devDependencies": {

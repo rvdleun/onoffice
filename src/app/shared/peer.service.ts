@@ -3,6 +3,7 @@ import {ElectronService} from 'ngx-electron';
 import * as SimplePeer from 'simple-peer';
 import {SourceSelection} from '../pages/main/settings-screen/source-toggle/source-toggle.component';
 import {StreamService} from './stream.service';
+import 'webrtc-adapter';
 
 interface PeerConnection {
     sessionId: string;
@@ -77,7 +78,13 @@ export class PeerService {
     }
 
     private createPeer(sessionId: string) {
-        const peer = new SimplePeer({ streams: this.streams });
+        const peer = new SimplePeer({
+            initiator: false,
+            streams: this.streams,
+            answerOptions: {
+                offerToReceiveAudio: false,
+                offerToReceiveVideo: false
+            }});
 
         peer.on('connect', () => {
             this.electronService.remote.getGlobal('clearResponses')(sessionId);
@@ -86,7 +93,7 @@ export class PeerService {
 
             setTimeout(() => {
                 this.electronService.remote.getGlobal('sendVirtualCursorPosition')();
-            });
+            }, 1000);
         });
 
         peer.on('data', (data) => {
