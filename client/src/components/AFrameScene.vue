@@ -1,5 +1,5 @@
 <template>
-    <a-scene ref="scene" :class="{ active: vrActive }" @renderstart="this.onRenderStart" @enter-vr="onEnterVR" @exit-vr="onExitVR()">
+    <a-scene ref="scene" :class="{ active: vrActive }" device-orientation-permission-ui="enabled: false" @renderstart="this.onRenderStart" @enter-vr="onEnterVR" @exit-vr="onExitVR()">
         <a-assets ref="assets">
             <img id="cursorImg" src="../assets/images/cursor.svg" />
             <video id="remote" muted autoplay></video>
