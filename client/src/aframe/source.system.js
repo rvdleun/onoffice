@@ -39,6 +39,7 @@ AFRAME.registerSystem('source', {
         videoEl.setAttribute('class', 'video-source');
         videoEl.setAttribute('id', videoId);
         videoEl.setAttribute('muted', '');
+        videoEl.setAttribute('playsinline', '');
 
         videoEl.srcObject = stream;
         videoEl.onloadedmetadata = () => {
