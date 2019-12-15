@@ -7,8 +7,9 @@ import ConnectingToClientPage from "../views/ConnectingToClientPage";
 import WaitingForSourcePage from "../views/WaitingForSourcePage";
 import RequestingVirtualCursorPage from "../views/RequestingVirtualCursorPage";
 import DisconnectedPage from "../views/DisconnectedPage";
+import DeviceOrientationAccessPage from "../views/DeviceOrientationAccessPage";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -20,6 +21,11 @@ const routes = [
     path: '/connecting-to-client',
     name: 'connecting-to-client',
     component: ConnectingToClientPage,
+  },
+  {
+    path: '/device-orientation-access',
+    name: 'device-orientation-access',
+    component: DeviceOrientationAccessPage,
   },
   {
     path: '/disconnected',
