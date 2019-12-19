@@ -10,6 +10,6 @@
 
 <style scoped>
     img {
-        width: 80%;
+        width: 60%;
     }
 </style>
