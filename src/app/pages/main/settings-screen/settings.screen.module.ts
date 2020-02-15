@@ -7,8 +7,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {SettingsScreen} from './settings.screen';
 import {StartStreamingComponent} from './start-streaming/start-streaming.component';
-import {SslConnectionComponent} from './ssl-connection/ssl-connection.component';
-
 
 @NgModule({
     declarations: [
@@ -17,7 +15,6 @@ import {SslConnectionComponent} from './ssl-connection/ssl-connection.component'
         PinFormComponent,
         SelectScreensComponent,
         SkyComponent,
-        SslConnectionComponent,
         StartStreamingComponent,
         SourceToggleComponent,
     ],

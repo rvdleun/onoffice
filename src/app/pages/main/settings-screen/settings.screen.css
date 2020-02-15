@@ -40,12 +40,6 @@ app-start-streaming {
     transform: translate(calc(-13.5vw), calc(-5.3vh)) !important;
 }
 
-app-ssl-connection {
-    display: block;
-    clear: left;
-    transform: translateY(57px);
-}
-
 .tutorial-button {
     position: fixed;
     bottom: 15px;
