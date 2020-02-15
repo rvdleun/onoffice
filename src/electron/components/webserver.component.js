@@ -12,7 +12,6 @@ let global;
 let sendPeerMessageFunc;
 let peerListeners = [];
 let pin = '';
-let ssl;
 let webServer;
 
 const webApp = express();
@@ -60,14 +59,10 @@ function postSignal(request, response) {
 }
 
 function createServer() {
-    if (ssl) {
-        return require('https').Server({
-            cert: fs.readFileSync(__dirname + '/webserver/server.cert'),
-            key: fs.readFileSync(__dirname + '/webserver/server.key'),
-        }, webApp)
-    } else {
-        return require('http').Server(webApp);
-    }
+    return require('https').Server({
+        cert: fs.readFileSync(__dirname + '/webserver/server.cert'),
+        key: fs.readFileSync(__dirname + '/webserver/server.key'),
+    }, webApp)
 }
 
 function getSignalResponse(sessionId) {
@@ -103,21 +98,6 @@ module.exports.init = function(electronGlobal) {
 
             pin = data.pin;
             cb(data.pin);
-        });
-    };
-
-    global.getSslFromStorage = function(cb) {
-        storage.get('ssl', (error, data) => {
-            if (error) {
-                return;
-            }
-
-            if (data.ssl === undefined) {
-                data.ssl = true;
-            }
-
-            ssl = data.ssl;
-            cb(data.ssl);
         });
     };
 
@@ -177,16 +157,6 @@ module.exports.init = function(electronGlobal) {
         storage.set('pin', { pin }, (error) => {
             if (error) {
                 console.error('Error while storing pin', error);
-            }
-        });
-    };
-
-    global.setSsl = function(newSsl) {
-        ssl = newSsl;
-
-        storage.set('ssl', { ssl }, (error) => {
-            if (error) {
-                console.error('Error while storing ssl', error);
             }
         });
     };

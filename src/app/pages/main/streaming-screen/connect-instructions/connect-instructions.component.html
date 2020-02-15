@@ -4,16 +4,9 @@
     <div class="col-12">
         <p>#1. Join the same network as this computer</p>
         <p>#2. Open a browser on your headset</p>
-        <ng-container *ngIf="sslActive">
-            <p>#3. Browse to <span class="ip">https://{{ ip }}</span></p>
-            <p>(Please note that <span class="ip">'https://'</span> is required)</p>
-            <p>#4. You may get a security error. Choose to proceed to the page.</p>
-            <p>#5. Press the 'Enter Office' button.</p>
-        </ng-container>
-        <ng-container *ngIf="!sslActive">
-            <p>#3. Browse to <span class="ip">http://{{ ip }}</span></p>
-            <p>(Note that <span class="ip">'http://'</span> is required for the Oculus Go and Quest)</p>
-            <p>#4. Press the 'Enter Office' button.</p>
-        </ng-container>
+        <p>#3. Browse to <span class="ip">https://{{ ip }}</span></p>
+        <p>(Please note that <span class="ip">'https://'</span> is required)</p>
+        <p>#4. You may get a security error. Choose to proceed to the next page.</p>
+        <p>#5. Press the 'Enter Office' button.</p>
     </div>
 </div>
