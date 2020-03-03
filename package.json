@@ -11,6 +11,7 @@
     "build-electron": "ng build --base-href . && cp -R src/electron/* dist && ln -s ../client/dist dist/client",
     "build-electron:windows": "ng build --base-href . && xcopy .\\src\\electron\\* dist /s && xcopy .\\client .\\dist\\client /I /S",
     "build-client": "cd client && npm run build && cd ..",
+    "start:electron": "npm run build-electron && electron dist/main.js",
     "start": "npm run build && electron dist/main.js",
     "start-windows": "npm run build-client && npm run build-electron:windows && electron dist/main.js"
   },

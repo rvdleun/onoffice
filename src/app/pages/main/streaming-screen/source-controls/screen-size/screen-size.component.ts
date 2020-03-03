@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {SourceSelection} from '../../settings-screen/source-toggle/source-toggle.component';
-import {PeerService} from '../../../../shared/peer.service';
+import {SourceSelection} from '../../../settings-screen/source-toggle/source-toggle.component';
+import {PeerService} from '../../../../../shared/peer.service';
 
 @Component({
     selector: 'app-screen-size',

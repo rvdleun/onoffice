@@ -1,6 +1,6 @@
 <div class="page" *ngIf="status.current !== 'inactive'">
     <img src="./assets/img/logo-red.png" />
-    <div id="data">
+    <div id="data" *ngIf="status.current !== 'active'">
         <app-status></app-status>
     </div>
     <div id="error-message" *ngIf="errorMessage">
@@ -10,19 +10,7 @@
         <app-connect-instructions [ip]="ip"></app-connect-instructions>
     </div>
     <div id="controls">
-        <div id="in-scene" *ngIf="!errorMessage && status.current === 'active'">
-            <p class="screen-controls-title">Screen controls</p>
-            <div class="select-screen" *ngIf="sources.length > 1">
-                <app-select-screen [sources]="sources" (selected)="onSelectedSource($event)"></app-select-screen>
-            </div>
-            <div class="input">
-                <app-screen-size [source]="selectedSource" data-step="1" data-intro="To change the screen size in the virtual world, move this slider."></app-screen-size>
-            </div>
-            <div class="input">
-                <app-center-screen [source]="selectedSource" data-step="2" data-intro="To center the screen, click here. In the virtual environment, the screen will move in front of the camera."></app-center-screen>
-            </div>
-            <button class="tutorial-button" (click)="startTutorial()">?</button>
-        </div>
+        <app-source-controls *ngIf="!errorMessage && status.current === 'active'" [sources]="sources"></app-source-controls>
         <app-stop-streaming></app-stop-streaming>
     </div>
 </div>

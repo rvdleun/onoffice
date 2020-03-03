@@ -38,7 +38,7 @@ input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
-    background-image: url('../../../../../assets/img/bullet.png');
+    background-image: url('../../../../../../assets/img/bullet.png');
     background-position: center;
     background-size: cover;
     transform: translateY(-10px);

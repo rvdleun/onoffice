@@ -1,0 +1,16 @@
+.input {
+    width: 50%;
+    float: left;
+}
+
+.select-screen {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.tutorial-button {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    font-size: 24px;
+}
