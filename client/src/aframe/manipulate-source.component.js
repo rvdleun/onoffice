@@ -63,7 +63,7 @@ AFRAME.registerComponent('manipulate-source', {
         const position = activeCamera.object3D.getWorldPosition(new THREE.Vector3());
         const rotation = activeCamera.getAttribute('rotation');
 
-        this.el.parentElement.setAttribute('animation__position', `property: position; to: ${position.x} ${position.y} ${position.z}; dur: 500; easing: linear`);
+        this.el.parentElement.setAttribute('animation__position', `property: position; to: ${position.x} ${position.y + 1.6} ${position.z}; dur: 500; easing: linear`);
         this.el.parentElement.setAttribute('animation__rotation', `property: rotation; to: ${rotation.x} ${rotation.y} 0; dur: 500; easing: linear`);
     },
 
