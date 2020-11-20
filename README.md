@@ -1,3 +1,7 @@
+####Note: I am taking an indefinite break on this project as I'm shifting my focus to https://virtc.app.
+
+If you are interested in learning how to share your desktop via the browser, I would recommend looking at [simple-peer](https://github.com/feross/simple-peer). If you have any questions regarding this project, you can reach me at [ruben@leunix.nl](mailto:ruben@leunix.nl).
+
 # On/Office
 
 ![](https://onoffice.app/assets/image/github.gif)
