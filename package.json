@@ -48,7 +48,7 @@
     "@types/node": "^6.0.118",
     "codelyzer": "~2.0.0",
     "core-js": "^2.6.10",
-    "electron": "^4.2.12",
+    "electron": "^11.5.0",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "karma": "~1.4.1",
