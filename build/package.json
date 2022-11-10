@@ -19,7 +19,7 @@
     "uniqid": "^5.0.3"
   },
   "devDependencies": {
-    "electron": "^4.2.6",
+    "electron": "^18.3.7",
     "electron-packager": "^12.1.2"
   }
 }
