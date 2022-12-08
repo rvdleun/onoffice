@@ -23,7 +23,7 @@
     "bootstrap": "^4.4.1",
     "cors": "^2.8.5",
     "electron-json-storage": "^4.1.8",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "install": "^0.13.0",
     "internal-ip": "^4.3.0",
     "intro.js": "^2.9.3",
